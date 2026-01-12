@@ -5,15 +5,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    if request.form:
-        return
+    if request.method == 'POST':
+        return render_template("main.html")
     else:
         return render_template("main.html")
 
 @app.route('/update-server', methods=['POST'])
 def webhook():
     if request.method == 'POST':
-        repo = git.Repo('/user/lndr/files/home/lndr/SI-Helper/.git')
+        repo = git.Repo('/.git')
         origin = repo.remotes.origin
         origin.pull()
         return 'Updated PythonAnywhere successfully', 200
