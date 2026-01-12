@@ -7,17 +7,17 @@
 // 5: Invader
 // 6: Slow power
 
-let phase = 0;
-let activeListItemClass = 'list-group-item-dark';
+var phase = 0;
+var activeListItemClass = 'list-group-item-dark';
 
-let phaseList = null;
-let phaseListLength = 0;
+var phaseList = null;
+var phaseListLength = 0;
 
-let fearProgress = null;
-let fearBadge = null;
-let fear = 0;
-let earnedFearCards = 0;
-let fearMax = 8;
+var fearProgress = null;
+var fearBadge = null;
+var fear = 0;
+var earnedFearCards = 0;
+var fearMax = 8;
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
@@ -102,17 +102,17 @@ function drawCard(type) {
 
     if (cardDisplay) {
         // Create image element
-        const img = document.createElement('img');
+        let img = document.createElement('img');
         random = 0;
 
         switch (type)
         {
             case 'fear':
-                random = Math.floor(Math.random() * 51);
+                random = Math.floor(Math.random() * 51) + 1;
                 img.src = `/static/assets/fear/${random}.png`;
                 break;
             case 'event':
-                random = Math.floor(Math.random() * 58);
+                random = Math.floor(Math.random() * 58 + 1);
                 img.src = `/static/assets/event/${random}.png`;
                 break;
         }
@@ -130,9 +130,11 @@ function drawCard(type) {
 // Function to set phase programmatically
 function setPhase(index) {
     phaseList[phase].classList.remove(activeListItemClass);
+    
     if (index >= 0 && index < phaseListLength)
         phase = index;
     else
         phase = 0;
+
     phaseList[phase].classList.add(activeListItemClass);
 }
