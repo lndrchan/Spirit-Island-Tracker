@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     leftBarFearBadge = document.getElementById('left-bar-fear-badge');
-    phaseListFearBadge = document.getElementById('fear-badge')
+    phaseListFearBadge = document.getElementById('phase-list-fear-badge');
+    console.log(phaseListFearBadge);
     if (leftBarFearBadge && phaseListFearBadge) {
         updateFearBadge();
     }
@@ -109,8 +110,8 @@ function updateFearBadge() {
         phaseListFearBadge.classList.remove('hidden');
     }
 
-    leftBarFearBadge.innerHTML = earnFearCard;
-    phaseListFearBadge.innerHTML = earnFearCard;
+    leftBarFearBadge.innerHTML = earnedFearCards;
+    phaseListFearBadge.innerHTML = earnedFearCards;
 
 }
 
