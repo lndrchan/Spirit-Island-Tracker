@@ -23,7 +23,7 @@ var fearMax = 8;
 // Initialize when DOM is ready
 $( document ).ready(function() {
 
-    phaseList = document.querySelectorAll('.list-group-item');
+    phaseList = $('.list-group-item');
     fearProgress = document.getElementById('fear-progress');
 
     // Highlight the first phase on page load
