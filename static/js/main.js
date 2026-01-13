@@ -240,6 +240,8 @@ function generateSeq(n) {
     let orderedArray = Array.from({ length: n }, (_, i) => i);
 
     for (let i = 0; i < n; i++) {
-        output[n] = orderedArray[Math.floor(Math.random() * n)]
+        let random = Math.floor(Math.random() * (n - i));
+        output[n] = orderedArray[random];
+        orderedArray.splice(random, 1);
     }
 }
