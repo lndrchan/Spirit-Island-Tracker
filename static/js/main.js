@@ -222,6 +222,8 @@ function generateInvaderSeq(levelSeq) {
     invaderSeq = [];
 
     for (level in levelSeq) {
-
+        if (level === 1) {
+            invaderSeq.push()
+        }
     }
 }
