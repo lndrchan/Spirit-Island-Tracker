@@ -221,7 +221,8 @@ function generateInvaderSeq(levelSeq) {
 
     invaderSeq = [];
 
-    for (level in levelSeq) {
+    for (let i = 0; i < levelSeq.length; i++) {
+        level = levelSeq[i];
         if (level === 1) {
             invaderSeq.push(level1[Math.floor(Math.random() * 4)]);
         } 
