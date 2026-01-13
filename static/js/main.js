@@ -234,3 +234,8 @@ function generateInvaderSeq(levelSeq) {
         }
     }
 }
+
+function generateSeq(n) {
+    let output = Array(n);
+    
+}
