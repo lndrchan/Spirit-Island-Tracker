@@ -159,18 +159,17 @@ function drawCard(type) {
     if (cardDisplay) {
         // Create image element
         let img = document.createElement('img');
-        random = 0;
+
 
         switch (type)
         {
             case 'fear':
-                random = Math.floor(Math.random() * 51) + 1;
-                img.src = `/static/assets/fear/${random}.jpg`;
-
+                img.src = `/static/assets/fear/${fearSeqIndex}.jpg`;
+                fearSeqIndex++;
                 break;
             case 'event':
-                random = Math.floor(Math.random() * 58 + 1);
-                img.src = `/static/assets/event/${random}.jpg`;
+                img.src = `/static/assets/event/${eventSeqIndex}.jpg`;
+                eventSeqIndex++;
                 break;
         }
 
