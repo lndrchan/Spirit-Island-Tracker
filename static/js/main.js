@@ -237,5 +237,9 @@ function generateInvaderSeq(levelSeq) {
 
 function generateSeq(n) {
     let output = Array(n);
-    
+    let orderedArray = Array.from({ length: n }, (_, i) => i);
+
+    for (let i = n-1; i < 0; i--) {
+        
+    }
 }
