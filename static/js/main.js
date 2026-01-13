@@ -33,7 +33,8 @@ var fearMax = 8;
 
 var cardDisplay = null;
 
-var invaderLevelSeq = []
+var invaderLevelSeq = [1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
+var invaderSeq = [];
 
 // To store serialised game state for gamesaves persisting between sessions
 var state = [];
@@ -210,4 +211,11 @@ function setPhase(index) {
 
 function clearCardDisplay() {
     cardDisplay.html('');
+}
+
+function generateInvaderSeq(levelSeq) {
+    
+    for (level in levelSeq) {
+
+    }
 }
