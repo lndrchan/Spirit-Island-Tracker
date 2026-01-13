@@ -157,9 +157,7 @@ function updateFearBadge() {
 function drawCard(type) {
 
     if (cardDisplay) {
-        // Create image element
         let img = document.createElement('img');
-
 
         switch (type)
         {
