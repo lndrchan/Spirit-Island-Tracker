@@ -392,7 +392,7 @@ function updateInvaderBadge(showExplore) {
             continue;
         }
 
-        level = invaderLevelSeq[turn - i];
+        level = invaderLevelSeq[levelIndex];
 
         if (level === 1 || level === 2) {
             badges[i].append(generateBadge(invaderSeq[turn][1]));
@@ -401,7 +401,6 @@ function updateInvaderBadge(showExplore) {
             badges[i].append(generateBadge(invaderSeq[turn][1]), generateBadge(invaderSeq[turn][2]));
         }
     
-        if (turn < 1) return;
     }
     
 
