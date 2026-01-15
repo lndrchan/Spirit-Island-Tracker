@@ -406,10 +406,12 @@ function generateBadge(terrain) {
             break;
         case 's': 
             b.css('background-color', '#ffd26a');
+            b.css('color','#000')
             b.html('Sand');
             break;
         case 'w': 
             b.css('background-color', '#73dcdf');
+            b.css('color','#000')
             b.html('Wetland');
             break;
         case 'u': 
