@@ -260,7 +260,6 @@ function setPhase(index) {
         }
         else if (phaseIndex === 4) {
             // Fear card phase special texts (fear badge)
-            listItem.removeClass('d-flex');
             $('<span></span>')
                 .addClass('badge badge-primary badge-pill fear-badge')
                 .attr('id', 'phase-list-fear-badge')
