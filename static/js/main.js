@@ -270,9 +270,13 @@ function setPhase(index) {
         else if (phaseIndex === 4) {
             // Fear card phase special texts
             $('<span></span>')
-                .addClass('badge rounded-pill text-bg-primary')
+                .addClass('badge rounded-pill text-bg-primary fear-badge')
+                
                 .appendTo(listItem)
         }
+
+        listItem.appendTo(phaseList);
+
     }   
     
 
