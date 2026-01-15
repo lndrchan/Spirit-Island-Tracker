@@ -8,8 +8,6 @@
 // 6: Slow power
 // 7: time passes
 
-const { event } = require("jquery");
-
 var phase = 0;
 
 var phaseList = null;
@@ -35,11 +33,20 @@ var fearMax = 8;
 
 var cardDisplay = null;
 
+var invaderCardExplore = null;
+var invaderCardBuild = null;
+var invaderCardRavage = null;
+var invaderCardFourth = null;
+var ravageBadge = null;
+var buildBadge = null;
+var exploreBadge = null;
+
 var invaderLevelSeq = [1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
 var invaderSeq = [];
-var fearSeq = [];
+var turn = 0;
+var fearSeq = Array(50);
 var fearSeqIndex = 0;
-var eventSeq = [];
+var eventSeq = Array(62);
 var eventSeqIndex = 0;
 
 // To store serialised game state for gamesaves persisting between sessions
@@ -50,18 +57,34 @@ jQuery(function() {
 
     fearSeq = generateSeq(50);
     eventSeq = generateSeq(62);
-    generateInvaderSeq();
+    generateInvaderSeq(invaderLevelSeq);
+
+    invaderCardExplore = $('#invader-card-explore');
+    invaderCardBuild = $('#invader-card-build');
+    invaderCardRavage = $('#invader-card-ravage');
+    invaderCardFourth = $('#invader-card-fourth');
+    clearInvaderCard();
 
     phaseList = $('#phase-list');
     fearProgress = $('#fear-progress');
 
     phaseListLength = 8;
 
+    ravageBadge = $('#phase-list-ravage-badge');
+    buildBadge = $('#phase-list-build-badge');
+    exploreBadge = $('#phase-list-explore-badge');
 
     $('#btn-next-phase').on('click', function() {
         nextStep();
     });
+    
+    let e = $.Event('keydown');
+    e.which = 13;
+    $('input').trigger(e, function() {
+        nextStep();
+    })
 
+ 
     $('#btn-add-fear').on('click', function() {
         addFear();
     });
@@ -73,11 +96,15 @@ jQuery(function() {
 
     cardDisplay = $('#main-card-display');
 
-    setPhase(0);
+    //Start from first invader phase (explore only)
+    setPhase(4);
+    nextStep();
 });
 
 function nextStep() {
 
+    // Check before phase advance: if at fear card phase and still has unresolved fear card, 
+    // do not advance phase
     if (phase === 4 && earnedFearCards > 0) {
         drawCard('fear');
         earnedFearCards--;
@@ -86,6 +113,11 @@ function nextStep() {
     }
 
     setPhase((phase + 1) % phaseListLength);
+
+    if (phase === 3) {
+        drawCard('event');
+        return;
+    }
 
     if (phase === 4) {
         if (earnedFearCards === 0) {
@@ -100,11 +132,26 @@ function nextStep() {
         }
     }
 
-
-    if (phase === 3) {
-        drawCard('event');
+    // Invader phase: flip explore card
+    if (phase === 5) {
+        updateInvaderCardExplore();
+        return;
     }
 
+    // Slow power phase: advance invader card
+    if (phase === 6) {
+        clearInvaderCard();
+        turn++;
+        updateInvaderCard();
+        turn--;
+        return;
+    }
+
+    // Time passes: advance turn counter
+    if (phase === 7) {
+        turn++;
+        return;
+    }
 }
 
 function addFear() {
@@ -161,11 +208,11 @@ function drawCard(type) {
         switch (type)
         {
             case 'fear':
-                img.src = `/static/assets/fear/${fearSeqIndex}.jpg`;
+                img.src = `/static/assets/fear/${fearSeq[fearSeqIndex]}.jpg`;
                 fearSeqIndex++;
                 break;
             case 'event':
-                img.src = `/static/assets/event/${eventSeqIndex}.jpg`;
+                img.src = `/static/assets/event/${eventSeq[eventSeqIndex]}.jpg`;
                 eventSeqIndex++;
                 break;
         }
@@ -181,7 +228,6 @@ function drawCard(type) {
 
 // Function to set phase programmatically
 function setPhase(index) {
-    console.log('Set phase to be ' + index);
 
     let clearDisplayPhases = [0, 1, 2, 5, 6, 7];
     if (clearDisplayPhases.includes(index)) {
@@ -218,6 +264,53 @@ function clearCardDisplay() {
     cardDisplay.html('');
 }
 
+function clearInvaderCard() {
+    invaderCardExplore.html('');
+    invaderCardBuild.html('');
+    invaderCardRavage.html('');
+    invaderCardFourth.html('');
+}
+
+function updateInvaderCard() {
+
+    clearInvaderCard();
+
+    let img = document.createElement('img');
+    img.classList.add('game-card', 'game-card-invader');
+    img.src = `/static/assets/invader/${invaderLevelSeq[turn]}.jpg`;
+    invaderCardExplore.append(img);
+
+    if (turn < 1) return;
+
+    img = document.createElement('img');
+    img.classList.add('game-card', 'game-card-invader');
+    img.src = `/static/assets/invader/${invaderSeq[turn - 1]}.jpg`;
+    invaderCardBuild.append(img);
+
+    if (turn < 2) return;
+
+    img = document.createElement('img');
+    img.classList.add('game-card', 'game-card-invader');
+    img.src = `/static/assets/invader/${invaderSeq[turn - 2]}.jpg`;
+    invaderCardRavage.append(img);
+
+    if (turn < 3) return;
+
+    img = document.createElement('img');
+    img.classList.add('game-card', 'game-card-invader');
+    img.src = `/static/assets/invader/${invaderSeq[turn - 3]}.jpg`;
+    invaderCardFourth.append(img);
+}
+
+function updateInvaderCardExplore() {
+    let img = document.createElement('img');
+    img.classList.add('game-card', 'game-card-invader');
+    img.src = `/static/assets/invader/${invaderSeq[turn]}.jpg`;
+
+    invaderCardExplore.html('');
+    invaderCardExplore.append(img);
+}
+
 function generateInvaderSeq(levelSeq) {
 
     let level1 = ['1w', '1s', '1j', '1m'];
@@ -225,17 +318,24 @@ function generateInvaderSeq(levelSeq) {
     let level3 = ['3js', '3jw', '3mj', '3mw', '3sm', '3sw'];
 
     invaderSeq = [];
+    let index = 0;
 
     for (let i = 0; i < levelSeq.length; i++) {
         level = levelSeq[i];
         if (level === 1) {
-            invaderSeq.push(level1[Math.floor(Math.random() * 4)]);
+            index = Math.floor(Math.random() * level1.length);
+            invaderSeq.push(level1[index]);
+            level1.splice(index, 1);
         } 
         else if (level === 2) {
-            invaderSeq.push(level2[Math.floor(Math.random() * 5)]);
+            index = Math.floor(Math.random() * level2.length);
+            invaderSeq.push(level2[index]);
+            level2.splice(index, 1);
         }
         else if (level === 3) {
-            invaderSeq.push(level3[Math.floor(Math.random() * 6)]);
+            index = Math.floor(Math.random() * level3.length);
+            invaderSeq.push(level3[index]);
+            level3.splice(index, 1);
         }
     }
 }
@@ -245,9 +345,43 @@ function generateSeq(n) {
     let orderedArray = Array.from({ length: n }, (_, i) => i);
 
     for (let i = 0; i < n; i++) {
-        let random = Math.floor(Math.random() * (n - i));
-        output[n] = orderedArray[random];
+        let random = Math.floor(Math.random() * (n-i));
+        output[i] = orderedArray[random];
         orderedArray.splice(random, 1);
     }
+    
     return output;
+}
+
+function generateBadge(terrain) {
+    // Terrain should be single character
+    let b = document.createElement('span');
+    
+    switch (terrain) {
+        case 's': 
+            b.attr('background-color', '$yellow-200');
+            b.html('Sand');
+            break;
+    }
+}
+
+function updateInvaderBadge(showExplore) {
+
+    ravageBadge.empty();
+    buildBadge.empty();
+    exploreBadge.empty();
+
+    badges = [ravageBadge, buildBadge, exploreBadge];
+
+    for (let i = 0; i < 3; i++) {
+        let invaderLevel = invaderLevelSeq[turn];
+    }
+
+    
+    if (invaderLevel === 1 || invaderLevel === 2) {
+        ravageBadge.append(generateBadge(invaderSeq[turn][1]));
+    }
+    else if (invaderLevel === 3) {
+
+    }
 }

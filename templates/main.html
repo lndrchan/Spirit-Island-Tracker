@@ -68,9 +68,9 @@
 						<div class="list-group-item">
 							<h3 class="phase-list-title">Invader Phase</h3>
 							<ul>
-								<li>Ravage</li>
-								<li>Build</li>
-								<li>Explore</li>
+								<li>Ravage</li> <div id="phase-list-ravage-badge"></div>
+								<li>Build</li> <div id="phase-list-build-badge"></div>
+								<li>Explore</li> <div id="phase-list-explore-badge"></div>
 							</ul>
 						</div>
 						<div class="list-group-item">
@@ -78,13 +78,16 @@
 						</div>
 
 					</div>
-					<button type="button" class="btn btn-outline-primary phase-list-btn" style="width:100%;" id="btn-next-phase">
+					<div>
+						<button type="button" class="btn btn-outline-primary phase-list-btn" style="width:100%;" id="btn-next-phase">
 						Next step
-					</button>
+						</button>
+						
+						<button type="button" class="btn btn-outline-secondary phase-list-btn" style="width:100%;" id="btn-undo">
+							Undo
+						</button>
+					</div>
 					
-					<button type="button" class="btn btn-outline-secondary phase-list-btn" style="width:100%;" id="btn-undo">
-						Undo
-					</button>
 				</div>
 				<div class="col-md-6 main-card-display" id="main-card-display">
 					<img src="{{ url_for('static', filename='assets/fear/back.jpg') }}" class="game-card">
@@ -111,6 +114,9 @@
 					<div class="invader-card-label">
 						Discard
 					</div>
+					<div id="invader-card-fourth"> 
+
+					</div>
 				</div>
 
 				<div class="col-md-1">
@@ -120,8 +126,9 @@
 					<div class="invader-card-label">
 						Ravage
 					</div>
-
-					<img src="{{ url_for('static', filename='assets/invader/1s.jpg') }}" class="game-card game-card-invader">
+					<div id="invader-card-ravage"> 
+						<img src="{{ url_for('static', filename='assets/invader/1s.jpg') }}" class="game-card game-card-invader">
+					</div>
 				</div>
 
 				<div class="col-md-1">
@@ -130,7 +137,9 @@
 					<div class="invader-card-label">
 						Build
 					</div>
-					<img src="{{ url_for('static', filename='assets/invader/1w.jpg') }}" class="game-card game-card-invader">
+					<div id="invader-card-build"> 
+						<img src="{{ url_for('static', filename='assets/invader/1w.jpg') }}" class="game-card game-card-invader">
+					</div>
 				</div>
 
 				<div class="col-md-1">
@@ -140,7 +149,9 @@
 					<div class="invader-card-label">
 						Explore
 					</div>
-					<img src="{{ url_for('static', filename='assets/invader/1.jpg') }}" class="game-card game-card-invader">
+					<div id="invader-card-explore"> 
+						<img src="{{ url_for('static', filename='assets/invader/1.jpg') }}" class="game-card game-card-invader">
+					</div>
 				</div>
 
 

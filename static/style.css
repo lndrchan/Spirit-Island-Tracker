@@ -37,12 +37,17 @@
 
 .game-card-invader
 {
-    height: 100%;
+    width: 100%;
 }
 
 .btn
 {
     margin-top: 12px;
+}
+
+#btn-next-phase
+{
+    background-image: url('/static/assets/fear/back.jpg') !important
 }
 
 .fear-panel
@@ -79,7 +84,16 @@
 
 .phase-list
 {
-    width: 100%
+    width: 100%;
+    height: 75%;
+}
+
+#phase-list-ravage-badge,
+#phase-list-build-badge,
+#phase-list-explore-badge
+{
+    display: inline;
+
 }
 
 .badge
