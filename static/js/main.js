@@ -271,7 +271,7 @@ function setPhase(index) {
             // Fear card phase special texts
             $('<span></span>')
                 .addClass('badge rounded-pill text-bg-primary fear-badge')
-                
+                .attr('id', 'phase-list-fear-badge')
                 .appendTo(listItem)
         }
 
