@@ -246,6 +246,7 @@ function setPhase(index) {
     // Make phase list dynamic HTML
     for (let i = 0; i < maxPhaseListHeight; i++) {
         let phaseIndex = (i + phase - 1) % phaseListLength;
+        if (phaseIndex < 0) phaseIndex = 7;
 
         // Make list item container
         let listItem = $(document.createElement('div'))
@@ -286,18 +287,20 @@ function setPhase(index) {
                 .append('<li>Build: <span class="badge" id="phase-list-build-badge"> </span> </li>')
                 .append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
                 .appendTo(listItem);
-            updateInvaderBadge();
         }
 
-        // Update variables to newly generated phase list DOM
-        ravageBadge = $('#phase-list-ravage-badge');
-        buildBadge = $('#phase-list-build-badge');
-        exploreBadge = $('#phase-list-explore-badge');
+        
 
         phaseListFearBadge = $('#phase-list-fear-badge');
 
         // Add generated list item to phase list DOM
         listItem.appendTo(phaseList);
+
+        // Update variables to newly generated phase list DOM
+        ravageBadge = $('#phase-list-ravage-badge');
+        buildBadge = $('#phase-list-build-badge');
+        exploreBadge = $('#phase-list-explore-badge');
+        updateInvaderBadge();
 
     }   
 }
