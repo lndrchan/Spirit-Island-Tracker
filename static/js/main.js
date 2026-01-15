@@ -179,7 +179,6 @@ function removeFear() {
 
 function earnFearCard() {
     earnedFearCards ++;
-    console.log('Earned fear card. Currently ' + earnedFearCards + ' earned. ')
     updateFearBadge();
 }
 
