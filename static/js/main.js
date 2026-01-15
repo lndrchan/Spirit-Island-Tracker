@@ -70,9 +70,7 @@ jQuery(function() {
 
     phaseListLength = 8;
 
-    ravageBadge = $('#phase-list-ravage-badge');
-    buildBadge = $('#phase-list-build-badge');
-    exploreBadge = $('#phase-list-explore-badge');
+    
 
     $('#btn-next-phase').on('click', function() {
         nextStep();
@@ -89,16 +87,19 @@ jQuery(function() {
         addFear();
     });
 
-
-    leftBarFearBadge = $('#left-bar-fear-badge');
-    phaseListFearBadge = $('#phase-list-fear-badge');
-    updateFearBadge();
-
     cardDisplay = $('#main-card-display');
 
     //Start from first invader phase (explore only)
     setPhase(4);
     nextStep();
+
+    ravageBadge = $('#phase-list-ravage-badge');
+    buildBadge = $('#phase-list-build-badge');
+    exploreBadge = $('#phase-list-explore-badge');
+
+    leftBarFearBadge = $('#left-bar-fear-badge');
+    phaseListFearBadge = $('#phase-list-fear-badge');
+    updateFearBadge();
 });
 
 function nextStep() {
