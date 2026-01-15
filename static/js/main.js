@@ -245,7 +245,8 @@ function setPhase(index) {
         let phaseIndex = (i + phase - 1) % phaseListLength;
 
         let listItem = $(document.createElement('div')).addClass('list-group-item d-flex justify-content-between align-items-center');
-        let listItemHeading = $('<b></b>')
+        // Make heading
+        $('<b></b>')
             .addClass('phase-list-title')
             .html(phaseListDict[phaseIndex])
             .appendTo(listItem);
@@ -255,7 +256,10 @@ function setPhase(index) {
             listItem.addClass('list-group-item-dark');
         }
 
-
+        if (phaseIndex === 0) {
+            // Spirit phase special texts
+            
+        }
     }   
     
 
