@@ -298,10 +298,10 @@ function clearCardDisplay() {
 }
 
 function clearInvaderCard() {
-    invaderCardExplore.html('');
-    invaderCardBuild.html('');
-    invaderCardRavage.html('');
-    invaderCardFourth.html('');
+    invaderCardExplore.empty();
+    invaderCardBuild.empty();
+    invaderCardRavage.empty();
+    invaderCardFourth.empty();
 }
 
 function updateInvaderCard(showExplore) {
