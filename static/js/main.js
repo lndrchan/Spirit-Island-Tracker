@@ -242,12 +242,14 @@ function setPhase(index) {
     phase = 0;
 
     for (let i = 0; i < maxPhaseListHeight; i++) {
-        let listGroupItem = $(document.createElement('div')).addClass('list-group-item d-flex justify-content-between align-items-center');
+        let listItem = $(document.createElement('div')).addClass('list-group-item d-flex justify-content-between align-items-center');
+        let listItemHeading = $('<span></span>')
 
         if (i == 1) {
-            listGroupItem.addClass('list-group-item-dark');
+            listItem.addClass('list-group-item-dark');
         }
 
+        
         phaseListHTML += phaseListDict[(i + phase - 1) % phaseListLength];
 
         phaseListHTML += '</div>';
