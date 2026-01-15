@@ -12,7 +12,7 @@ var phase = 0;
 
 var phaseList = null;
 var phaseListLength = 0;
-var maxPhaseListHeight = 4;
+var maxPhaseListHeight = 2;
 var phaseListDict = {
     0: '<div> <h3 class="phase-list-title">Spirit Phase</h3>    <ul><li>Growth options</li><li>Gain energy</li><li>Choose and pay for cards</li></ul> </div>',
     1: '<h3 class="phase-list-title">Fast Powers</h3>',
