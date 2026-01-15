@@ -248,7 +248,7 @@ function setPhase(index) {
             listGroupItem.addClass('list-group-item-dark');
         }
 
-        phaseListHTML += phaseListDict[(i + phase) % phaseListLength];
+        phaseListHTML += phaseListDict[(i + phase - 1) % phaseListLength];
 
         phaseListHTML += '</div>';
 
