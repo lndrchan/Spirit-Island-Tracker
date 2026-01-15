@@ -237,6 +237,7 @@ function setPhase(index) {
     }
 
     phase = index;
+    phaseList.clear();
 
     // Make phase list dynamic HTML
     for (let i = 0; i < maxPhaseListHeight; i++) {
