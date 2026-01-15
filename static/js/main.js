@@ -417,6 +417,7 @@ function generateBadge(terrain) {
         case 'u': 
             b.css('background-color', '#ffffff');
             b.css('color','#000000')
+            b.css('border')
             b.html('Unknown');
             break;
         case 'n': 
