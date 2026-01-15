@@ -239,6 +239,7 @@ function setPhase(index) {
     let phaseListHTML = '';
     
     if (index >= 0 && index < phaseListLength)
+        
         phase = index;
     else
         phase = 0;
