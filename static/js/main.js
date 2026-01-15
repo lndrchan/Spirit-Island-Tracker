@@ -93,10 +93,6 @@ jQuery(function() {
     setPhase(4);
     nextStep();
 
-    ravageBadge = $('#phase-list-ravage-badge');
-    buildBadge = $('#phase-list-build-badge');
-    exploreBadge = $('#phase-list-explore-badge');
-
     leftBarFearBadge = $('#left-bar-fear-badge');
     phaseListFearBadge = $('#phase-list-fear-badge');
     updateFearBadge();
