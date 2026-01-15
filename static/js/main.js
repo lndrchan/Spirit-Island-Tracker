@@ -224,7 +224,7 @@ function drawCard(type) {
     }
 }
 
-// Code to update phase list DOM
+// Code to update phase list DOM, used by nextStep function
 function setPhase(index) {
 
     let clearDisplayPhases = [0, 1, 2, 5, 6, 7];
