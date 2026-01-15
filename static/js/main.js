@@ -304,7 +304,7 @@ function clearInvaderCard() {
     invaderCardFourth.html('');
 }
 
-function updateInvaderCard() {
+function updateInvaderCard(showExplore) {
 
     clearInvaderCard();
 
