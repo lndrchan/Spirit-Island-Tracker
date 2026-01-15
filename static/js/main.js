@@ -315,7 +315,7 @@ function updateInvaderCard(showExplore) {
                 img.src = `/static/assets/invader/${invaderLevelSeq[turn]}.jpg`;
             }
         else {
-            img.src = `/static/assets/invader/${invaderSeq[4 - i]}.jpg`;
+            img.src = `/static/assets/invader/${invaderSeq[3 - i]}.jpg`;
         }
     }
 
