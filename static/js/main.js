@@ -89,13 +89,14 @@ jQuery(function() {
 
     cardDisplay = $('#main-card-display');
 
-    //Start from first invader phase (explore only)
-    setPhase(4);
-    nextStep();
-
     leftBarFearBadge = $('#left-bar-fear-badge');
     phaseListFearBadge = $('#phase-list-fear-badge');
     updateFearBadge();
+
+    //Start from first invader phase (explore only)
+    setPhase(4);
+    nextStep();
+    
 });
 
 function nextStep() {
