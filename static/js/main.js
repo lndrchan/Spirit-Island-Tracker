@@ -90,8 +90,6 @@ jQuery(function() {
     cardDisplay = $('#main-card-display');
 
     leftBarFearBadge = $('#left-bar-fear-badge');
-    phaseListFearBadge = $('#phase-list-fear-badge');
-    updateFearBadge();
 
     //Start from first invader phase (explore only)
     setPhase(4);
@@ -286,6 +284,8 @@ function setPhase(index) {
         ravageBadge = $('#phase-list-ravage-badge');
         buildBadge = $('#phase-list-build-badge');
         exploreBadge = $('#phase-list-explore-badge');
+
+        phaseListFearBadge = $('#phase-list-fear-badge');
 
         // Add generated list item to phase list DOM
         listItem.appendTo(phaseList);
