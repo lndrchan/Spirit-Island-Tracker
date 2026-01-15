@@ -237,7 +237,6 @@ function setPhase(index) {
     }
 
     phase = index;
-    phase = 0;
 
     for (let i = 0; i < maxPhaseListHeight; i++) {
         let phaseIndex = (i + phase - 1) % phaseListLength;
