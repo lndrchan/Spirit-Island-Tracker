@@ -415,6 +415,7 @@ function generateBadge(terrain) {
             b.html('Unknown');
             break;
         case 'n': 
+            b.attr('background-color', 'var(--cyan-300)');
             b.html('None');
             break;
     }
