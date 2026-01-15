@@ -132,7 +132,7 @@ function nextStep() {
 
     // Invader phase: flip explore card
     if (phase === 5) {
-        updateInvaderCard();
+        updateInvaderCard(true);
         updateInvaderBadge(true);
         return;
     }
@@ -141,7 +141,7 @@ function nextStep() {
     if (phase === 6) {
         clearInvaderCard();
         turn++;
-        updateInvaderCard();
+        updateInvaderCard(false);
         updateInvaderBadge(false);
         turn--;
         return;
