@@ -243,7 +243,7 @@ function setPhase(index) {
 
     for (let i = 0; i < maxPhaseListHeight; i++) {
         let listItem = $(document.createElement('div')).addClass('list-group-item d-flex justify-content-between align-items-center');
-        let listItemHeading = $('<span></span>').addClass('phase-list-title');
+        let listItemHeading = $('<b></b>').addClass('phase-list-title');
 
         if (i == 1) {
             listItem.addClass('list-group-item-dark');
