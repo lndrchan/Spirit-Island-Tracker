@@ -308,6 +308,20 @@ function updateInvaderCard(showExplore) {
 
     clearInvaderCard();
 
+    // Update explore card first
+    for (let i = 0; i < 4; i++) {
+        let img = document.createElement('img');
+        img.classList.add('game-card', 'game-card-invader');
+        if (i === 0) {
+            if (!showExplore) {
+
+            }
+            else {
+                img.src = `/static/assets/invader/${invaderLevelSeq[turn]}.jpg`;
+            }
+        }
+    }
+
     let img = document.createElement('img');
     img.classList.add('game-card', 'game-card-invader');
     img.src = `/static/assets/invader/${invaderLevelSeq[turn]}.jpg`;
