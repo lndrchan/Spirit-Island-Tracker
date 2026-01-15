@@ -257,7 +257,7 @@ function setPhase(index) {
         phaseListHTML += '</div>';
     }
 
-    let listGroupItem = $(document.createElement('div')).addClass('');
+    let listGroupItem = $(document.createElement('div')).addClass('list-group-item d-flex justify-content-between align-items-center');
 
 
     phaseList.html(phaseListHTML);
