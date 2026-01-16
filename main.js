@@ -106,7 +106,7 @@ function init() {
     leftBarFearBadge = $('#left-bar-fear-badge');
 
     //Start from first invader phase (explore only)
-    setPhase(4);
+    updatePhaseList(4);
     nextStep();
 }
 
@@ -121,7 +121,7 @@ function nextStep() {
         return;
     }
 
-    setPhase((phase + 1) % phaseListLength);
+    updatePhaseList((phase + 1) % phaseListLength);
 
     if (phase === 3) {
         drawCard('event');
@@ -131,7 +131,7 @@ function nextStep() {
     if (phase === 4) {
         if (earnedFearCards === 0) {
             // Skip fear card phase if there is no earned fear card
-            setPhase((phase + 1) % phaseListLength);
+            updatePhaseList((phase + 1) % phaseListLength);
         }
         else {
             drawCard('fear');
@@ -156,7 +156,7 @@ function nextStep() {
         updateInvaderBadge(false);
         turn--;
         if (turn === 0) {
-            setPhase((phase + 2) % phaseListLength);
+            updatePhaseList((phase + 2) % phaseListLength);
             turn++;
         }
         return;
@@ -237,7 +237,7 @@ function drawCard(type) {
 }
 
 // Code to update phase list DOM, used by nextStep function
-function setPhase(index) {
+function updatePhaseList(index) {
 
     let clearDisplayPhases = [0, 1, 2, 5, 6, 7];
     if (clearDisplayPhases.includes(index)) {
