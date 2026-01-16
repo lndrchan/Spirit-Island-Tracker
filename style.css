@@ -60,11 +60,16 @@
     /*background-image: url('/assets/fear/back.jpg') !important*/
 }
 
-.fear-panel
+.fear-panel.bottom
 {
     width: 100%;
     margin-top: 12px;
     margin-bottom: 12px;
+}
+
+.fear-panel-top
+{
+    text-align: right;
 }
 
 .left-bar,
