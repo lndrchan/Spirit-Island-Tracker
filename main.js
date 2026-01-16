@@ -288,6 +288,7 @@ function setPhase(index) {
             updateFearBadge();
         }
         else if (phaseIndex === 5) {
+            // Invader phase texts
             listItem.removeClass('d-flex');
             $('<ul></ul>')
                 .append('<li>Ravage: <span class="badge" id="phase-list-ravage-badge"> </span> </li>')
@@ -295,8 +296,6 @@ function setPhase(index) {
                 .append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
                 .appendTo(listItem);
         }
-
-        
 
         phaseListFearBadge = $('#phase-list-fear-badge');
 
