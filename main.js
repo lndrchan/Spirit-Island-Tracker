@@ -125,7 +125,7 @@ function nextStep() {
 
     // Clear main display if moving away from draw card phase
     let clearDisplayPhases = [0, 1, 2, 5, 6, 7];
-    if (clearDisplayPhases.includes(index)) {
+    if (clearDisplayPhases.includes((phase + 1) % phaseListLength)) {
         clearCardDisplay();
     }
 
