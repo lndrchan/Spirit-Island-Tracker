@@ -249,6 +249,12 @@ function drawCard(type) {
 function updatePhaseList(index) {
 
     phase = index;
+
+
+    let children = $('#phase-list').$('.list-group-item');
+    for (let i = 0; i < children.length; i++) {
+        
+    }
     phaseList.empty();
 
     // Make phase list dynamic HTML
