@@ -67,9 +67,9 @@
     color: white;
     border-radius: 12px;
     background-image: url('/assets/fear/back.jpg');
-    background-position: center;
     background-size: 110%;
-    background-position-y: 60%;
+    background-position-x: center;
+    background-position-y: 40%;
     text-align: right;
     font-family: 'Cantora One';
 }
