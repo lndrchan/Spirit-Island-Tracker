@@ -253,7 +253,7 @@ function setPhase(index) {
             .addClass('list-group-item d-flex justify-content-between align-items-center');
 
         // Make heading
-        $('<b></b>')
+        let heading = $('<b></b>')
             .addClass('phase-list-title')
             .html(phaseListDict[phaseIndex])
             .appendTo(listItem);
@@ -274,12 +274,12 @@ function setPhase(index) {
         }
         else if (phaseIndex === 4) {
             // Fear card phase special texts (fear badge)
-            let text = $('<span></span>')
+            $('<span></span>')
                 .addClass('badge badge-primary rounded-pill fear-badge')
                 .attr('id', 'phase-list-fear-badge')
                 .appendTo(listItem);
             if (earnedFearCards === 0) {
-                text.addClass('text-secondary');
+                heading.addClass('text-secondary');
             }
             updateFearBadge();
         }
