@@ -193,6 +193,9 @@ function removeFear() {
 }
 
 function earnFearCard() {
+    if (earnedFearCards === 0) {
+        updatePhaseList(phase);
+    }
     earnedFearCards ++;
     updateFearBadge();
 }
