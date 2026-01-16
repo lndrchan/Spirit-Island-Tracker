@@ -12,7 +12,7 @@ var phase = 0;
 
 var phaseList = null;
 var phaseListLength = 0;
-var maxPhaseListHeight = 4;
+var maxPhaseListHeight = 5;
 // Headings for phase list
 var phaseListDict = {
     0: 'Spirit Phase',
