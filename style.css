@@ -66,6 +66,7 @@
     color: white;
     background-image: url('/assets/fear/back.jpg');
     background-position: center;
+    background-size: cover;
     text-align: right;
     font-family: 'Cantora One';
 }
