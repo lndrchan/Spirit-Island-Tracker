@@ -279,7 +279,7 @@ function setPhase(index) {
                 .attr('id', 'phase-list-fear-badge')
                 .appendTo(listItem);
             if (earnedFearCards === 0) {
-                heading.addClass('text-secondary');
+                heading.css('color', '$gray-100')
             }
             updateFearBadge();
         }
