@@ -40,8 +40,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid gray;
-    border-radius: 12px;
     margin-top: 12px;
     padding: 12px;
 }
