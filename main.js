@@ -320,7 +320,7 @@ function updatePhaseList(newPhase) {
             invaderPhaseDescription.append('<li>Ravage: <span class="badge" id="phase-list-ravage-badge"> </span> </li>')
             invaderPhaseDescription.append('<li>Build: <span class="badge" id="phase-list-build-badge"> </span> </li>')
             if (invaderSeq[turn][0] === 2 && invaderSeq[turn][1] != 'c') {
-                invaderPhaseDescription.append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
+                invaderPhaseDescription.append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> + Escalation</li>')
             }
             else {
                 invaderPhaseDescription.append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
