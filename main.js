@@ -287,8 +287,7 @@ function advancePhase(count) {
         phaseListFearBadge = $('#phase-list-fear-badge');
         updateFearBadge();
 
-        // Add generated list item to phase list DOM
-        listItem.appendTo(phaseList);
+        phaseList.append(generatePhaseListItem((phase + (phaseListLength - maxPhaseListHeight + 1)) % phaseListLength));
 
         // Update variables to newly generated phase list DOM
         ravageBadge = $('#phase-list-ravage-badge');
