@@ -372,10 +372,14 @@ function setup() {
     eventSeq = generateSeq(62);
     generateInvaderSeq(invaderLevelSeq);
 
+    playerCount = $('input[name="playerCount"]:checked').val();
+    adversary = $('input[name="adversary"]:checked').val();
+    adversaryLevel = $('#adversaryLevel').val() || 0;
+
     const gameData = {
-        playerCount: $('input[name="playerCount"]:checked').val(),
-        adversary: $('input[name="adversary"]:checked').val(),
-        adversaryLevel: $('#adversaryLevel').val() || 0,
+        playerCount: playerCount,
+        adversary: adversary,
+        adversaryLevel: adversaryLevel,
         invaderSeq: invaderSeq,
         fearSeq: fearSeq,
         fearSeqIndex: fearSeqIndex,
