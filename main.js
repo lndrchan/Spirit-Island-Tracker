@@ -179,7 +179,8 @@ function nextStep() {
         updateInvaderBadge(false);
         turn--;
         if (turn === 0) {
-            advancePhaseList((phase + 2) % phaseListLength);
+            
+            advancePhaseList();
             turn++;
         }
     }
