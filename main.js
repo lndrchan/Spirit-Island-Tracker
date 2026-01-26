@@ -397,13 +397,14 @@ function save() {
 
 function load() {
     let gameData = JSON.parse(localStorage.getItem('gameData'));
-    if (gameData) {
-        playerCount = gameData.playerCount;
-        adversary = gameData.adversary;
-        adversaryLevel = gameData.adversaryLevel;
-        phase = gameData.phase;
-    }
+
+    playerCount = gameData.playerCount;
+    adversary = gameData.adversary;
+    adversaryLevel = gameData.adversaryLevel;
+    phase = gameData.phase;
     
+
+    updatePhaseList(phase);
 }
 
 function startNewGame() {
