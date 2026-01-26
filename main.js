@@ -168,7 +168,7 @@ function nextStep() {
     if (phase === 5) {
         updateInvaderCard(true);
         updateInvaderBadge(true);
-        cardDisplay.html(`<img src=".assets/adversary/${invader}.jpg" class="game-card adversary-preview-image">`)
+        cardDisplay.html(`<img src="./assets/adversary/${adversary}.jpg" class="game-card adversary-preview-image">`)
     }
 
     // Slow power phase: advance invader card
