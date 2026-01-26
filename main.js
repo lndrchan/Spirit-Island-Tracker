@@ -59,6 +59,8 @@ var ls = window.localStorage;
 // Initialisations
 $(function() {
 
+    init();
+
     // Logic about game setup. 
 
     // If localstorage info present, read them via init(). Fill in blanks by init generation. 
@@ -97,6 +99,8 @@ function init() {
     $('.adversary-radio').on('change', function() {
         const selectedAdversary = $(this).val();
         const imagePath = $(this).data('image');
+
+        console.log(selectedAdversary,imagePath);
         
         if (selectedAdversary !== 'none' && imagePath) {
             // Show adversary level selector
@@ -118,6 +122,14 @@ function init() {
                     <i class="text-muted">No adversary selected</i>
                 </div>
             `);
+        }
+    });
+
+    $('#startGameBtn').on('click', function() {
+        if (validateSetupForm()) {
+            saveGameSetup();
+            initializeGame();
+            $('#gameSetupModal').modal('hide');
         }
     });
     
@@ -540,6 +552,23 @@ function updateInvaderBadge(showExplore) {
         }
     
     }
-    
 
+}
+
+// Validate the setup form
+function validateSetupForm() {
+    const playerCount = $('input[name="playerCount"]:checked').val();
+    const adversary = $('input[name="adversary"]:checked').val();
+    
+    if (!playerCount) {
+        alert('Please select number of players');
+        return false;
+    }
+    
+    if (!adversary) {
+        alert('Please select an adversary option');
+        return false;
+    }
+    
+    return true;
 }

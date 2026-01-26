@@ -1,8 +1,3 @@
-# Variables to store in 
-
-- Fear sequence and index
-- Event sequence and index
-
 # Adversary-specific setup changes
 
 - England 3/4: high immigration

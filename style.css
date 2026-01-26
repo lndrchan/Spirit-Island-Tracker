@@ -229,8 +229,8 @@
 }
 
 #setup-modal .col-md-6 {
+    display: flex;
     align-items: center;
-    height: 100%;
 }
 
 /* Adversary Preview Styles */
