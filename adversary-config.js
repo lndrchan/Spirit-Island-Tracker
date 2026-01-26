@@ -1,4 +1,4 @@
-const adversarySetup = {
+const adversaryConfig = {
     "prussia": {
         "fear": [
             [3,3,3],
