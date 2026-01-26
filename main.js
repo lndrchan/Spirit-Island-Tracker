@@ -118,12 +118,11 @@ $(function() {
 
     // If localstorage info present, read them via init(). Fill in blanks by init generation. 
     if (ls.getItem('game')) {
-        
+
     }
     // If no localstorage info, initiate setup popup
     else {
         
-        setup();
     }
 
     //Start from first invader phase (explore only)
