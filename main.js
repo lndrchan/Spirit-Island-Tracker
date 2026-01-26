@@ -316,10 +316,11 @@ function updatePhaseList(newPhase) {
         else if (phaseIndex === 5) {
             // Invader phase texts
             listItem.removeClass('d-flex');
-            $('<ul style="list-style-type:none; padding-left: 20px;"></ul>')
-                .append('<li>Ravage: <span class="badge" id="phase-list-ravage-badge"> </span> </li>')
-                .append('<li>Build: <span class="badge" id="phase-list-build-badge"> </span> </li>')
-                .append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
+            let invaderPhaseDescription = $('<ul style="list-style-type:none; padding-left: 20px;"></ul>');
+            invaderPhaseDescription.append('<li>Ravage: <span class="badge" id="phase-list-ravage-badge"> </span> </li>')
+            invaderPhaseDescription.append('<li>Build: <span class="badge" id="phase-list-build-badge"> </span> </li>')
+            
+            invaderPhaseDescription.append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
                 .appendTo(listItem);
         }
         else if (phaseIndex === 6) {
