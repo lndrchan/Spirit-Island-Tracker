@@ -407,7 +407,7 @@ function setup() {
 
 function startNewGame() {
     
-    location.reload();
+    
 }
 
 function clearCardDisplay() {
