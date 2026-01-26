@@ -385,6 +385,11 @@ function setup() {
     };
     
     localStorage.setItem('gameData', JSON.stringify(gameData));
+
+    //Start from first invader phase (explore only)
+    updatePhaseList(4);
+    nextStep();
+
     console.log('Game setup saved:', gameSetup);
 }
 
