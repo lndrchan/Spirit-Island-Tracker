@@ -264,11 +264,15 @@ function advancePhase(count) {
         phase = (phase + 1) % phaseListLength;
 
         let children = $('.list-group-item', phaseList);
-        children[0].remove();
+        // Only perform children manipulation if phase list is fully populated
+        if (children && children.length === maxPhaseListHeight) {
+            children[0].remove();
 
-        children[0].removeClass('list-group-item-dark');
-        $('.phase-list-title', children[0]).addClass('text-body-tertiary');
-        children[1].addClass('list-group-item-dark');
+            children[0].removeClass('list-group-item-dark');
+            $('.phase-list-title', children[0]).addClass('text-body-tertiary');
+            children[1].addClass('list-group-item-dark');
+        }
+        
 
         // Make list item container
         let listItem = $(document.createElement('div'))
