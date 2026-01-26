@@ -394,6 +394,7 @@ function setup() {
         playerCount: $('input[name="playerCount"]:checked').val(),
         adversary: $('input[name="adversary"]:checked').val(),
         adversaryLevel: $('#adversaryLevel').val() || 0,
+        invaderSeq: invaderSeq,
         fearSeq: fearSeq,
         fearSeqIndex: fearSeqIndex,
         eventSeq: eventSeq,
