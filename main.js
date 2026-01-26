@@ -280,7 +280,7 @@ function advancePhaseList() {
         listItem.addClass('list-group-item-dark');
     }
 
-    if (phaseIndex === 0) {
+    if (phase === 0) {
         // Spirit phase special texts
         listItem.removeClass('d-flex');
         $('<ul></ul>')
@@ -289,7 +289,7 @@ function advancePhaseList() {
             .append('<li>Choose and pay for cards</li>')
             .appendTo(listItem);
     }
-    else if (phaseIndex === 4) {
+    else if (phase === 4) {
         // Fear card phase special texts (fear badge)
         $('<span></span>')
             .addClass('badge badge-primary rounded-pill fear-badge')
@@ -299,7 +299,7 @@ function advancePhaseList() {
             heading.addClass('text-body-tertiary');
         }
     }
-    else if (phaseIndex === 5) {
+    else if (phase === 5) {
         // Invader phase texts
         listItem.removeClass('d-flex');
         let invaderPhaseDescription = $('<ul style="list-style-type:none; padding-left: 20px;"></ul>');
@@ -313,23 +313,18 @@ function advancePhaseList() {
         }
         invaderPhaseDescription.appendTo(listItem);
     }
-    else if (phaseIndex === 6) {
+    else if (phase === 6) {
         // Grey text out if game just started (skipping)
         if (turn === 0) {
             heading.addClass('text-body-tertiary');
         }
     }
-    else if (phaseIndex === 7) {
+    else if (phase === 7) {
         if (turn === 0) {
             heading.addClass('text-body-tertiary');
         }
     }
-
-    if (i === 0) {
-        // Grey out last step text
-        listItem.addClass('text-body-tertiary');
-    }
-
+    
     phaseListFearBadge = $('#phase-list-fear-badge');
     updateFearBadge();
 
