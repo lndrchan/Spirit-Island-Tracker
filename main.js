@@ -264,7 +264,7 @@ function advancePhase(count) {
     if ($('.list-group-item', phaseList).length <= 0) {
         phaseList.empty();
         for (let i = 0; i < maxPhaseListHeight; i++) {
-            
+            index = (phase + i - 1) % 7;
         }
     }
 
