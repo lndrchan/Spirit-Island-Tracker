@@ -45,7 +45,7 @@ var ravageBadge = null;
 var buildBadge = null;
 var exploreBadge = null;
 
-var invaderLevelSeq = [1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
+var invaderLevelSeq = [];
 var invaderSeq = []; // [1s, 1w, 2c ... ]
 
 var turn = 0;
