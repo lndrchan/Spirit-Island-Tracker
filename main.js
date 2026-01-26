@@ -290,7 +290,23 @@ function advancePhase(count) {
             .html(phaseListDict[phase])
             .appendTo(listItem);
 
-        if (phase === 0) {
+        phaseListFearBadge = $('#phase-list-fear-badge');
+        updateFearBadge();
+
+        // Add generated list item to phase list DOM
+        listItem.appendTo(phaseList);
+
+        // Update variables to newly generated phase list DOM
+        ravageBadge = $('#phase-list-ravage-badge');
+        buildBadge = $('#phase-list-build-badge');
+        exploreBadge = $('#phase-list-explore-badge');
+        updateInvaderBadge();
+
+    }
+}
+
+function generatePhastListItem(index) {
+    if (phase === 0) {
             // Spirit phase special texts
             listItem.removeClass('d-flex');
             $('<ul></ul>')
@@ -334,20 +350,6 @@ function advancePhase(count) {
                 heading.addClass('text-body-tertiary');
             }
         }
-
-        phaseListFearBadge = $('#phase-list-fear-badge');
-        updateFearBadge();
-
-        // Add generated list item to phase list DOM
-        listItem.appendTo(phaseList);
-
-        // Update variables to newly generated phase list DOM
-        ravageBadge = $('#phase-list-ravage-badge');
-        buildBadge = $('#phase-list-build-badge');
-        exploreBadge = $('#phase-list-explore-badge');
-        updateInvaderBadge();
-
-    }
 }
 
 function setup() {
