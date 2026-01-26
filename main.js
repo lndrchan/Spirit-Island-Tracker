@@ -64,24 +64,6 @@ var ls = window.localStorage;
 // Initialisations
 $(function() {
 
-    init();
-
-    // Logic about game setup. 
-
-    // If localstorage info present, read them via init(). Fill in blanks by init generation. 
-    if (ls.getItem('game')) {
-        init();
-    }
-    // If no localstorage info, initiate setup popup
-    else {
-        
-        setup();
-    }
-    
-});
-
-function init() {
-
     invaderCardExplore = $('#invader-card-explore');
     invaderCardBuild = $('#invader-card-build');
     invaderCardRavage = $('#invader-card-ravage');
@@ -134,10 +116,26 @@ function init() {
         }
     });
 
+    init();
+
+    // Logic about game setup. 
+
+    // If localstorage info present, read them via init(). Fill in blanks by init generation. 
+    if (ls.getItem('game')) {
+        init();
+    }
+    // If no localstorage info, initiate setup popup
+    else {
+        
+        setup();
+    }
+
     //Start from first invader phase (explore only)
     updatePhaseList(4);
     nextStep();
-}
+    
+});
+
 
 function nextStep() {
 
