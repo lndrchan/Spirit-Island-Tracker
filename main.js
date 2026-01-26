@@ -521,8 +521,13 @@ function generateBadge(terrain) {
             b.html('Sand');
             break;
         case 'w': 
-            b.css('background-color', '#73dcdf');
+            b.css('background-color', '#7eebde');
             b.css('color','#000');
+            b.html('Wetland');
+            break;
+        case 'c': 
+            b.css('background-color', '#0483f1');
+            b.css('color','#ffffff');
             b.html('Wetland');
             break;
         case 'u': 
