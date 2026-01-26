@@ -130,7 +130,7 @@ function init() {
 
     $('#startGameBtn').on('click', function() {
         if (validateSetupForm()) {
-            startNewGame();
+            setup();
             $('#gameSetupModal').modal('hide');
         }
     });
