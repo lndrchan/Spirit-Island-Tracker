@@ -4,15 +4,15 @@ Welcome to Spirit Island Tracker. This is a webapp created to replace the invade
 
 # Features
 
-##### Turn Tracking
+### Turn Tracking
 Turns are automatically tracked and advanced with a single button press. The indicator pane updates dynamically depending on what is coming next, including invader actions and adversary-specific actions. 
 
-##### Fear Tracking
+### Fear Tracking
 Amount of fear tokens earned and fear cards earned are dynamically displayed on the left pane, and resolved when the turn tracker reaches the fear card phase. 
 
-##### Card Drawing
+### Card Drawing
 Fear cards and event cards are automatically drawn when the corresponding phases have been reached. 
 
-##### Special Actions (*Under Development*)
+### Special Actions (*Under Development*)
 Actions that influence the setup of the invader board (e.g. England 6, Fractured Days) will be supported via a dedicated menu accessed via a single click. 
 
