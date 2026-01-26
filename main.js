@@ -261,6 +261,7 @@ function drawCard(type) {
 function advancePhase(count) {
 
     for (let i = 0; i < count; i++) {
+        
         phase = (phase + 1) % phaseListLength;
 
         let children = $('.list-group-item', phaseList);
