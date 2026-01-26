@@ -179,8 +179,7 @@ function nextStep() {
         updateInvaderBadge(false);
         turn--;
         if (turn === 0) {
-            
-            advancePhaseList();
+            for (let i = 0; i < 2; i++) advancePhaseList(); // Advance twice to skip to first spirit phase if it is turn 0
             turn++;
         }
     }
