@@ -364,6 +364,9 @@ function setup() {
     adversary = $('input[name="adversary"]:checked').val();
     adversaryLevel = $('#adversaryLevel').val() || 0;
 
+    invaderLevelSeq = adversarySetup[adversary]['invader'][adversaryLevel];
+
+
     const gameData = {
         playerCount: playerCount,
         adversary: adversary,
