@@ -402,6 +402,8 @@ function load() {
     adversary = gameData.adversary;
     adversaryLevel = gameData.adversaryLevel;
     phase = gameData.phase;
+    invaderSeq = gameData.invaderSeq;
+    invaderSeqIndex = gameData.invaderSeqIndex;
     
 
     updatePhaseList(phase);
