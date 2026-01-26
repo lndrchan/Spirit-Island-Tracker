@@ -1,6 +1,6 @@
 # Spirit Island Tracker
 
-Welcome to Spirit Island Tracker. This is a webapp created to replace the invader board for Spirit Island, to reduce the amount of setup needed when playing the board game. 
+Welcome to Spirit Island Tracker. This is a webapp created to replace the invader board for Spirit Island, to reduce the amount of setup needed when playing the board game. Currently under development. 
 
 # Features
 
