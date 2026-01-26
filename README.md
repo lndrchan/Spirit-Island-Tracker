@@ -5,9 +5,10 @@ Welcome to Spirit Island Toolbox. This is a webapp created to replace the invade
 # Features
 
 ##### Turn Tracking
-Turns are automatically tracked and advanced with a single button press. The indicator 
+Turns are automatically tracked and advanced with a single button press. The indicator pane updates dynamically depending on what is coming next, including invader actions and adversary-specific actions. 
 
 ##### Fear Tracking
+
 
 ##### Card Drawing
 
