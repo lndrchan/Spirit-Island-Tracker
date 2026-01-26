@@ -262,7 +262,10 @@ function advancePhase(count) {
 
     // If phase list empty, populate it before anything else
     if ($('.list-group-item', phaseList).length <= 0) {
-
+        phaseList.empty();
+        for (let i = 0; i < maxPhaseListHeight; i++) {
+            
+        }
     }
 
     for (let i = 0; i < count; i++) {
