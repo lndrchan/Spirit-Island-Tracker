@@ -155,7 +155,7 @@ function nextStep() {
     if (phase === 4) {
         if (earnedFearCards === 0) {
             // Skip fear card phase if there is no earned fear card
-            advancePhaseList((phase + 1) % phaseListLength);
+            advancePhaseList(1);
         }
         else {
             drawCard('fear');
@@ -179,7 +179,7 @@ function nextStep() {
         updateInvaderBadge(false);
         turn--;
         if (turn === 0) {
-            for (let i = 0; i < 2; i++) advancePhaseList(); // Advance twice to skip to first spirit phase if it is turn 0
+            advancePhaseList(2); // Advance twice to skip to first spirit phase if it is turn 0
             turn++;
         }
     }
