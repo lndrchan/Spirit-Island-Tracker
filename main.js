@@ -73,6 +73,8 @@ $(function() {
     cardDisplay = $('#main-card-display');
     leftBarFearBadge = $('#left-bar-fear-badge');
 
+    setupModal = $('#setup-modal');
+
     $('#btn-next-phase').on('click', function() {
         nextStep();
     });
@@ -110,7 +112,7 @@ $(function() {
     $('#startGameBtn').on('click', function() {
         if (validateSetupForm()) {
             setup();
-            $('#gameSetupModal').modal('hide');
+            setupModal.modal('hide');
         }
     });
 
@@ -118,11 +120,11 @@ $(function() {
 
     // If localstorage info present, read them via init(). Fill in blanks by init generation. 
     if (ls.getItem('game')) {
-
+        load();
     }
     // If no localstorage info, initiate setup popup
     else {
-        
+        setupModal.modal('show');
     }
 
     //Start from first invader phase (explore only)
