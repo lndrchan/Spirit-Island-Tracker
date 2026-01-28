@@ -208,7 +208,6 @@ function nextStep() {
         $('#redraw-btn').removeAttr('disabled');
     } else {
         $('#redraw-btn').attr('disabled','');
-        console.log('run');
     }
 
     save();
