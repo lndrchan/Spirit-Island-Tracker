@@ -13,9 +13,11 @@ var playerCount = 0;
 var adversary = '';
 var adversaryLevel = 0;
 
+var eventEnabled = true;
+
 var phaseList = null;
-var phaseListLength = 8;
-var maxPhaseListHeight = 4;
+var phaseCount = 8;
+var phaseListDisplayLength = 4;
 // Headings for phase list
 var phaseListDict = {
     0: 'Spirit Phase',
@@ -28,20 +30,20 @@ var phaseListDict = {
     7: 'Time Passes'
 };
 
-var fearProgress = null;
+var fearProgressBar = null;
 var leftBarFearBadge = null;
 var phaseListFearBadge = null;
+var leftBarFearCardBadges = null;
+var leftBarFearCardsNextLevel = null;
 var fear = 0;
 var earnedFearCards = 0;
-var fearMax = 0;
+var maxFear = 0;
 var fearLevelSeq = [];
+var terrorLevel = 0; // 0 means terror level 1 and so on...
 
 var cardDisplay = null;
+var terrorLevelDisplay = null;
 
-var invaderCardExplore = null;
-var invaderCardBuild = null;
-var invaderCardRavage = null;
-var invaderCardFourth = null;
 var ravageBadge = null;
 var buildBadge = null;
 var exploreBadge = null;
@@ -56,9 +58,7 @@ var fearSeqIndex = 0;
 var eventSeq = Array(62);
 var eventSeqIndex = 0;
 
-var ls = window.localStorage;
-// ls.getItem('key');
-// ls.setItem('key', 'value');
+var saveIndex = 0;
 
 // Initialisations
 $(function() {
@@ -67,18 +67,17 @@ $(function() {
     invaderCardBuild = $('#invader-card-build');
     invaderCardRavage = $('#invader-card-ravage');
     invaderCardFourth = $('#invader-card-fourth');
-    clearInvaderCard();
 
     phaseList = $('#phase-list');
-    fearProgress = $('#fear-progress');
+    fearProgressBar = $('#fear-progress');
     cardDisplay = $('#main-card-display');
     leftBarFearBadge = $('#left-bar-fear-badge');
+    leftBarFearCardBadges = $('.fear-cards-remaining-badge', '#fear-cards-remaining-container');
+    leftBarFearCardsNextLevel = $('#fear-cards-next-level');
+
+    terrorLevelDisplay = $('#terror-level-container')
 
     setupModal = $('#setup-modal');
-
-    $('#btn-next-phase').on('click', function() {
-        nextStep();
-    });
 
     // Handle adversary selection and preview in setup modal
     $('.adversary-radio').on('change', function() {
@@ -119,11 +118,13 @@ $(function() {
 
     // Logic about game setup. 
 
-    phase = 0;
-
-    // If localstorage info present, read them via init(). Fill in blanks by init generation. 
-    if (ls.getItem('game') && confirm('Saved game found. Do you want to resume the previous game?')) {
-        load();
+    // If localstorage info present, read them via load(). 
+    if (localStorage.getItem('0')) {
+        while (localStorage.getItem(`${saveIndex}`)) {
+        saveIndex++;
+    }
+        saveIndex--;
+        load(saveIndex);
     }
     // If no localstorage info, initiate setup popup
     else {
@@ -131,7 +132,8 @@ $(function() {
     }
 });
 
-
+// Function attached to next step button. 
+// Checks if advance phase or if there are things that need resolving. 
 function nextStep() {
 
     // Check before phase advance: if at fear card phase and still has unresolved fear card, 
@@ -140,14 +142,21 @@ function nextStep() {
         drawCard('fear');
         earnedFearCards--;
         updateFearBadge();
+        return;
     }
 
-    advancePhase(1);
+    advancePhaseList(1);
 
     // Clear main display if moving away from draw card phase
     let clearDisplayPhases = [0, 1, 2, 5, 6, 7];
-    if (clearDisplayPhases.includes((phase + 1) % phaseListLength)) {
+    if (clearDisplayPhases.includes(phase)) {
         clearCardDisplay();
+    }
+
+    if (phase === 0) {
+        turn++;
+        $('#turn-count-display').html(turn);
+        $('#total-turn-count-display').html(invaderLevelSeq.length);
     }
 
     if (phase === 3) {
@@ -156,8 +165,11 @@ function nextStep() {
 
     if (phase === 4) {
         if (earnedFearCards === 0) {
-            // Skip fear card phase if there is no earned fear card
-            advancePhase(1);
+            cardDisplay.html(`
+                <div class="preview-placeholder cantora-one">
+                    <i class="text-muted">No cards to resolve</i>
+                </div>
+            `);
         }
         else {
             drawCard('fear');
@@ -170,7 +182,7 @@ function nextStep() {
     if (phase === 5) {
         updateInvaderCard(true);
         updateInvaderBadge(true);
-        cardDisplay.html(`<img src="./assets/adversary/${adversary}.jpg" class="game-card adversary-preview-image">`)
+        showAdversaryCard();
     }
 
     // Slow power phase: advance invader card
@@ -178,60 +190,93 @@ function nextStep() {
         clearInvaderCard();
         turn++;
         updateInvaderCard(false);
-        updateInvaderBadge(false);
         turn--;
         if (turn === 0) {
-            advancePhase(2); // Advance twice to skip to first spirit phase if it is turn 0
+            advancePhaseList(2); // Advance twice to skip to first spirit phase if it is turn 0
             turn++;
+            $('#turn-count-display').html(turn);
+            $('#total-turn-count-display').html(invaderLevelSeq.length);
         }
     }
 
-    // Time passes: advance turn counter
     if (phase === 7) {
-        turn++;
+        
+    }
+
+    let redrawEnabledPhases = [3,4];
+    if (redrawEnabledPhases.includes(phase)) {
+        $('#redraw-btn').removeAttr('disabled');
+    } else {
+        $('#redraw-btn').attr('disabled','');
+        console.log('run');
     }
 
     save();
 }
 
-function addFear() {
-    fear ++;
+function addFear(count) {
+    for (let i = 0; i < count; i++) {
+        fear ++;
 
-    if (fear === fearMax) {
-        earnFearCard();
-    }
+        if (fear === maxFear) {
+            earnFearCard();
+        }
 
-    if (fear >= fearMax || fear < 0) {
-        fear = 0;
+        if (fear >= maxFear || fear < 0) {
+            fear = 0;
+        }
     }
     
-    fearProgress.attr('style', 'width: ' + fear / fearMax * 100 + '%');
-    fearProgress.html(fear + ' / ' + fearMax);
+    fearProgressBar.attr('style', 'width: ' + fear / maxFear * 100 + '%');
+    fearProgressBar.html(fear + ' / ' + maxFear);
+
+    save();
 }
 
-function removeFear() {
-    fear --;
 
-    if (fear < 0) {
-        return;
+function updateTerrorLevel() {
+
+    if (terrorLevel >= 3) {
+        alert('Fear Victory!');
     }
+    
+    terrorLevelDisplay.html(`
+        <img class="game-card terror-level-display" src="assets/board/${terrorLevel+1}.jpg">
+        <img class="game-card terror-level-display" src="assets/board/${terrorLevel+1}-vc.jpg">
+        `)
 }
 
 function earnFearCard() {
     earnedFearCards ++;
+
+    fearLevelSeq[terrorLevel]--;
+    if (fearLevelSeq[terrorLevel] === 0) {
+        terrorLevel++;
+        updateTerrorLevel();
+    }
+
     updateFearBadge();
 }
 
 function updateFearBadge() {
-    if (earnedFearCards == 0) {
-        phaseListFearBadge.hide();
-    }
-    else {
-        phaseListFearBadge.show();
+
+    if (phaseListFearBadge = $('#phase-list-fear-badge')) {
+        if (earnedFearCards == 0) {
+            phaseListFearBadge.hide();
+        }
+        else {
+            phaseListFearBadge.show();
+            phaseListFearBadge.html(earnedFearCards);
+        }
     }
 
     leftBarFearBadge.html(earnedFearCards);
-    phaseListFearBadge.html(earnedFearCards);
+
+    for (let i = 0; i < 3; i++) {
+        leftBarFearCardBadges[i].innerHTML = fearLevelSeq[i];
+    }
+
+    leftBarFearCardsNextLevel.html(fearLevelSeq[terrorLevel]);
 }
 
 // Function to draw and display a random card
@@ -257,82 +302,134 @@ function drawCard(type) {
     cardDisplay.append(img);
 }
 
-// Code to update phase list DOM, used by nextStep function
-function advancePhase(count) {
+function redraw() {
+    if (phase === 3) {
+        // Event card phase
+        drawCard('event');
+    }
+    else if (phase === 4) {
+        // Fear card phase
+        drawCard('fear');
+    }
+}
+
+// Remove first item of phase list and generate new phase list item at bottom of list
+function advancePhaseList(count) {
 
     // If phase list empty, populate it before anything else
-    if ($('.list-group-item', phaseList).length <= 0) {
-        phaseList.empty();
-        for (let i = 0; i < maxPhaseListHeight; i++) {
-            index = (phase + i - 1) % phaseListLength;
-            phaseList.append(generatePhaseListItem(i));
-        }
+    if ($('.list-group-item', phaseList).length < phaseListDisplayLength) {
+        generatePhaseList();
     }
 
     for (let i = 0; i < count; i++) {
 
-        phase = (phase + 1) % phaseListLength;
+        phase = (phase + 1) % phaseCount;
 
         let children = $('.list-group-item', phaseList);
-        console.log(children);
+        
         // Only perform children manipulation if phase list is fully populated
-        if (children && children.length === maxPhaseListHeight) {
+        if (children && children.length === phaseListDisplayLength) {
+            // Delete list item for phase before previous phase
             children[0].remove();
 
-            children[0].classList.remove('list-group-item-dark');
-            $('.phase-list-title', children[0]).addClass('text-body-tertiary');
-            children[1].classList.add('list-group-item-dark');
+            // List item for previous phase
+            $(children[1]).removeClass('list-group-item-dark').addClass('text-body-tertiary');
+            $(children[1]).children('.phase-list-title').nextAll().remove(); // Remove everything except for heading (first element)
+
+            // List item for current phase
+            $(children[2]).addClass('list-group-item-dark');
+            // Add 'Current' phase marker to phase list
+            $('.phase-list-title', children[2]).after('<span style="float: right;" class="badge rounded-pill bg-primary" id="current-badge"> <i>Current</i> </span>');
         }
 
-        phaseListFearBadge = $('#phase-list-fear-badge');
         updateFearBadge();
 
-        phaseList.append(generatePhaseListItem((phase + (phaseListLength - maxPhaseListHeight + 1)) % phaseListLength));
+        // Append new list item. Phase index is current phase + phase list display length
+        let newPhaseListItemIndex = (phase + phaseListDisplayLength - 2) % phaseCount;
+        phaseList.append(generatePhaseListItem(newPhaseListItemIndex));
 
-        // Update variables to newly generated phase list DOM
-        ravageBadge = $('#phase-list-ravage-badge');
-        buildBadge = $('#phase-list-build-badge');
-        exploreBadge = $('#phase-list-explore-badge');
-        updateInvaderBadge();
+        if (newPhaseListItemIndex === 5) {
+            // Relink invader list item badges
+            updateInvaderBadge();
+        }
+
+        console.log('Appended list item for phase ' + (phase + phaseListDisplayLength - 2) % phaseCount);
 
     }
+
+    //console.log('Advanced phase by ' + count);
 }
 
-function generatePhaseListItem(index) {
+function generatePhaseList() {
+    
+    phaseList.empty();
+    //console.log('Phase list emptied');
+    for (let i = 0; i < phaseListDisplayLength; i++) {
+        index = (phase + i - 1 < 0 ? phaseCount - 1 : phase + i - 1);
+        phaseList.append(generatePhaseListItem(index));
+        //console.log('Emptied phase list appended list item for phase ' + index);
+    }
+
+}
+
+function generatePhaseListItem(phaseIndex) {
 
     // Make list item container
     let listItem = $(document.createElement('div'))
-        .addClass('list-group-item d-flex justify-content-between align-items-center');
+        .addClass('list-group-item align-items-center');
+    if (phaseIndex === phase) {
+        listItem.addClass('list-group-item-dark')
+    }
 
     // Make heading
     let heading = $('<b></b>')
         .addClass('phase-list-title')
-        .html(phaseListDict[index])
+        .html(phaseListDict[phaseIndex])
         .appendTo(listItem);
+    let phaseListIconContainer = $('<div></div>').addClass('phase-list-icon-container').prependTo(listItem);
         
-    if (index === 0) {
+
+    if (phaseIndex === 0) {
         // Spirit phase special texts
-        listItem.removeClass('d-flex');
-        $('<ul></ul>')
+
+        phaseListIconContainer.prepend($('<img src="./assets/symbol/token.png">')
+            .addClass('phase-list-icon inverted'));
+
+        $('<ul style="list-style-type:none; padding-left: 40px;margin-top: 0.5em;margin-bottom: 0em;"></ul>')
             .append('<li>Growth options</li>')
             .append('<li>Gain energy</li>')
             .append('<li>Choose and pay for cards</li>')
             .appendTo(listItem);
     }
-    else if (index === 4) {
+    else if (phaseIndex === 1) {
+        phaseListIconContainer.prepend($('<img src="./assets/symbol/fast.png">')
+            .addClass('phase-list-icon brightness'));
+    }
+    else if (phaseIndex === 2) {
+        phaseListIconContainer.prepend($('<img src="./assets/symbol/blight.png">')
+            .addClass('phase-list-icon inverted'));
+    }
+    else if (phaseIndex === 4) {
         // Fear card phase special texts (fear badge)
+
+        phaseListIconContainer.prepend($('<img src="./assets/symbol/fear.png">')
+            .addClass('phase-list-icon inverted'));
+
         $('<span></span>')
             .addClass('badge badge-primary rounded-pill fear-badge')
             .attr('id', 'phase-list-fear-badge')
+            .css('float', 'right')
+            .html(earnedFearCards)
             .appendTo(listItem);
-        if (earnedFearCards === 0) {
-            heading.addClass('text-body-tertiary');
-        }
     }
-    else if (index === 5) {
+    else if (phaseIndex === 5) {
         // Invader phase texts
+
+        phaseListIconContainer.prepend($('<img src="./assets/symbol/explorer.png">')
+            .addClass('phase-list-icon inverted'));
+
         listItem.removeClass('d-flex');
-        let invaderPhaseDescription = $('<ul style="list-style-type:none; padding-left: 20px;"></ul>');
+        let invaderPhaseDescription = $('<ul style="list-style-type:none; padding-left: 40px;margin-top: 0.5em;margin-bottom: 0em;"></ul>');
         invaderPhaseDescription.append('<li>Ravage: <span class="badge" id="phase-list-ravage-badge"> </span> </li>')
         invaderPhaseDescription.append('<li>Build: <span class="badge" id="phase-list-build-badge"> </span> </li>')
         if (invaderSeq[turn][0] === 2 && invaderSeq[turn][1] != 'c') {
@@ -341,15 +438,20 @@ function generatePhaseListItem(index) {
         else {
             invaderPhaseDescription.append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
         }
+
         invaderPhaseDescription.appendTo(listItem);
     }
-    else if (index === 6) {
+    else if (phaseIndex === 6) {
+
+        phaseListIconContainer.prepend($('<img src="./assets/symbol/slow.png">')
+            .addClass('phase-list-icon brightness'));
+
         // Grey text out if game just started (skipping)
         if (turn === 0) {
             heading.addClass('text-body-tertiary');
         }
     }
-    else if (index === 7) {
+    else if (phaseIndex === 7) {
         if (turn === 0) {
             heading.addClass('text-body-tertiary');
         }
@@ -358,27 +460,38 @@ function generatePhaseListItem(index) {
     return listItem;
 }
 
+// Function attached to setup modal 'Start Game' button
 function setup() {
 
-    ls.clear();
+    localStorage.clear();
 
+    // Testing with Prussia 6. Delete before release. 
     playerCount = $('input[name="playerCount"]:checked').val();
     adversary = $('input[name="adversary"]:checked').val();
     adversaryLevel = $('#adversaryLevel').val() || 0;
 
     // England 6 special rule
     if (adversary === 'england' && adversaryLevel === '6') {
-        fearMax = playerCount*5;
+        maxFear = playerCount * 5;
+        // Need another line to update invader card area text
     } else {
-        fearMax = playerCount * 4;
+        maxFear = playerCount * 4;
+    }
+
+    invaderLevelSeq = adversaryConfig[adversary]['invader'][adversaryLevel];
+    fearLevelSeq = adversaryConfig[adversary]['fear'][adversaryLevel];
+
+    // Sweden 4: discard top card of lowest invader stage remaining
+    if (adversary === 'sweden' && adversaryLevel >= 4) {
+        for (let i = 0; i < invaderSeq.length; i++) {
+            if (invaderSeq[i][1] === Math.min(levelSeq)) {
+                invaderSeq.splice(i, 1);
+                return;
+            }
+        }
     }
 
     fear = 0;
-
-    invaderLevelSeq = adversaryConfig[adversary].invader[adversaryLevel];
-    fearLevelSeq = adversaryConfig[adversary].fear[adversaryLevel];
-
-    console.log(fearLevelSeq);
 
     // Fall back to lower level if undefined (same as level below)
     for (let i = adversaryLevel; invaderLevelSeq.length === 0 || i === 0; i--) {
@@ -392,10 +505,23 @@ function setup() {
 
     fearSeq = generateSeq(50);
     eventSeq = generateSeq(62);
+    // France 2 special rule (Slave Rebellion is event/1.jpg)
+    if (adversary === 'france' && adversaryLevel >= 2) {
+        for (let i = 0; i < eventSeq.length; i++) {
+            if (eventSeq[i] === 1) {
+                eventSeq[i] = eventSeq[3];
+                eventSeq[3] = 1;  
+            }
+        }
+    }
+    
     generateInvaderSeq(invaderLevelSeq);
 
-    //Start from first invader phase (explore only)
-    advancePhase(4);
+    initialiseUI();
+
+    // Start from first invader phase (explore only)
+    // Advance phase 4 times then call nextstep to advance once more while loading card display graphics
+    advancePhaseList(4);
     nextStep();
 }
 
@@ -405,20 +531,31 @@ function save() {
         adversary: adversary,
         adversaryLevel: adversaryLevel,
         invaderSeq: invaderSeq,
+        invaderLevelSeq: invaderLevelSeq,
         fear: fear,
         fearSeq: fearSeq,
         fearSeqIndex: fearSeqIndex,
         eventSeq: eventSeq,
         eventSeqIndex: eventSeqIndex,
-        phase: phase
+        turn: turn,
+        phase: phase,
+        fear: fear,
+        maxFear: maxFear,
+        earnedFearCards: earnedFearCards,
+        fearLevelSeq: fearLevelSeq,
+        terrorLevel: terrorLevel,
+        cardDisplayHTML: cardDisplay.innerHTML
     };
     
-    localStorage.setItem('gameData', JSON.stringify(gameData));
-    console.log('gameData saved:', gameData);
+    localStorage.setItem(`${saveIndex}`, JSON.stringify(gameData));
+    saveIndex++;
+    console.log('Game data saved:', saveIndex, gameData);
 }
 
-function load() {
-    let gameData = JSON.parse(localStorage.getItem('gameData'));
+function load(index) {
+    // console.log('Loading savegame ', saveIndex);
+
+    let gameData = JSON.parse(localStorage.getItem(`${index}`));
 
     playerCount = gameData.playerCount;
     adversary = gameData.adversary;
@@ -426,12 +563,44 @@ function load() {
     
     invaderSeq = gameData.invaderSeq;
     invaderSeqIndex = gameData.invaderSeqIndex;
+    invaderLevelSeq = gameData.invaderLevelSeq;
+    fearSeq = gameData.fearSeq;
+    fearSeqIndex = gameData.fearSeqIndex;
     eventSeq = gameData.eventSeq;
     eventSeqIndex = gameData.eventSeqIndex;
     
+    turn = gameData.turn;
     phase = gameData.phase;
 
-    advancePhase(phase);
+    fear = gameData.fear;
+    maxFear = gameData.maxFear;
+    earnedFearCards = gameData.earnedFearCards;
+
+    fearLevelSeq = gameData.fearLevelSeq;
+    terrorLevel = gameData.terrorLevel;
+
+    cardDisplay.innerHTML = gameData.cardDisplayHTML;
+
+    initialiseUI();
+}
+
+function undo() {
+    load(saveIndex-1);
+}
+
+function initialiseUI() {
+    updateTerrorLevel();
+    updateFearBadge();
+    generatePhaseList();
+    // If in invader phase, show explore. 
+    if (phase === 5) {updateInvaderCard(true)} else {updateInvaderCard(false)}
+    if (phase === 5) {updateInvaderBadge(true)} else {updateInvaderBadge(false)}
+    
+    $('#total-turn-count-display').html(invaderLevelSeq.length);
+
+    $('#invader-level-sequence').html(invaderLevelSeq);
+    $('#player-count-display').html(playerCount);
+    $('#adversary-name-display').html(adversaryNameDict[adversary] + ' ' + adversaryLevel)
 }
 
 function startNewGame() {
@@ -439,6 +608,13 @@ function startNewGame() {
         localStorage.clear();
         location.reload();
     }
+}
+
+function showAdversaryCard() {
+    let img = document.createElement('img');
+    img.classList.add('game-card');
+    img.src = `./assets/adversary/${adversary}.jpg`;
+    cardDisplay.html(img);
 }
 
 function clearCardDisplay() {
@@ -479,27 +655,37 @@ function generateInvaderSeq(levelSeq) {
     let level2 = ['2w', '2s', '2j', '2m', '2c'];
     let level3 = ['3js', '3jw', '3mj', '3mw', '3sm', '3sw'];
 
-    invaderSeq = [];
+    invaderSeq = Array(levelSeq.length);
     let index = 0;
 
     for (let i = 0; i < levelSeq.length; i++) {
+        if (isNaN(levelSeq[i])) {
+            // If not a number, it is a specified invader card code. 
+            // Prioritise its position in invader card sequence.
+            invaderSeq[i] = levelSeq[i];
+        }
+    }
+
+    for (let i = 0; i < levelSeq.length; i++) {
         level = levelSeq[i];
+        if (invaderSeq[i] !== undefined) continue; // Pre-filled slot
         if (level === 1) {
             index = Math.floor(Math.random() * level1.length);
-            invaderSeq.push(level1[index]);
+            invaderSeq[i] = (level1[index]);
             level1.splice(index, 1);
         } 
         else if (level === 2) {
             index = Math.floor(Math.random() * level2.length);
-            invaderSeq.push(level2[index]);
+            invaderSeq[i] = (level2[index]);
             level2.splice(index, 1);
         }
         else if (level === 3) {
             index = Math.floor(Math.random() * level3.length);
-            invaderSeq.push(level3[index]);
+            invaderSeq[i] = (level3[index]);
             level3.splice(index, 1);
         }
     }
+
 }
 
 function generateSeq(n) {
@@ -546,7 +732,7 @@ function generateBadge(terrain) {
         case 'c': 
             b.css('background-color', '#0483f1');
             b.css('color','#ffffff');
-            b.html('Wetland');
+            b.html('Coastal Lands');
             break;
         case 'u': 
             b.css('background-color', '#ffffff');
@@ -566,17 +752,23 @@ function generateBadge(terrain) {
 
 function updateInvaderBadge(showExplore) {
 
+    ravageBadge = $('#phase-list-ravage-badge');
+    buildBadge = $('#phase-list-build-badge');
+    exploreBadge = $('#phase-list-explore-badge');
+
     ravageBadge.empty();
     buildBadge.empty();
     exploreBadge.empty();
 
     badges = [exploreBadge, buildBadge, ravageBadge];
 
+    // Invader level of generated badge. Generate two badges if level 3. 
     let level = 0;
 
     for (let i = 0; i < 3; i++) {
 
-        // Explore badge first
+        // Update badges from explore to ravage
+
         let levelIndex = turn - i;
         if (levelIndex < 0) {
             badges[i].append(generateBadge('n'))
@@ -593,19 +785,23 @@ function updateInvaderBadge(showExplore) {
 
         if (level === 1 || level === 2) {
             badges[i].append(generateBadge(invaderSeq[turn - i][1]));
+            // Add '+ Escalation' if level 2 Explore (i=0) card flipped and not Coastal Lands
+            if (level === 2 && i === 0 && invaderSeq[turn - i][1] !== 'c') {
+                badges[i].append(' + Escalation')
+            }   
         }
         else if (level === 3) {
             badges[i].append(generateBadge(invaderSeq[turn - i][1]), generateBadge(invaderSeq[turn - i][2]));
         }
-    
+        
     }
-
+    
 }
 
 // Validate the setup form
 function validateSetupForm() {
-    const playerCount = $('input[name="playerCount"]:checked').val();
-    const adversary = $('input[name="adversary"]:checked').val();
+    let playerCount = $('input[name="playerCount"]:checked').val();
+    let adversary = $('input[name="adversary"]:checked').val();
     
     if (!playerCount) {
         alert('Please select number of players');
@@ -618,4 +814,18 @@ function validateSetupForm() {
     }
     
     return true;
+}
+
+function existInPhaseList(i) {
+
+    // Need to rewrite if phase list organisation changes later
+
+    if (phase >= 1 && phase <= phaseCount - phaseListDisplayLength + 1) {
+        // If phase list does not involve wrapping around
+        return (i >= 0 && i <= phaseCount - phaseListDisplayLength + 1);
+    }
+    else {
+        if (phase === 0) return (i === phaseCount - 1 || i < phaseListDisplayLength - 2);
+        else return (i >= phaseCount - 2 || i <= phaseListDisplayLength - 3);
+    }
 }

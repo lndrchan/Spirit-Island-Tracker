@@ -114,7 +114,7 @@
 										<div class="form-check">
 											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advHabsburgLivestock" value="habsburg-livestock" data-image="habsburg-livestock.jpg">
 											<label class="form-check-label" for="advHabsburgLivestock">
-												Habsburg Livestock
+												Habsburg (Livestock Colony)
 											</label>
 										</div>
 										<div class="form-check">
@@ -132,7 +132,7 @@
 										<div class="form-check">
 											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advHabsburgMining" value="habsburg-mining" data-image="habsburg-mining.jpg">
 											<label class="form-check-label" for="advHabsburgMining">
-												Habsburg Mining
+												Habsburg (Mining Expedition)
 											</label>
 										</div>
 									</div>
@@ -149,6 +149,8 @@
 											<option value="5">5</option>
 											<option value="6" selected>6</option>
 										</select>
+										<label for="invaderLevelSequence" class="font-weight-bold">Custom Invader Level Sequence</label>
+										<input type="text" id="invaderLevelSequence">
 									</div>
 									<hr>
 									<!-- Expansions -->
@@ -207,46 +209,66 @@
 		<div class="container-fluid">
 			<div class="row main-container">
 				<div class="col-md-3">
-					<div class="left-bar card fear-panel-top">
-						<div class="card-body">
+					<div class="left-bar fear-panel-top">
 
-							<p id="fear-card-levels">Fear Cards:    
-								<span class="badge text-bg-dark">1</span> /
-								<span class="badge text-bg-dark">4</span> /
-								<span class="badge text-bg-dark">4</span>
-							</p>
 
-							<hr>
+						<p id="fear-cards-remaining-container">Fear Cards Remaining:    
+							<span class="badge text-bg-dark fear-cards-remaining-badge">1</span> /
+							<span class="badge text-bg-dark fear-cards-remaining-badge">4</span> /
+							<span class="badge text-bg-dark fear-cards-remaining-badge">4</span>
+						</p>
 
-							<h1 class="card-title fear-panel-top-title">2</h5>
-							<p>cards until next Terror Level</p>
+						<hr>
 
-							<hr>
+						<h1 class="card-title fear-panel-top-title"><span class="badge text-bg-dark" id="fear-cards-next-level">1</span></h1>
+						<p>cards until next Terror Level</p>
 
-							<p>Earned this turn: <span class="badge badge-primary rounded-pill fear-badge" id="left-bar-fear-badge">2</span></p>
+						<hr>
 
-							<hr>
+						<p>Earned this turn: <span class="badge badge-primary rounded-pill fear-badge" id="left-bar-fear-badge">2</span></p>
 
-							<div class="card container-glassmorphism fear-panel-bottom" data-bs-theme="dark">
-								<h5 class="card-header">
-									Earned fear
-								</h5>
-								<div class="card-body">
-									<div class="progress">
-										<div class="progress-bar" id='fear-progress' style="width: 0%;"></div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<button type="button" class="btn btn-outline-primary" style="width:100%;" id='btn-add-fear' onclick="addFear()">
-										Generate fear
-									</button>
+						<hr>
+
+						<div class="card container-glassmorphism fear-panel-bottom" data-bs-theme="dark">
+							<h5 class="card-header">
+								Earned fear
+							</h5>
+							<div class="card-body">
+								<div class="progress">
+									<div class="progress-bar" id='fear-progress' style="width: 0%;"></div>
 								</div>
 							</div>
+							<div class="card-footer">
+								<button type="button" class="btn btn-secondary" style="width:45%;margin-right: 24px;" id='btn-add-fear' onclick="addFear(1)">
+									+1 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em;">
+								</button>
+								<button type="button" class="btn btn-secondary" style="width:45%;" id='btn-add-fear' onclick="addFear(2)">
+									+2 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em">
+								</button>
+							</div>
 						</div>
+
 					</div>
 
-					<div>
-						<img src="assets/adversary/england.jpg" class="game-card" id="adversary-corner">
+					<div class="left-bar-bottom container-glassmorphism">
+						<p>
+							Player count: <span class="badge text-bg-dark" id="player-count-display">2</span> 
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							Turn: <span class="badge text-bg-dark" id="turn-count-display">1</span> / <span class="badge text-bg-dark" id="total-turn-count-display">9</span>
+						</p>
+
+						<hr>
+
+						<p>
+							Adversary: <span class="badge text-bg-dark" id="adversary-name-display">Brandenburg-Prussia 6</span> 
+							<button type="button" class="btn btn-secondary btn-small" onclick="showAdversaryCard()">View Adversary Card</button>
+						</p>
+
+						<hr>
+
+						<p>
+							Invader sequence: <span class="badge text-bg-dark" id="invader-level-sequence"></span>
+						</p>
 					</div>
 
 				</div>
@@ -258,11 +280,11 @@
 							</div>
 
 							<div>
-								<button type="button" class="btn btn-outline-primary phase-list-btn" style="width:100%;" id="btn-next-phase">
+								<button type="button" class="btn btn-success phase-list-btn" style="width:100%;" id="btn-next-phase" onclick="nextStep()">
 									Next step
 								</button>
 								
-								<button type="button" class="btn btn-outline-secondary phase-list-btn" style="width:100%;" id="btn-undo">
+								<button type="button" class="btn btn-secondary phase-list-btn" style="width:100%;" id="btn-undo">
 									Undo
 								</button>
 							</div>
@@ -273,15 +295,22 @@
 
 						<div class="col-md-3">
 							<div class="right-bar">
-								<img class="d-block w-100 game-card" src="assets/board/3.jpg">
+								<div id="terror-level-container" style="align-content: center;display: flex;"></div>
 
 								<hr>
 
 								<div class="card container-glassmorphism fear-panel-bottom" data-bs-theme="dark">
 									<div class="card-body">
-										<button type="button" class="btn btn-outline-primary" style="width:100%;" id='btn-add-fear'>
+										<button type="button" class="btn btn-outline-light" style="width:100%;" id='redraw-btn' onclick="redraw()">
+											Redraw
+										</button>
+										<button type="button" class="btn btn-outline-light" style="width:100%;" id='special-action-btn'>
 											Special Actions
 										</button>
+										<button type="button" class="btn btn-outline-light" style="width:100%;" id='credits-btn'>
+											Credits
+										</button>
+										<hr>
 										<button type="button" class="btn btn-outline-danger" style="width:100%;" onclick="startNewGame()">
 											New Game
 										</button>
@@ -294,7 +323,7 @@
 
 					<div class="row invader-area container-glassmorphism">
 						<div class="col-md-2 invader-card-area">
-							<div class="invader-card-container id="invader-card-fourth"> 
+							<div class="invader-card-container" id="invader-card-fourth"> 
 								
 							</div>
 							<div class="invader-card-label">
