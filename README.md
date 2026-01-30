@@ -4,6 +4,8 @@
 
 Welcome to Spirit Island Tracker. This is a webapp created to replace the invader board for Spirit Island, to reduce the amount of setup needed when playing the board game. 
 
+This is a personal project and is only meant to complement the board game rather than replacing it altogether. Since I am new to web programming, I may not be able to implement all of the requests for features. 
+
 # Limitations
 
 This tool does not cover all aspects of the game (yet). **Please read about the following limitations carefully before using this tool.**
@@ -32,3 +34,8 @@ Shuffled fear decks or event decks for a setup just to lose to England 6 after 1
 ### Special Actions (*Under Development*)
 Actions that influence the setup of the invader board (e.g. England 6, Fractured Days) will be supported via a dedicated menu accessed via a single click. 
 
+# Credits
+
+Spirit Island is a board game by R. Eric Reuss. 
+
+Spirit Island Tracker is an unofficial tool and is not affiliated with Spirit Island's publisher or author in any way. 
