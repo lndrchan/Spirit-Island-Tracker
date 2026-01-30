@@ -36,6 +36,6 @@ Actions that influence the setup of the invader board (e.g. England 6, Fractured
 
 # Credits
 
-Spirit Island is a board game by R. Eric Reuss. 
+Spirit Island is a board game by R. Eric Reuss, published by Greater Than Games. 
 
 Spirit Island Tracker is an unofficial tool and is not affiliated with Spirit Island's publisher or author in any way. 
