@@ -257,26 +257,19 @@
 					</div>
 
 					<div class="left-bar-bottom container-glassmorphism">
-						<p>
-							Player count: <span class="badge text-bg-dark" id="player-count-display">2</span> 
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							Turn: <span class="badge text-bg-dark" id="turn-count-display">1</span> / <span class="badge text-bg-dark" id="total-turn-count-display">9</span>
-						</p>
-
+						<button type="button" class="btn btn-outline-light" style="width:100%;" id='redraw-btn' onclick="redraw()">
+							Redraw
+						</button>
+						<button type="button" class="btn btn-outline-light" style="width:100%;" id='special-action-btn' data-bs-toggle="modal" data-bs-target="#special-actions-modal">
+							Special Actions
+						</button>
+						<button type="button" class="btn btn-outline-light" style="width:100%;" id='credits-btn' data-bs-toggle="modal" data-bs-target="#credits-modal">
+							Credits & Feedback
+						</button>
 						<hr>
-
-						<p>
-							Adversary: <span class="badge text-bg-dark" id="adversary-name-display">Brandenburg-Prussia 6</span> 
-							<button type="button" id="show-adversary-card-btn" class="btn btn-secondary btn-sm" onclick="showAdversaryCard()">Show Adversary Card</button>
-							<button type="button" id="show-recent-event-btn" class="btn btn-secondary btn-sm" onclick="displayCard('event',eventSeq[eventSeqIndex-1])">Show Most Recent Event Card</button>
-							<button type="button" id="show-recent-fear-btn" class="btn btn-secondary btn-sm" onclick="displayCard('fear',fearSeq[fearSeqIndex-1])">Show Most Recent Fear Card</button>
-						</p>
-
-						<hr>
-
-						<p>
-							Invader sequence: <span class="badge text-bg-dark" id="invader-level-sequence"></span>
-						</p>
+						<button type="button" class="btn btn-outline-danger" style="width:100%;" onclick="startNewGame()">
+							New Game
+						</button>
 					</div>
 
 				</div>
@@ -307,21 +300,26 @@
 
 								<hr>
 
-								<div class="card container-glassmorphism fear-panel-bottom" data-bs-theme="dark">
+								<div class="card container-glassmorphism right-bar-card" data-bs-theme="dark">
 									<div class="card-body">
-										<button type="button" class="btn btn-outline-light" style="width:100%;" id='redraw-btn' onclick="redraw()">
-											Redraw
-										</button>
-										<button type="button" class="btn btn-outline-light" style="width:100%;" id='special-action-btn' data-bs-toggle="modal" data-bs-target="#special-actions-modal">
-											Special Actions
-										</button>
-										<button type="button" class="btn btn-outline-light" style="width:100%;" id='credits-btn' data-bs-toggle="modal" data-bs-target="#credits-modal">
-											Credits & Feedback
-										</button>
+										<div>
+											Player count: <span class="badge text-bg-dark" id="player-count-display">2</span> 
+											<br>
+											Turn: <span class="badge text-bg-dark" id="turn-count-display">1</span> / <span class="badge text-bg-dark" id="total-turn-count-display">9</span>
+											<br>
+											Adversary: <span class="badge text-bg-dark" id="adversary-name-display">Brandenburg-Prussia 6</span> 
+											<br>
+											Invader Cards Remaining: <span class="badge text-bg-dark" id="invader-level-sequence"></span>
+										</div>
+
 										<hr>
-										<button type="button" class="btn btn-outline-danger" style="width:100%;" onclick="startNewGame()">
-											New Game
-										</button>
+
+										<div>
+											<button type="button" id="show-adversary-card-btn" class="btn btn-secondary btn-sm" onclick="showAdversaryCard()">Adversary Card</button>
+											<button type="button" id="show-recent-event-btn" class="btn btn-secondary btn-sm" onclick="displayCard('event',eventSeq[eventSeqIndex-1])">Event Card</button>
+											<button type="button" id="show-recent-fear-btn" class="btn btn-secondary btn-sm" onclick="displayCard('fear',fearSeq[fearSeqIndex-1])">Fear Card</button>
+										</div>
+										
 									</div>	
 								</div>
 

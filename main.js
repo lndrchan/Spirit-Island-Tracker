@@ -667,8 +667,9 @@ function updateUI() {
     if (phase === 5) {updateInvaderBadge(true)} else {updateInvaderBadge(false)}
     
     $('#total-turn-count-display').html(invaderLevelSeq.length);
+    
+    $('#invader-level-sequence').html(invaderLevelSeq.slice(turn).toString());
 
-    $('#invader-level-sequence').html(invaderLevelSeq);
     $('#player-count-display').html(playerCount);
     if (adversary !== 'none') {
         $('#adversary-name-display').html(adversaryNameDict[adversary] + ' ' + adversaryLevel);
