@@ -6,6 +6,18 @@ Welcome to Spirit Island Tracker. This is a webapp created to replace the invade
 
 This is a personal project and is only meant to complement the board game rather than replacing it altogether. Since I am new to web programming, I may not be able to implement all of the requests for features. 
 
+# How to Use
+
+- Set up the board game as usual but **skip the Invader Board and its associated components**:
+    - Fear Card deck
+    - Event Card deck
+    - Invader Card deck
+    - Adversary Card
+    - Terror Level indicators
+- The Tracker will start on the first Invader Phase to allow you to set up the Island Boards.
+- After each phase, press 'Next Step' to advance to the next phase.
+- Make sure to read the [Limitations](#limitations) and [Special Actions](#special-actions) sections to see what this tool can and cannot do for your game. 
+
 # Limitations
 
 This tool does not cover all aspects of the game (yet). **Please read about the following limitations carefully before using this tool.**
@@ -19,6 +31,7 @@ This tool does not cover all aspects of the game (yet). **Please read about the 
 - Vertical screens are not supported. Please use a sufficiently sized horizontal screen (laptops, tablets etc.) and adjust text size as needed. 
 - **If you would like to see a feature added or report a broken feature, please consider sending feedback with the 'Bug Reports and Feature Suggestions' button under the 'Credits and Feedback' menu.**
 
+# Special Actions
 
 # Features
 
