@@ -585,8 +585,8 @@ function setup() {
 
     phase = 5;
     
-    updateUI();
     updatePhaseList();
+    updateUI();
 
 }
 
