@@ -762,7 +762,7 @@ function advanceInvaderCard() {
 }
 
 function generateInvaderCard(code) {
-
+    
 }
 
 function generateInvaderSeq(levelSeq) {
