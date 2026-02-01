@@ -156,6 +156,7 @@ function nextStep() {
         advancePhaseList(3); // Advance twice to skip to first spirit phase if it is turn 0
         advanceInvaderCard();
         turn++;
+        updateUI();
         return;
     }
 
@@ -164,7 +165,7 @@ function nextStep() {
     if (phase === 4 && earnedFearCards > 0) {
         drawCard('fear');
         earnedFearCards--;
-        updateFearBadge();
+        updateUI();
         return;
     }
 
