@@ -731,11 +731,12 @@ function clearInvaderCard() {
 
 function updateInvaderCard(showExplore) {
 
-    invaderCards = [invaderCardExplore, invaderCardBuild, invaderCardRavage, invaderCardFourth];
+    invaderCards = [invaderCardFourth, invaderCardRavage, invaderCardBuild, invaderCardExplore];
 
-    // Start from explore
+    // Start left to right
     for (let i = 0; i < 4; i++) {
 
+        invadercards[i].html(invadercards[i+1])
         if (i === 0) {
             let img = document.createElement('img');
             img.classList.add('game-card', 'game-card-invader');
@@ -747,8 +748,8 @@ function updateInvaderCard(showExplore) {
             }
             invaderCardExplore.append(img);
         }
+
         
-        invadercards[i].html()
         if (i > turn) return;
 
         
