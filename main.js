@@ -584,6 +584,7 @@ function setup() {
     invaderCards = [[],[],[],[invaderSeq[0]]];
 
     phase = 5;
+    
     updateUI();
 
 }
