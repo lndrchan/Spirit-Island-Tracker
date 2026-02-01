@@ -44,6 +44,12 @@ var terrorLevel = 0; // 0 means terror level 1 and so on...
 var cardDisplay = null;
 var terrorLevelDisplay = null;
 
+var invaderCardFourth;
+var invaderCardRavage; 
+var invaderCardBuild; 
+var invaderCardExplore;
+var invaderCards;
+
 var ravageBadge = null;
 var buildBadge = null;
 var exploreBadge = null;
