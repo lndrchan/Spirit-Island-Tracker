@@ -703,7 +703,7 @@ function updateUI() {
     $('#next-fear-card-btn').attr('disabled','');
     if (eventSeqIndex > 0) {
         $('this-event-card-btn').removeAttr('disabled');
-        console.log('run');
+        console.log($('this-event-card-btn'));
     } 
     if (fearSeqIndex > 0) $('this-fear-card-btn').removeAttr('disabled');  
 
