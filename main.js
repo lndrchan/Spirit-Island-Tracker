@@ -912,7 +912,7 @@ function displayCardHistory(type,step) {
         case 'event': 
             cardHistoryEventIndex = eventSeqIndex-1;
             displayCard('event', eventSeq[eventSeqIndex-1]);
-            lastEventBtn.removeAttr('disabled');
+            if (cardHistoryEventIndex <= 0) lastEventBtn.attr('disabled',''); else lastEventBtn.removeAttr('disabled');
             nextEventBtn.attr('disabled','');
             return;
         case 'fear': 
