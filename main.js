@@ -723,7 +723,11 @@ function clearCardDisplay() {
 }
 
 function showExploreCard() {
-    
+    invaderCardExplore.empty();
+    let img = document.createElement('img');
+    img.classList.add('game-card', 'game-card-invader');
+    img.src = `./assets/invader/${invaderSeq[turn]}.jpg`;
+    invaderCardExplore.append(img);
 }
 
 function advanceInvaderCard() {
