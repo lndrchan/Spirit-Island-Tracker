@@ -722,6 +722,10 @@ function clearCardDisplay() {
     cardDisplay.empty();
 }
 
+function showExploreCard() {
+    
+}
+
 function advanceInvaderCard() {
 
     invaderCards = [invaderCardFourth, invaderCardRavage, invaderCardBuild, invaderCardExplore];
