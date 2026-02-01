@@ -904,11 +904,14 @@ function displayCardHistory(type,step) {
         case 'event': 
             cardHistoryEventIndex = eventSeqIndex-1;
             displayCard('event', eventSeq[eventSeqIndex-1]);
-            
+            lastEventBtn.removeAttr('disabled');
+            nextEventBtn.attr('disabled','');
             return;
         case 'fear': 
             cardHistoryFearIndex = fearSeqIndex-1;
             displayCard('fear', fearSeq[fearSeqIndex-1]);
+            lastFearBtn.removeAttr('disabled');
+            nextFearBtn.attr('disabled','');
             return;
         }
     }
