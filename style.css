@@ -48,11 +48,11 @@
 {
     height: 100%;
     flex: auto;
-    text-align: center;
 }
 
 .invader-card-container
 {
+    position: relative;
     padding: 6px;
     height: 80%;
     border: dashed rosybrown 3px;
@@ -61,6 +61,7 @@
 
 .invader-card-label
 {
+    text-align: center;
     margin-top: 12px;
 }
 
@@ -82,10 +83,6 @@
     margin-right: auto;
 }
 
-.invader-card{
-    margin-left: 3px;
-    margin-right: 3px;
-}
 
 .game-card-side
 {
@@ -95,9 +92,10 @@
 
 .game-card-invader
 {
-    height: 100%;
-    margin-left: 3px;
-    margin-right: 3px;
+    height: 95%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .btn

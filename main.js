@@ -485,14 +485,10 @@ function generatePhaseListItem(phaseIndex) {
 
         listItem.removeClass('d-flex');
         let invaderPhaseDescription = $('<ul style="list-style-type:none; padding-left: 40px;margin-top: 0.5em;margin-bottom: 0em;"></ul>');
+        invaderPhaseDescription.append('<li id="phase-list-fourth-item" style="display:none;">Build: <span class="badge" id="phase-list-fourth-badge"> </span> </li>')
         invaderPhaseDescription.append('<li>Ravage: <span class="badge" id="phase-list-ravage-badge"> </span> </li>')
         invaderPhaseDescription.append('<li>Build: <span class="badge" id="phase-list-build-badge"> </span> </li>')
-        if (invaderSeq[turn][0] === 2 && invaderSeq[turn][1] != 'c') {
-            invaderPhaseDescription.append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> + Escalation</li>')
-        }
-        else {
-            invaderPhaseDescription.append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
-        }
+        invaderPhaseDescription.append('<li>Explore: <span class="badge" id="phase-list-explore-badge"> </span> </li>')
 
         invaderPhaseDescription.appendTo(listItem);
     }
@@ -660,6 +656,7 @@ function load(index) {
 
     fracturedDaysPeekedType = gameData.fracturedDaysPeekedType;
 
+    updatePhaseList();
     updateUI();
 
     console.log('Game data loaded:', saveIndex, gameData);
@@ -674,6 +671,7 @@ function updateUI() {
     updateTerrorLevel();
     updateFearBadge();
     updateInvaderCard();
+    updateInvaderBadge();
 
     fearProgressBar.attr('style', 'width: ' + fear / maxFear * 100 + '%');
     fearProgressBar.html(fear + ' / ' + maxFear);
@@ -773,6 +771,7 @@ function updateInvaderCard() {
             slots[i].append(generateInvaderCard(invaderCards[i][j]))
         }
     }
+    invaderCards[3].push('1w');
 }
 
 function generateInvaderSeq(levelSeq) {
@@ -878,48 +877,48 @@ function generateBadge(terrain) {
     return b;
 }
 
-function updateInvaderBadge(showExplore) {
+function updateInvaderBadge() {
 
+    fourthBadge = $('#phase-list-fourth-badge');
     ravageBadge = $('#phase-list-ravage-badge');
     buildBadge = $('#phase-list-build-badge');
     exploreBadge = $('#phase-list-explore-badge');
 
+    if (!fourthBadge && !ravageBadge && !buildBadge && !exploreBadge) return;
+
+    fourthBadge.empty();
     ravageBadge.empty();
     buildBadge.empty();
     exploreBadge.empty();
 
-    badges = [exploreBadge, buildBadge, ravageBadge];
+    badges = [fourthBadge, ravageBadge, buildBadge, exploreBadge];
 
-    // Invader level of generated badge. Generate two badges if level 3. 
-    let level = 0;
-
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
 
         // Update badges from explore to ravage
+        // Skip first row of adversary badges if not England 3 or above (high immigration)
+        if (!(adversary === 'england' && adversaryLevel >= 3) && i === 0) continue;
 
-        let levelIndex = turn - i;
-        if (levelIndex < 0) {
+        if (invaderCards[i].length === 0) {
             badges[i].append(generateBadge('n'))
             continue;
         }
 
-        // If show explore is false, append 'unknown' badge and move on
-        if (i === 0 && !showExplore) {
-            exploreBadge.append(generateBadge('u'));
-            continue;
-        }
+        for (let j = 0; j < invaderCards[i].length; j++) {
+            let code = invaderCards[i][j]; // e.g. 3mj
+            if (isNaN(code[0])) {
+                badges[i].append(generateBadge(code));
+                continue;
+            }
+            if (code.length <= 1) exploreBadge.append(generateBadge('u'));
 
-        level = invaderLevelSeq[levelIndex];
-
-        if (level === 1 || level === 2) {
-            badges[i].append(generateBadge(invaderSeq[turn - i][1]));
-            // Add '+ Escalation' if level 2 Explore (i=0) card flipped and not Coastal Lands
-            if (level === 2 && i === 0 && invaderSeq[turn - i][1] !== 'c') {
-                badges[i].append(' + Escalation')
-            }   
-        }
-        else if (level === 3) {
-            badges[i].append(generateBadge(invaderSeq[turn - i][1]), generateBadge(invaderSeq[turn - i][2]));
+            // Else if code[0] is a number (stage)...
+            level = code[0];
+            for (let k = 0; k < code.length-1; k++) {
+                badges[i].append(generateBadge(code[k+1]));
+            }
+            if (i === 3 && level === '2' && code[1] !== 'c') badges[i].append(' + Escalation')
+            
         }
         
     }
