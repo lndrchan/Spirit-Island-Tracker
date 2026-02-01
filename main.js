@@ -939,19 +939,19 @@ function displayCardHistory(type,step) {
             displayCard('event', eventSeq[cardHistoryEventIndex]);
         case 'fear': 
             cardHistoryFearIndex += step;
-            if (cardHistoryEventIndex < eventSeqIndex-1) {
-                nextEventBtn.removeAttr('disabled');
+            if (cardHistoryFearIndex < fearSeqIndex-1) {
+                nextFearBtn.removeAttr('disabled');
             } else {
-                cardHistoryEventIndex = eventSeqIndex-1;
-                nextEventBtn.attr('disabled','');
+                cardHistoryFearIndex = fearSeqIndex-1;
+                nextFearBtn.attr('disabled','');
             }
-            if (cardHistoryEventIndex > 0) {
-                lastEventBtn.attr('disabled','')
+            if (cardHistoryFearIndex > 0) {
+                lastFearBtn.attr('disabled','')
             } else {
-                cardHistoryEventIndex = 0;
-                lastEventBtn.removeAttr('disabled')
+                cardHistoryFearIndex = 0;
+                lastFearBtn.removeAttr('disabled')
             }
-            displayCard('fear', cardHistoryFearIndex);
+            displayCard('fear', fearSeq[cardHistoryFearIndex]);
     }
 }
 
