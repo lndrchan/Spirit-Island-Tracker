@@ -701,10 +701,7 @@ function updateUI() {
     $('#next-event-card-btn').attr('disabled','');
     $('#last-fear-card-btn').attr('disabled','');
     $('#next-fear-card-btn').attr('disabled','');
-    if (eventSeqIndex > 0) {
-        $('#this-event-card-btn').removeAttr('disabled');
-        console.log('run');
-    }
+    if (eventSeqIndex > 0) $('#this-event-card-btn').removeAttr('disabled');
     if (fearSeqIndex > 0) $('#this-fear-card-btn').removeAttr('disabled');  
 
 }
