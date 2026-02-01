@@ -760,6 +760,7 @@ function generateInvaderCard(code) {
 }
 
 function updateInvaderCard() {
+    // To be updated later
     invaderCardFourth.empty().append(generateInvaderCard(invaderCards[0][0]));
     invaderCardRavage.empty().append(generateInvaderCard(invaderCards[1][0]));
     invaderCardBuild.empty().append(generateInvaderCard(invaderCards[2][0]));
