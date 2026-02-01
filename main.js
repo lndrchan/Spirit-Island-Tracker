@@ -186,7 +186,7 @@ function nextStep() {
     // Invader phase: flip explore card
     if (phase === 5) {
         $('.fear-btn').removeAttr('disabled');
-        updateInvaderCard(true);
+        advanceInvaderCard(true);
         updateInvaderBadge(true);
         showAdversaryCard();
     }
@@ -195,7 +195,7 @@ function nextStep() {
     if (phase === 6) {
         clearInvaderCard();
         turn++;
-        updateInvaderCard(false);
+        advanceInvaderCard(false);
         turn--;
         if (turn === 0) {
             advancePhaseList(2); // Advance twice to skip to first spirit phase if it is turn 0
@@ -664,7 +664,7 @@ function updateUI() {
     generatePhaseList();
 
     // If in invader phase, show explore. 
-    if (phase === 5) {updateInvaderCard(true)} else {updateInvaderCard(false)}
+    if (phase === 5) {advanceInvaderCard(true)} else {advanceInvaderCard(false)}
     if (phase === 5) {updateInvaderBadge(true)} else {updateInvaderBadge(false)}
     
     $('#total-turn-count-display').html(invaderLevelSeq.length);
@@ -722,7 +722,7 @@ function clearCardDisplay() {
     cardDisplay.empty();
 }
 
-function updateInvaderCard(showExplore) {
+function advanceInvaderCard() {
 
     invaderCards = [invaderCardFourth, invaderCardRavage, invaderCardBuild, invaderCardExplore];
 
@@ -1011,7 +1011,7 @@ function fracturedDaysPower(deck, strength) {
         if (deck === 0) {
             invaderSeqFirst = invaderSeq.shift();
             invaderSeq.push(invaderSeqFirst);
-            updateInvaderCard(false);
+            advanceInvaderCard(false);
             alert('The top Invader Card has been moved to the bottom of the deck. ')
         }
         else if (deck === 1) {
