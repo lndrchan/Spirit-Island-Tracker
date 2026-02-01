@@ -76,6 +76,7 @@ $(function() {
     invaderCardBuild = $('#invader-card-build');
     invaderCardRavage = $('#invader-card-ravage');
     invaderCardFourth = $('#invader-card-fourth');
+    invaderCards = [invaderCardFourth, invaderCardRavage, invaderCardBuild, invaderCardExplore];
 
     phaseList = $('#phase-list');
     fearProgressBar = $('#fear-progress');
@@ -734,8 +735,6 @@ function showExploreCard() {
 }
 
 function advanceInvaderCard() {
-
-    invaderCards = [invaderCardFourth, invaderCardRavage, invaderCardBuild, invaderCardExplore];
 
     // Start left to right
     for (let i = 0; i < 3; i++) {
