@@ -643,6 +643,8 @@ function load(index) {
 
     cardDisplay.html(gameData.cardDisplayHTML);
 
+    invaderCardFourth.html(gameData)
+
     cardHistoryEventIndex = gameData.cardHistoryEventIndex;
     cardHistoryFearIndex = gameData.cardHistoryFearIndex;
 
