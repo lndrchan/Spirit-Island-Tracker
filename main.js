@@ -745,24 +745,21 @@ function advanceInvaderCard() {
 
     // Start left to right
     for (let i = 0; i < 3; i++) {
-        invaderCards[i].html(invaderCards[i+1].html());
+        invaderCards[i] = invaderCards[i+1];
     }
     invaderCardExplore.empty();
-    let img = document.createElement('img');
-    img.classList.add('game-card', 'game-card-invader');
-
-    let stage = invaderSeq[turn][0];
-    if (!isNaN(stage)) {
-        img.src = `./assets/invader/${stage}.jpg`;
-    } else {
-        img.src = `./assets/invader/${stage}-back.jpg`;
-    }
-
     invaderCardExplore.append(img);
 }
 
 function generateInvaderCard(code) {
-    
+    let img = $('<img>').addClass('game-card game-card-invader');
+    let stage = invaderSeq[turn][0];
+    if (!isNaN(stage)) {
+        img.attr('src', `./assets/invader/${stage}.jpg`);
+    } else {
+        img.attr('src', `./assets/invader/${stage}-back.jpg`);
+    }
+    return img;
 }
 
 function generateInvaderSeq(levelSeq) {
