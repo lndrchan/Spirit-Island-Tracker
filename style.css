@@ -46,23 +46,69 @@
 
 .invader-card-area
 {
-    height: 100%;
-    flex: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .invader-card-container
 {
-    position: relative;
-    padding: 6px;
-    height: 80%;
-    border: dashed rosybrown 3px;
-    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 20px;
+    border: 2px dashed rosybrown;
+    border-radius: 8px;
+    background-color: rgba(139, 69, 19, 0.05);
+    min-height: 200px;
+    width: fit-content;
 }
+
+/* Card styling */
+.game-card-invader {
+    max-width: 120px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover effect - bring card forward */
+.game-card-invader:hover {
+    z-index: 10 !important;
+}
+
+/* Single card - centered */
+.invader-card-container .game-card-invader:only-child {
+    margin: 0;
+}
+
+/* Multiple cards - overlapping */
+.invader-card-container .game-card-invader:not(:only-child) {
+    margin-left: -70px;
+    position: relative;
+}
+
+.invader-card-container .game-card-invader:not(:only-child):first-child {
+    margin-left: 0;
+    z-index: 1;
+}
+
+/* Z-index stacking - each card goes on top of previous */
+.invader-card-container .game-card-invader:nth-child(1) { z-index: 1; }
+.invader-card-container .game-card-invader:nth-child(2) { z-index: 2; }
+.invader-card-container .game-card-invader:nth-child(3) { z-index: 3; }
+.invader-card-container .game-card-invader:nth-child(4) { z-index: 4; }
+.invader-card-container .game-card-invader:nth-child(5) { z-index: 5; }
+.invader-card-container .game-card-invader:nth-child(6) { z-index: 6; }
 
 .invader-card-label
 {
     text-align: center;
-    margin-top: 12px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: rosybrown;
+    text-transform: uppercase;
 }
 
 .invader-card-arrow
@@ -88,14 +134,6 @@
 {
     border-radius: 12px;
     width: 80%;
-}
-
-.game-card-invader
-{
-    height: 95%;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .btn

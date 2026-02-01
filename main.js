@@ -743,6 +743,11 @@ function showExploreCard() {
 
 function advanceInvaderCard() {
     for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < invaderCards[i].length; j++) {
+            if (invaderCards[i][j] === 'ss') {
+                // TODO
+            }
+        }
         invaderCards[i] = invaderCards[i+1];
     }
     invaderCards[3] = [];
@@ -771,7 +776,6 @@ function updateInvaderCard() {
             slots[i].append(generateInvaderCard(invaderCards[i][j]))
         }
     }
-    invaderCards[3].push('1w');
 }
 
 function generateInvaderSeq(levelSeq) {
