@@ -698,9 +698,9 @@ function updateUI() {
     }
 
     $('#last-event-card-btn').attr('disabled','');
-    let nextEventBtn = $('#next-event-card-btn');
-    let lastFearBtn = $('#last-fear-card-btn');
-    let nextFearBtn = $('#next-fear-card-btn');
+    $('#next-event-card-btn').attr('disabled','');
+    $('#last-fear-card-btn').attr('disabled','');
+    $('#next-fear-card-btn').attr('disabled','');
 
 }
 
