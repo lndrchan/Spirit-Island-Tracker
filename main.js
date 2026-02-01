@@ -918,7 +918,11 @@ function displayCardHistory(type,step) {
     switch (type){
         case 'event': 
             cardHistoryEventIndex += step;
-            if (cardHistoryEventIndex < eventSeqIndex-1) 
+            if (cardHistoryEventIndex < eventSeqIndex-1) {
+                nextEventBtn.removeAttr('disabled');
+            } else {
+                nextEventBtn.attr('disabled','');
+            }
             displayCard('event', cardHistoryEventIndex);
         case 'fear': 
             cardHistoryFearIndex += step;
