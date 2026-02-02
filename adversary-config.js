@@ -10,6 +10,18 @@ const adversaryNameDict = {
     'habsburg-mining': 'Habsburg (Mining Expedition)'
 }
 
+const adversaryFlagDict = {
+    'none': '',
+    'prussia': '(B-P)',
+    'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    'sweden': '🇸🇪',
+    'france': '(FR)',
+    'habsburg-livestock': '(HA)',
+    'scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    'russia': '(RU)',
+    'habsburg-mining': '(HME)'
+}
+
 const invaderCardDict = {
     'w': 'Wetland',
     's': 'Sand',
@@ -39,6 +51,15 @@ const adversaryConfig = {
             [],
             [],
             []
+        ],
+        'actionChange': [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
         ]
     },
 
@@ -60,6 +81,15 @@ const adversaryConfig = {
             [1,1,3,2,2,2,3,3,3,3],
             [1,3,2,2,2,3,3,3,3],
             [3,2,2,2,3,3,3,3]
+        ],
+        'actionChange': [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
         ]
     },
 
@@ -81,6 +111,15 @@ const adversaryConfig = {
             [],
             [],
             []
+        ],
+        'actionChange': [
+            [],
+            [2],
+            [2],
+            [2],
+            [2],
+            [2],
+            [2]
         ]
     },
 
@@ -102,6 +141,15 @@ const adversaryConfig = {
             [],
             [],
             []
+        ],
+        'actionChange': [
+            [],
+            [1],
+            [1],
+            [1],
+            [1],
+            [1],
+            [1]
         ]
     },
 
@@ -123,6 +171,15 @@ const adversaryConfig = {
             [],
             [],
             []
+        ],
+        'actionChange': [
+            [],
+            [3],
+            [2,3],
+            [2,3],
+            [2,3],
+            [2,3],
+            [2,3]
         ]
     },
 
@@ -144,6 +201,15 @@ const adversaryConfig = {
             [],
             [],
             []
+        ],
+        'actionChange': [
+            [],
+            [2],
+            [2],
+            [2],
+            [2],
+            [2,3],
+            [1,2,3]
         ]
     },
 
@@ -165,6 +231,15 @@ const adversaryConfig = {
             [1,1,1,2,3,2,3,2,3,2,3,3],
             [],
             []
+        ],
+        'actionChange': [
+            [],
+            [1],
+            [1],
+            [1],
+            [1],
+            [1],
+            [1]
         ]
     },
 
@@ -186,6 +261,15 @@ const adversaryConfig = {
             [1,1,2,2,3,'2c',3,3,3,3],
             [],
             []
+        ],
+        'actionChange': [
+            [],
+            [3],
+            [3],
+            [2,3],
+            [2,3],
+            [1,2,3],
+            [1,2,3]
         ]
     },
 
@@ -207,6 +291,15 @@ const adversaryConfig = {
             [1,1,1,2,'ss',2,2,3,3,3,3,3],
             [],
             []
+        ],
+        'actionChange': [
+            [],
+            [1,2],
+            [1,2],
+            [1,2],
+            [1,2],
+            [1,2],
+            [1,2,3]
         ]
     },
 }

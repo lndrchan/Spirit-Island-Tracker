@@ -30,6 +30,10 @@ var phaseListDict = {
     7: 'Time Passes'
 };
 
+var level1 = ['1w', '1s', '1j', '1m'];
+var level2 = ['2w', '2s', '2j', '2m', '2c'];
+var level3 = ['3js', '3jw', '3mj', '3mw', '3sm', '3sw'];
+
 var fearProgressBar = null;
 var leftBarFearBadge = null;
 var phaseListFearBadge = null;
@@ -276,6 +280,29 @@ function earnFearCard() {
     if (fearLevelSeq[terrorLevel] === 0) {
         terrorLevel++;
         updateTerrorLevel();
+    }
+
+    if (adversary === 'russia' && adversaryLevel >= 5) {
+        let russiaFearCount = 0;
+        for (let i = 0; i < 3; i++) {
+            russiaFearCount += adversaryConfig[adversary]['fear'][adversaryLevel][i] - fearLevelSeq[i];
+            console.log(adversaryConfig[adversary]['fear'][adversaryLevel][i], fearLevelSeq[i]);
+        }
+
+        if (russiaFearCount === 3) {
+            alert('Russia effect triggered: Entrench in the Face of Fear');
+            let unusedLevel2 = level2.filter(function(item) {return !invaderSeq.includes(item)});
+            invaderCards[2].push(unusedLevel2[Math.floor(Math.random() * unusedLevel2.length)]);
+            updateInvaderCard();
+            updateInvaderBadge();
+        }
+        if (russiaFearCount === 7) {
+            alert('Russia effect triggered: Entrench in the Face of Fear');
+            let unusedLevel3 = level3.filter(function(item) {return !invaderSeq.includes(item)});
+            invaderCards[2].push(unusedLevel3[Math.floor(Math.random() * unusedLevel3.length)]);
+            updateInvaderCard();
+            updateInvaderBadge();
+        }
     }
 
     updateFearBadge();
@@ -530,8 +557,8 @@ function setup() {
     }
 
     if (adversary !== 'none') {
-        invaderLevelSeq = adversaryConfig[adversary]['invader'][adversaryLevel];
-        fearLevelSeq = adversaryConfig[adversary]['fear'][adversaryLevel];
+        invaderLevelSeq = adversaryConfig[adversary]['invader'][adversaryLevel].slice();
+        fearLevelSeq = adversaryConfig[adversary]['fear'][adversaryLevel].slice();
     }
     else { // No adversary
         invaderLevelSeq = [1,1,1,2,2,2,2,3,3,3,3,3];
@@ -581,6 +608,7 @@ function setup() {
 
     phase = 5;
     
+    initUI();
     updatePhaseList();
     updateUI();
 
@@ -656,6 +684,7 @@ function load(index) {
 
     fracturedDaysPeekedType = gameData.fracturedDaysPeekedType;
 
+    initUI();
     updatePhaseList();
     updateUI();
     setupModal.modal('hide');
@@ -681,18 +710,20 @@ function updateUI() {
     // If in invader phase, show explore. 
     if (phase === 5) {updateInvaderBadge(true)} else {updateInvaderBadge(false)}
     
-    $('#total-turn-count-display').html(invaderLevelSeq.length);
-    
     $('#turn-count-display').html(invaderSeqIndex);
     $('#invader-level-sequence').html(invaderLevelSeq.slice(invaderSeqIndex).join(' '));
 
-    $('#player-count-display').html(playerCount);
-    if (adversary !== 'none') {
-        $('#adversary-name-display').html(adversaryNameDict[adversary] + ' ' + adversaryLevel);
-    } else {
-        // No adversary, hide button
-        $('#adversary-name-display').html('None');
-        $('#show-adversary-card-btn').hide();
+    if (adversary === 'england' && adversaryLevel >= 3 && adversaryLevel < 5) {
+        let invaderSeqIndexGreaterThanLevel1 = 0;
+        for (let i = 0; i < invaderLevelSeq.length; i++) {
+            if (invaderLevelSeq[invaderSeqIndexGreaterThanLevel1] > 1) break;
+            invaderSeqIndexGreaterThanLevel1 ++;
+        }
+        if (invaderSeqIndex < invaderSeqIndexGreaterThanLevel1 + 3) {
+            $('#invader-card-label-fourth').html('Build 🏴󠁧󠁢󠁥󠁮󠁧󠁿')
+        } else {
+            $('#invader-card-label-fourth').html('Discard')
+        }
     }
 
     // Clear main display if moving away from draw card phase
@@ -719,6 +750,29 @@ function updateUI() {
     if (eventSeqIndex > 0) $('#this-event-card-btn').removeAttr('disabled');
     if (fearSeqIndex > 0) $('#this-fear-card-btn').removeAttr('disabled');  
 
+}
+
+function initUI() {
+    $('#total-turn-count-display').html(invaderLevelSeq.length);
+    let invaderCardLabels = [
+        $('#invader-card-label-fourth'), 
+        $('#invader-card-label-ravage'), 
+        $('#invader-card-label-build'), 
+        $('#invader-card-label-explore')
+    ];
+
+    if (adversary !== 'none') {
+        $('#adversary-name-display').html(adversaryNameDict[adversary] + ' ' + adversaryLevel);
+
+        let actionChangeIndex = adversaryConfig[adversary]['actionChange'][adversaryLevel];
+        for (let i = 0; i < actionChangeIndex.length; i++) {
+            invaderCardLabels[actionChangeIndex[i]].append(adversaryFlagDict[adversary]);
+        }
+    } else {
+        // No adversary, hide button
+        $('#adversary-name-display').html('None');
+        $('#show-adversary-card-btn').hide();
+    }
 }
 
 function startNewGame() {
@@ -795,10 +849,6 @@ function updateInvaderCard() {
 function generateInvaderSeq(levelSeq) {
 
     // levelSeq: defined in adversary-config under each 'invader' section
-
-    let level1 = ['1w', '1s', '1j', '1m'];
-    let level2 = ['2w', '2s', '2j', '2m', '2c'];
-    let level3 = ['3js', '3jw', '3mj', '3mw', '3sm', '3sw'];
 
     invaderSeq = Array(levelSeq.length);
     let index = 0;
