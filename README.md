@@ -2,36 +2,36 @@
 
 **Access the tool at [https://lndrchan.github.io/spirit-island-tracker/](https://lndrchan.github.io/spirit-island-tracker/)**
 
-Welcome to Spirit Island Tracker. This is a webapp created to replace the invader board for Spirit Island, to reduce the amount of setup needed when playing the board game. 
+Welcome to Spirit Island Tracker. This is a web app created to replace the invader board for Spirit Island, to reduce the amount of setup needed when playing the board game. 
 
-This is a personal project and is only meant to complement the board game rather than replacing it altogether. Since I am new to web programming, I may not be able to implement all of the requests for features. 
+This is a personal project and is only meant to complement the board game rather than replacing it altogether. 
+
+I will try my best to respond to any feedback and suggestions. However, since I am new to web programming, I may not be able to implement all of the requests. 
 
 # How to Use
 
-- Set up the board game as usual but **skip the Invader Board and its associated components**:
-    - Fear Card deck
-    - Event Card deck
-    - Invader Card deck
-    - Adversary Card
-    - Terror Level indicators
+- Set up the board game with the following components as usual: 
+    - Spirit Boards, Cards and Tokens (Energy, Power Decks and any associated pieces)
+    - Island Boards and Tokens (Invader pieces, Blight)
+- You do **not** need to set up the following: 
+    - Fear Deck and Terror Level indicator
+    - Event Deck
+    - Invader Deck
+    - Adversary Card (if using)
 - The Tracker will start on the first Invader Phase to allow you to set up the Island Boards.
 - After each phase, press 'Next Step' to advance to the next phase.
-- Make sure to read the [Limitations](#limitations) and [Special Actions](#special-actions) sections to see what this tool can and cannot do for your game. 
+- Make sure to read the [Compatibility](#Compatibility) section to see what this tool can and cannot do for your game. 
 
-# Limitations
+# Compatibility
 
-This tool does not cover all aspects of the game (yet). **Please read about the following limitations carefully before using this tool.**
-
-- Certain Adversary Levels are not supported.
-    - France Level 3 or above
-    - Russia Level 5 or above
-    - Habsburg Mining Expedition Level 4 or above
-- Games with two Adversaries are not supported. 
+- This tool supports all adversaries and their special rules. However, Supporting Adversaries (combinations) are **not** supported. 
+- All Spirits are supported. However, some of them need **Special Actions** with this tool to resolve their effects: 
+    - Bringer of Dreams and Nightmares: **Spirits May Yet Dream**
+    - Fractured Days Split the Sky: **Visions of a Shifting Future**
 - Use scenarios at your own discretion. Any scenarios that change the Invader Board setup are generally not supported.
-- Vertical screens are not supported. Please use a sufficiently sized horizontal screen (laptops, tablets etc.) and adjust text size as needed. 
-- **If you would like to see a feature added or report a broken feature, please consider sending feedback with the 'Bug Reports and Feature Suggestions' button under the 'Credits and Feedback' menu.**
-
-# Special Actions
+- Vertical screens and small screens are **not** supported. Please use a sufficiently sized horizontal screen (laptops, tablets etc.) and adjust text size as needed. 
+---
+**If you would like to see a feature added or report a broken feature, please consider sending feedback with the 'Issues' tab on Github or 'Bug Reports and Feature Suggestions' button under the 'Credits and Feedback' menu.**
 
 # Features
 
@@ -44,10 +44,11 @@ No more being confused between earned fear tokens and fear pool tokens. Fears ar
 ### Card Drawing
 Shuffled fear decks or event decks for a setup just to lose to England 6 after 10 minutes? Not to worry! With Spirit Island Tracker, fear cards and event cards are automatically drawn when the corresponding phases have been reached. Also includes an option to redraw if you encounter a card not currently supported by the tool, or if you just want to cheat a little bit. 
 
-### Special Actions (*Under Development*)
-Actions that influence the setup of the invader board (e.g. England 6, Fractured Days) will be supported via a dedicated menu accessed via a single click. 
-
 # Credits
+
+Created by lndrchan (Leander). Please consider [buying me a coffee](https://ko-fi.com/lndr0) if you have enjoyed using this tool. 
+
+---
 
 Spirit Island is a board game by R. Eric Reuss, published by Greater Than Games. 
 

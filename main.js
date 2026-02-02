@@ -14,6 +14,7 @@ var adversary = '';
 var adversaryLevel = 0;
 
 var eventEnabled = true;
+var blightEnabled = true;
 
 var phaseList = null;
 var phaseCount = 8;
@@ -65,9 +66,17 @@ var invaderSeqIndex = 0;
 var turn = 0;
 var turnRandomNumber = 0;
 
-var fearSeq = Array(50);
+var blightSeq = Array(BLIGHT_CARD_COUNT);
+var blightSeqIndex = 0;
+var blightFlipped = false;
+
+var BLIGHT_CARD_COUNT = 23;
+var FEAR_CARD_COUNT = 50;
+var EVENT_CARD_COUNT = 62;
+
+var fearSeq = Array(FEAR_CARD_COUNT);
 var fearSeqIndex = 0;
-var eventSeq = Array(62);
+var eventSeq = Array(EVENT_CARD_COUNT);
 var eventSeqIndex = 0;
 
 var saveIndex = 0;
@@ -129,8 +138,16 @@ $(function() {
         }
     });
 
+    $('#customSequencesEnabled').on('change', function() {
+        if ($(this).is(':checked')) {
+            $('#customSequencesSection').slideDown();
+        } else {
+            $('#customSequencesSection').slideUp();
+        }
+    });
+
     $('#startGameBtn').on('click', function() {
-        if (validateSetupForm()) {
+        if (validateSetupForm() && validateCustomSequences()) {
             setup();
             setupModal.modal('hide');
         }
@@ -182,8 +199,32 @@ function nextStep() {
         $('#total-turn-count-display').html(invaderLevelSeq.length);
     }
 
+    if (phase === 2) {
+        if (!blightEnabled) {
+            cardDisplay.html(`
+                <div class="preview-placeholder cantora-one">
+                    <i class="text-muted">Blight Card Disabled</i>
+                </div>
+            `);
+            return;
+        }
+        if (!blightFlipped) {
+            displayCard('blight', 'back');
+            return;
+        }
+        displayCard('blight', blightSeq[blightSeqIndex]);
+    }
+
     if (phase === 3) {
-        drawCard('event');
+        if (eventEnabled) {
+            drawCard('event');
+        } else {
+            cardDisplay.html(`
+                <div class="preview-placeholder cantora-one">
+                    <i class="text-muted">Event Cards Disabled</i>
+                </div>
+            `);
+        }   
     }
 
     if (phase === 4) {
@@ -381,13 +422,22 @@ function displayCard(type, id) {
 }
 
 function redraw() {
-    if (phase === 3) {
+    if (phase === 2) {
+        if (blightSeqIndex >= blightSeq.length-1) blightSeq = generateSeq(BLIGHT_CARD_COUNT);
+        blightSeq[blightSeqIndex] = blightSeq.pop();
+        displayCard('blight', blightSeq[blightSeqIndex]);
+    }
+    else if (phase === 3) {
         // Event card phase
-        drawCard('event');
+        if (eventSeqIndex >= eventSeq.length-1) eventSeq = generateSeq(EVENT_CARD_COUNT);
+        eventSeq[eventSeqIndex-1] = eventSeq.pop();
+        displayCard('event', eventSeq[eventSeqIndex-1]);
     }
     else if (phase === 4) {
         // Fear card phase
-        drawCard('fear');
+        if (fearSeqIndex >= fearSeq.length-1) fearSeq = generateSeq(FEAR_CARD_COUNT);
+        fearSeq[fearSeqIndex-1] = fearSeq.pop();
+        displayCard('fear', fearSeq[fearSeqIndex-1]);
     }
 }
 
@@ -548,6 +598,9 @@ function setup() {
     adversary = $('input[name="adversary"]:checked').val();
     adversaryLevel = $('#adversaryLevel').val() || 0;
 
+    eventEnabled = $('#eventCardsEnabled').is(':checked');
+    blightEnabled = $('#blightCardsEnabled').is(':checked');
+
     // England 6 special rule
     if (adversary === 'england' && adversaryLevel === '6') {
         maxFear = playerCount * 5;
@@ -587,8 +640,10 @@ function setup() {
         if (i === 0) fearLevelSeq = [3,3,3]; // Default sequence
     }
 
-    fearSeq = generateSeq(50);
-    eventSeq = generateSeq(62);
+    blightSeq = generateSeq(BLIGHT_CARD_COUNT);
+    fearSeq = generateSeq(FEAR_CARD_COUNT);
+    eventSeq = generateSeq(EVENT_CARD_COUNT);
+
     // France 2 special rule (Slave Rebellion is event/1.jpg)
     for (let i = 0; i < eventSeq.length; i++) {
         if (eventSeq[i] === 1) {
@@ -619,6 +674,9 @@ function save() {
         playerCount: playerCount,
         adversary: adversary,
         adversaryLevel: adversaryLevel,
+        blightSeq: blightSeq,
+        blightSeqIndex: blightSeqIndex,
+        blightFlipped: blightFlipped,
         invaderSeq: invaderSeq,
         invaderSeqIndex: invaderSeqIndex,
         invaderLevelSeq: invaderLevelSeq,
@@ -659,6 +717,11 @@ function load(index) {
     invaderSeq = gameData.invaderSeq;
     invaderSeqIndex = gameData.invaderSeqIndex;
     invaderLevelSeq = gameData.invaderLevelSeq;
+
+    blightSeq = gameData.blightSeq;
+    blightSeqIndex = gameData.blightSeqIndex;
+    blightFlipped = gameData.blightFlipped;
+
     fearSeq = gameData.fearSeq;
     fearSeqIndex = gameData.fearSeqIndex;
     eventSeq = gameData.eventSeq;
@@ -747,12 +810,15 @@ function updateUI() {
     $('#next-event-card-btn').attr('disabled','');
     $('#last-fear-card-btn').attr('disabled','');
     $('#next-fear-card-btn').attr('disabled','');
-    if (eventSeqIndex > 0) $('#this-event-card-btn').removeAttr('disabled');
+    if (eventSeqIndex > 0 && eventEnabled) $('#this-event-card-btn').removeAttr('disabled');
     if (fearSeqIndex > 0) $('#this-fear-card-btn').removeAttr('disabled');  
 
 }
 
 function initUI() {
+
+    if (!blightEnabled) $('#show-blight-card-btn').css('display','none');
+
     $('#total-turn-count-display').html(invaderLevelSeq.length);
     let invaderCardLabels = [
         $('#invader-card-label-fourth'), 
@@ -783,9 +849,19 @@ function startNewGame() {
 }
 
 function showAdversaryCard() {
-    if (adversary === 'none') clearCardDisplay();
+    if (adversary === 'none') return;
     displayCard('adversary', adversary);
 }
+
+function showBlightCard() {
+    if (!blightEnabled) return;
+    if (!blightFlipped) {
+        displayCard('blight', 'back');
+        return;
+    }
+    displayCard('blight', blightSeq[blightSeqIndex]);
+}
+
 
 function clearCardDisplay() {
     cardDisplay.empty();
@@ -1002,6 +1078,18 @@ function updateInvaderBadge() {
     
 }
 
+function changeBlightCard() {
+    if (!confirm('Are you sure you want to flip/change the blight card?')) return;
+    if (!blightEnabled) return;
+    if (!blightFlipped) {
+        blightFlipped = true;
+        displayCard('blight', blightSeq[blightSeqIndex]);
+        return;
+    }
+    blightSeqIndex++;
+    displayCard('blight', blightSeq[blightSeqIndex]);
+}
+
 function displayCardHistory(type,step) {
     let lastEventBtn = $('#last-event-card-btn');
     let nextEventBtn = $('#next-event-card-btn');
@@ -1072,6 +1160,39 @@ function validateSetupForm() {
     if (!adversary) {
         alert('Please select an adversary option');
         return false;
+    }
+    
+    return true;
+}
+
+// Validate custom sequences before saving
+function validateCustomSequences() {
+    if (!$('#customSequencesEnabled').is(':checked')) {
+        return true; // Skip validation if not enabled
+    }
+    
+    const invaderSeq = $('#customInvaderSequence').val();
+    if (invaderSeq) {
+        // Check if it's comma-separated numbers
+        const numbers = invaderSeq.split(',').map(n => parseInt(n.trim()));
+        if (numbers.some(n => isNaN(n) || n < 1 || n > 3)) {
+            alert('Custom invader sequence must contain only numbers 1-3 separated by commas');
+            return false;
+        }
+    }
+    
+    // Validate fear levels
+    const levels = [
+        $('#fearLevel1').val(),
+        $('#fearLevel2').val(),
+        $('#fearLevel3').val()
+    ];
+    
+    for (let level of levels) {
+        if (level && (isNaN(parseInt(level)) || parseInt(level) < 1)) {
+            alert('Fear card counts must be positive numbers');
+            return false;
+        }
     }
     
     return true;

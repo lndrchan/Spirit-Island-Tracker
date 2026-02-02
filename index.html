@@ -183,6 +183,77 @@
 										</div>
 									</div>
 									-->
+									<!-- Custom Rules -->
+									<div class="form-group mt-4">
+										<label class="font-weight-bold mb-3">Custom Rules</label>
+										
+										<!-- Event Cards Enabled -->
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="eventCardsEnabled" checked>
+											<label class="form-check-label" for="eventCardsEnabled">
+												Enable Event Cards
+											</label>
+										</div>
+										
+										<!-- Blight Cards Enabled -->
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="blightCardsEnabled" checked>
+											<label class="form-check-label" for="blightCardsEnabled">
+												Enable Blight Cards
+											</label>
+										</div>
+										
+										<!-- Enable Custom Sequences -->
+										<div class="form-check mb-3">
+											<input class="form-check-input" type="checkbox" id="customSequencesEnabled">
+											<label class="form-check-label" for="customSequencesEnabled">
+												Enable Custom Invader Card and Fear Card Sequences
+											</label>
+										</div>
+										
+										<!-- Custom Sequences Section (Initially Hidden) -->
+										<div id="customSequencesSection" style="display: none;">
+											<!-- Custom Invader Sequence -->
+											<div class="form-group mt-3">
+												<label for="customInvaderSequence" class="form-label">Custom Invader Card Sequence</label>
+												<input type="text" 
+													class="form-control" 
+													id="customInvaderSequence" 
+													placeholder="Leave blank for default (e.g., 1,1,1,2,2,2,2,3,3,3,3,3)">
+												<small class="form-text text-muted">
+													Enter comma-separated numbers (1 = Stage I, 2 = Stage II, 3 = Stage III)
+												</small>
+											</div>
+											
+											<!-- Custom Fear Sequence -->
+											<div class="form-group mt-3">
+												<label class="form-label">Custom Fear Card Sequence</label>
+												<div class="row">
+													<div class="col-md-4">
+														<input type="text" 
+															class="form-control" 
+															id="fearLevel1" 
+															placeholder="Terror Level 1">
+													</div>
+													<div class="col-md-4">
+														<input type="text" 
+															class="form-control" 
+															id="fearLevel2" 
+															placeholder="Terror Level 2">
+													</div>
+													<div class="col-md-4">
+														<input type="text" 
+															class="form-control" 
+															id="fearLevel3" 
+															placeholder="Terror Level 3">
+													</div>
+												</div>
+												<small class="form-text text-muted">
+													Leave blank for default (e.g., 3, 3, 3)
+												</small>
+											</div>
+										</div>
+									</div>
 								</form>
 							</div>
 							
@@ -241,10 +312,10 @@
 							</div>
 							<div class="card-footer">
 								<button type="button" class="btn btn-secondary fear-btn" style="width:45%;margin-right: 24px;" id='btn-add-fear' onclick="addFear(1)">
-									+1 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em;">
+									1 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em;">
 								</button>
 								<button type="button" class="btn btn-secondary fear-btn" style="width:45%;" id='btn-add-fear-2' onclick="addFear(2)">
-									+2 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em">
+									2 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em">
 								</button>
 
 								<button type="button" class="btn btn-outline-secondary remove-fear-btn fear-btn" style="width:45%;margin-right: 24px;" id='btn-remove-fear' onclick="removeFear(1)">
@@ -261,6 +332,9 @@
 					<div class="left-bar-bottom container-glassmorphism">
 						<button type="button" class="btn btn-outline-light" style="width:100%;" id='redraw-btn' onclick="redraw()">
 							Redraw
+						</button>
+						<button type="button" class="btn btn-outline-light" style="width:100%;" id='blight-btn' onclick="changeBlightCard()">
+							Flip/Change Blight Card
 						</button>
 						<button type="button" class="btn btn-outline-light" style="width:100%;" id='special-action-btn' data-bs-toggle="modal" data-bs-target="#special-actions-modal">
 							Special Actions
@@ -304,7 +378,10 @@
 									<div class="card-body">
 										<div style="text-align: center; align-items: center;">
 											<span class="badge text-bg-dark" id="adversary-name-display"></span>
-											<button type="button" id="show-adversary-card-btn" class="btn btn-secondary btn-sm" onclick="showAdversaryCard()">Adversary Card</button>
+											<div>
+												<button type="button" id="show-adversary-card-btn" class="btn btn-secondary btn-sm" onclick="showAdversaryCard()">Adversary Card</button>
+												<button type="button" id="show-blight-card-btn" class="btn btn-secondary btn-sm" onclick="showBlightCard()">Blight Card</button>
+											</div>
 										</div>
 										
 										<hr class="m-1">

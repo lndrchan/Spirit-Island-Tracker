@@ -239,7 +239,6 @@
 
 .left-bar-bottom
 {
-    height: 35vh;
     margin-top: 12px;
     text-align: center;
 }
@@ -387,6 +386,30 @@
 
 .form-check {
     margin-right: 36px;
+}
+
+/* Custom Rules Section */
+#customSequencesSection {
+    background-color: rgba(67, 56, 202, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+#customSequencesSection .form-control {
+    font-size: 0.9rem;
+}
+
+#customSequencesSection .form-text {
+    font-size: 0.75rem;
+    margin-top: 5px;
+}
+
+/* Fear level inputs */
+#fearLevel1,
+#fearLevel2,
+#fearLevel3 {
+    text-align: center;
 }
 
 #special-actions-model {
