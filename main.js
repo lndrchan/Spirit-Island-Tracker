@@ -220,6 +220,8 @@ function nextStep() {
         advancePhaseList(3); // Advance twice to skip to first spirit phase if it is turn 0
         advanceInvaderCard();
         turn++;
+        turnRandomNumber = Math.random();
+        updateUI();
         save();
         return;
     }
@@ -312,7 +314,6 @@ function nextStep() {
     }
 
     updateUI();
-
     save();
 }
 
@@ -350,14 +351,15 @@ function removeFear(count) {
     fearProgressBar.attr('style', 'width: ' + fear / maxFear * 100 + '%');
     fearProgressBar.html(fear + ' / ' + maxFear);
 
+    updateUI();
     save();
 }
 
 
 function updateTerrorLevel() {
-
     if (terrorLevel >= 3) {
-        alert('Fear Victory!');
+        alert('Fear Victory! No more Fear Cards left. ');
+        return;
     }
     
     terrorLevelDisplay.html(`
@@ -1375,6 +1377,8 @@ function slaveRebellion() {
         drawCard('event');
         alert(`A new Event Card is now drawn and displayed. Slave Rebellion has been discarded. `)
     }
+
+    updateUI(); 
     save();
 }
 
@@ -1432,75 +1436,68 @@ function fracturedDaysPower(deck, strength) {
     // Deck: 0 is invader; 1 is event
     // Strength: 0 is weak, 1 is strong
 
-    if (strength === 9) {
-        // Return specified card to bottom of respective deck. 
-
-        if (deck === 0) {
-            // Does not work. Need fixing
-            invaderSeqFirst = invaderSeq.shift();
-            invaderSeq.push(invaderSeqFirst);
-            updateInvaderCard();
-            alert('The top Invader Card has been moved to the bottom of the deck. ')
-        }
-        else if (deck === 1) {
-            eventSeqFirst = eventSeq.shift();
-            eventSeq.push(eventSeqFirst);
-            alert('The top Event Card has been moved to the bottom of the deck. ')
-        }
-
-        return;
-    }
-
-
     if (deck === 0) {
-
+        // Invader deck
         let stage = 0;
-        let invaderCode = '';
+        let invaderCode = invaderSeq[invaderSeqIndex];
 
         if (strength === 0) {
-            invaderCode = (turnRandomNumber >= 0.5 ? invaderSeq[turn] : invaderSeq[turn+1]);
-            stage = invaderCode[0];
+            
+            stage = codeToLevel(invaderCode);
             if (isNaN(stage)) {
                 stage = 0;
                 terrain = invaderCode;
-                alert(`The top card of the Invader Deck is a ${invaderCardDict[terrain]} card. You shuffle it with the second card of the deck. \nIf you want to see the card again later, please press the same button.`);
+                alert(`The top card of the Invader Deck is a ${invaderCardDict[terrain]} card. You shuffle it with the second card of the deck. `);
             } else {
                 terrain = invaderCode[1];
-                alert(`The top card of the Invader Deck is a Stage ${stage} ${invaderCardDict[terrain]} card. You shuffle it with the second card of the deck. \nIf you want to see the card again later, please press the same button.`);
+                alert(`The top card of the Invader Deck is a Stage ${stage} ${invaderCardDict[terrain]} card. You shuffle it with the second card of the deck.`);
+            }
+
+            if (Math.random() >= 0.5) {
+                // Shuffle two top cards
+                invaderSeq[invaderSeqIndex] = invaderSeq[invaderSeqIndex+1];
+                invaderSeq[invaderSeqIndex+1] = invaderCode;
             }
             
         } else if (strength === 1) {
-            invaderCode = invaderSeq[turn];
-            stage = invaderCode[0];
+            stage = codeToLevel(invaderCode);
+            let msg = '';
             if (isNaN(stage)) {
                 stage = 0;
                 terrain = invaderCode;
-                alert(`The top card of the Invader Deck is a ${invaderCardDict[terrain]} card. \nNo further actions are needed if you want to return it to the top of the deck. \nUse the buttons on the third row to return it to the bottom of the deck.  `);
+                msg = `The top card of the Invader Deck is a ${invaderCardDict[terrain]} card. `
             } else {
                 terrain = invaderCode[1];
-                alert(`The top card of the Invader Deck is a Stage ${stage} ${invaderCardDict[terrain]} card. \n No further actions are needed if you want to return it to the top of the deck. \nUse the buttons on the third row to return it to the bottom of the deck.  `);
+                msg = `The top card of the Invader Deck is a Stage ${stage} ${invaderCardDict[terrain]} card. `;
             }
-            
+            alert(msg + 'Use the next button to move it to the bottom of the Invader Deck. ');
+
+        } else if (strength === 9) {
+            invaderSeqFirst = invaderSeq.splice(invaderSeqIndex, 1); // Returns an array instead of single element
+            invaderSeq.push(invaderSeqFirst);
         }
+        
     }
     if (deck === 1) {
-        let img = document.createElement('img');
-        img.classList.add('game-card');
-
         if (strength === 0) {
             card = (turnRandomNumber >= 0.5 ? eventSeq[eventSeqIndex] : eventSeq[eventSeqIndex+1]);
-            img.src = (`./assets/event/${card}.jpg`)
-            alert(`The top card of the Event Deck is now displayed. You shuffle it with the second card of the deck. \nIf you want to see the card again later, please press the same button.`);
+            displayCard('event', card);
+            alert(`The top card of the Event Deck is now displayed. You shuffle it with the second card of the Deck. `);
         } else if (strength === 1) {
             card = eventSeq[eventSeqIndex];
-            img.src = (`./assets/event/${card}.jpg`)
-            alert(`The top card of the Event Deck is now displayed. \nNo further actions are needed if you want to return it to the top of the deck. \nUse the buttons on the third row to return it to the bottom of the deck.`);
+            displayCard('event', card);
+            alert(`The top card of the Event Deck is now displayed. Use the next button to move it to the bottom of the Event Deck. `);
         }
-
-        clearCardDisplay();
-        cardDisplay.append(img);
+        else if (strength === 9) {
+            eventSeqFirst = eventSeq.splice(eventSeqIndex, 1);
+            eventSeq.push(eventSeqFirst);
+            alert(`The top card of the Event Deck is now moved to the bottom of the Event Deck. `);
+        }
     }
+    updateUI();
+    save();
 }
+
 
 function isValidCode(code) {
     if (code.length > 2) return false;
