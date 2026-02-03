@@ -945,12 +945,12 @@ function updateUI() {
         $('#btn-undo').removeAttr('disabled');
     }
 
-    if (cardHistoryEventIndex > 0 && eventEnabled) {
+    if (eventSeqIndex > 0 && eventEnabled) {
         $('#this-event-card-btn').removeAttr('disabled');
     } else {
         $('#this-event-card-btn').attr('disabled','');
     }
-    if (cardHistoryFearIndex > 0) {
+    if (fearSeqIndex > 0) {
         $('#this-fear-card-btn').removeAttr('disabled');  
     } else {
         $('#this-fear-card-btn').attr('disabled','');
