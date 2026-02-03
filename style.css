@@ -150,11 +150,8 @@
     height: auto;
 }
 
-
-.game-card-side
-{
-    border-radius: 12px;
-    width: 80%;
+#main-card-display .game-card {
+    transition: opacity 300ms ease-in-out;
 }
 
 .btn
@@ -166,16 +163,29 @@
     text-transform: uppercase;
 }
 
+.special-action-row
+{
+    margin-bottom: 12px;
+}
+
+.special-action-label
+{
+    display: flex;
+    align-items: center;
+}
+
 .special-action-btn {
     text-transform: none;
     display: inline;
+    float: right;
+    margin: 0px 3px;
 }
 
 .history-btn 
 {
     height: 2em;
     font-size: 0.75em;
-    padding: 0px 6px 0px 6px;
+    padding: 0px 6px;
 }
 
 .remove-fear-btn
@@ -442,6 +452,11 @@
 #credits-modal .d-grid {
     max-width: 400px;
     margin: 0 auto;
+}
+
+#btn-next-phase.active {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0.2rem rgba(67, 56, 202, 0.5);
 }
 
 .inverted {filter:invert(100%)}
