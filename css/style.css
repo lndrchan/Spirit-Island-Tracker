@@ -90,6 +90,15 @@
 .invader-card-container .game-card-invader:nth-child(5) { z-index: 5; }
 .invader-card-container .game-card-invader:nth-child(6) { z-index: 6; }
 
+.invader-card-label-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Reduced gap */
+    margin-top: 10px;
+}
+
 /* Card styling */
 .game-card-invader {
     max-width: 120px;
@@ -117,7 +126,6 @@
 /* Invader Card Label */
 .invader-card-label {
     text-align: center;
-    margin-top: 10px;
     font-weight: bold;
     font-size: 0.9rem;
     color: white;
@@ -183,9 +191,15 @@
 
 .history-btn 
 {
-    height: 2em;
+    height: 3em;
     font-size: 0.75em;
-    padding: 0px 6px;
+    padding: 0px 12px;
+    margin: 0px 6px;
+}
+
+.fear-btn 
+{
+    width: 45%; 
 }
 
 .remove-fear-btn
@@ -456,6 +470,29 @@
 #btn-next-phase.active {
     transform: scale(0.95);
     box-shadow: 0 0 0 0.2rem rgba(67, 56, 202, 0.5);
+}
+
+
+/* Star button customization */
+.btn-star {
+    border-color: rosybrown;
+    color: rosybrown;
+    padding: 0.25rem 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-star:hover {
+    border-color: #ffd700;
+    color: #ffd700;
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+/* Active/lit state */
+.btn-star.active {
+    background-color: #ffd700;
+    border-color: #ffd700;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 .inverted {filter:invert(100%)}

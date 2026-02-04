@@ -197,6 +197,25 @@ $(function() {
         }
     });
 
+    $('.btn-star').on('click', function() {
+        // Toggle active class
+        $(this).toggleClass('active');
+        
+        // Toggle icon
+        const $icon = $(this).find('i');
+        if ($(this).hasClass('active')) {
+            $icon.removeClass('bi-star').addClass('bi-star-fill');
+        } else {
+            $icon.removeClass('bi-star-fill').addClass('bi-star');
+        }
+        
+        const cardName = $(this).data('card');
+        console.log(`Star toggled for ${cardName}:`, $(this).hasClass('active'));
+        
+        // Save star state
+        saveStarStates();
+    });
+
     // Logic about game setup. 
 
     // If localstorage info present, read them via load(). 

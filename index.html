@@ -302,19 +302,22 @@
 								</div>
 							</div>
 							<div class="card-footer">
-								<button type="button" class="btn btn-secondary fear-btn" style="width:45%;margin-right: 24px;" id='btn-add-fear' onclick="addFear(1)">
-									1 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em;">
-								</button>
-								<button type="button" class="btn btn-secondary fear-btn" style="width:45%;" id='btn-add-fear-2' onclick="addFear(2)">
-									2 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em">
-								</button>
-
-								<button type="button" class="btn btn-outline-secondary remove-fear-btn fear-btn" style="width:45%;margin-right: 24px;" id='btn-remove-fear' onclick="removeFear(1)">
-									-1 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em;">
-								</button>
-								<button type="button" class="btn btn-outline-secondary remove-fear-btn fear-btn" style="width:45%;" id='btn-remove-fear-2' onclick="removeFear(2)">
-									-2 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em">
-								</button>
+								<div style="text-align: center;">
+									<button type="button" class="btn btn-secondary fear-btn"  id='btn-add-fear' onclick="addFear(1)">
+										1 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em;">
+									</button>
+									<button type="button" class="btn btn-secondary fear-btn" id='btn-add-fear-2' onclick="addFear(2)">
+										2 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em">
+									</button>
+								</div>
+								<div style="text-align: center;">
+									<button type="button" class="btn btn-outline-secondary remove-fear-btn fear-btn" id='btn-remove-fear' onclick="removeFear(1)">
+										-1 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em;">
+									</button>
+									<button type="button" class="btn btn-outline-secondary remove-fear-btn fear-btn" id='btn-remove-fear-2' onclick="removeFear(2)">
+										-2 <img src="./assets/symbol/fear.png" class="d-inline inverted" style="height:1em">
+									</button>
+								</div>
 							</div>
 						</div>
 
@@ -359,9 +362,9 @@
 							
 						</div>
 
-						<div class="col-md-6 main-card-display container-glassmorphism" id="main-card-display"> </div>
+						<div class="col-md-5 main-card-display container-glassmorphism" id="main-card-display"> </div>
 
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<div class="right-bar">
 								<div id="terror-level-container" style="align-content: center;display: flex;"></div>
 
@@ -376,9 +379,13 @@
 										</div>
 										
 										<hr class="m-1">
-										<div style="text-align: center;">
-											<span style="vertical-align: middle;">Invader Deck Remaining</span> <br>
-											<span class="badge text-bg-dark" id="invader-level-sequence"></span>
+										<div class="row">
+											<div class="col-md-6">
+												<span style="vertical-align: middle;">Invader Deck</span>
+											</div>
+											<div class="col-md-6" style="text-align: right;">
+												<span class="badge text-bg-dark" id="invader-level-sequence"></span>
+											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-6">
@@ -392,13 +399,13 @@
 								</div>
 
 								<div class="card container-glassmorphism fear-panel-bottom" data-bs-theme="dark">
-									<span class="card-header">
+									<h5 class="card-header">
 										Card Histories
-									</span>
+									</h5>
 									<div class="card-body" style="text-align: left;">
 										<div class="row">
 											<div class="col-md-4">
-												<span style="vertical-align: middle;">Event</span> 
+												<span class="fs-4" style="vertical-align: middle;">Event</span> 
 											</div>
 											<div class="col-md-8" style="text-align: right;">
 												<button type="button" id="last-event-card-btn" class="btn btn-secondary btn-sm history-btn" onclick="displayCardHistory('event', -1)">
@@ -412,9 +419,9 @@
 												</button>
 											</div>
 										</div>
-										<div class="row">
+										<div class="row mt-2">
 											<div class="col-md-4">
-												<span style="vertical-align: middle;">Fear</span> 
+												<span class="fs-4" style="vertical-align: middle;">Fear</span> 
 											</div> 
 											<div class="col-md-8" style="text-align: right;">
 												<button type="button" id="last-fear-card-btn" class="btn btn-secondary btn-sm history-btn" onclick="displayCardHistory('fear', -1)">
@@ -440,8 +447,13 @@
 							<div class="invader-card-container" id="invader-card-fourth"> 
 								
 							</div>
-							<div class="invader-card-label" id="invader-card-label-fourth">
-								Discard
+							<div class="invader-card-label-container">
+								<div class="invader-card-label" id="invader-card-label-fourth">
+									Discard
+								</div>
+								<button type="button" class="btn btn-sm btn-outline-secondary btn-star" data-card="fourth">
+									<i class="bi bi-star"></i>
+								</button>
 							</div>
 						</div>
 
@@ -453,8 +465,13 @@
 							<div class="invader-card-container" id="invader-card-ravage"> 
 								
 							</div>
-							<div class="invader-card-label" id="invader-card-label-ravage">
-								Ravage
+							<div class="invader-card-label-container">
+								<div class="invader-card-label" id="invader-card-label-ravage">
+									Ravage
+								</div>
+								<button type="button" class="btn btn-sm btn-outline-secondary btn-star" data-card="fourth">
+									<i class="bi bi-star"></i>
+								</button>
 							</div>
 						</div>
 
@@ -466,8 +483,13 @@
 							<div class="invader-card-container" id="invader-card-build"> 
 								
 							</div>
-							<div class="invader-card-label" id="invader-card-label-build">
-								Build
+							<div class="invader-card-label-container">
+								<div class="invader-card-label" id="invader-card-label-build">
+									Build
+								</div>
+								<button type="button" class="btn btn-sm btn-outline-secondary btn-star" data-card="fourth">
+									<i class="bi bi-star"></i>
+								</button>
 							</div>
 						</div>
 
@@ -479,8 +501,14 @@
 							<div class="invader-card-container" id="invader-card-explore"> 
 								
 							</div>
-							<div class="invader-card-label" id="invader-card-label-explore">
-								Explore
+							
+							<div class="invader-card-label-container">
+								<div class="invader-card-label" id="invader-card-label-explore">
+									Explore
+								</div>
+								<button type="button" class="btn btn-sm btn-outline-secondary btn-star" data-card="fourth">
+									<i class="bi bi-star"></i>
+								</button>
 							</div>
 						</div>
 
