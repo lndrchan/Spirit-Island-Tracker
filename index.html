@@ -276,13 +276,11 @@
 			<div class="row main-container">
 				<div class="col-md-3">
 					<div class="left-bar fear-panel-top">
-						<p id="fear-cards-remaining-container">Fear Cards Remaining:    
+						<p id="fear-cards-remaining-container">Fear Cards Remaining 
 							<span class="badge text-bg-dark fear-cards-remaining-badge">1</span> /
 							<span class="badge text-bg-dark fear-cards-remaining-badge">4</span> /
 							<span class="badge text-bg-dark fear-cards-remaining-badge">4</span>
 						</p>
-
-						<hr>
 
 						<span class="badge text-bg-dark fear-panel-top-title" id="fear-cards-next-level">1</span>
 						cards until next Terror Level
@@ -367,7 +365,7 @@
 
 						<div class="col-md-4">
 							<div class="right-bar">
-								<div id="terror-level-container" style="align-content: center;display: flex;"></div>
+								<div id="terror-level-container" style="text-align: center;"></div>
 
 								<div class="card container-glassmorphism right-bar-card" data-bs-theme="dark">
 									<div class="card-body">
@@ -405,10 +403,10 @@
 									</h5>
 									<div class="card-body" style="text-align: left;">
 										<div class="row">
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<span class="fs-4" style="vertical-align: middle;">Event</span> 
 											</div>
-											<div class="col-md-8" style="text-align: right;">
+											<div class="col-md-9" style="text-align: right;">
 												<button type="button" id="last-event-card-btn" class="btn btn-secondary btn-sm history-btn" onclick="displayCardHistory('event', -1)">
 													<i class="bi bi-caret-left-fill"></i>
 												</button>
@@ -421,10 +419,10 @@
 											</div>
 										</div>
 										<div class="row mt-2">
-											<div class="col-md-4">
+											<div class="col-md-3">
 												<span class="fs-4" style="vertical-align: middle;">Fear</span> 
 											</div> 
-											<div class="col-md-8" style="text-align: right;">
+											<div class="col-md-9" style="text-align: right;">
 												<button type="button" id="last-fear-card-btn" class="btn btn-secondary btn-sm history-btn" onclick="displayCardHistory('fear', -1)">
 													<i class="bi bi-caret-left-fill"></i>
 												</button>
@@ -452,9 +450,17 @@
 								<div class="invader-card-label" id="invader-card-label-fourth">
 									Discard
 								</div>
-								<button type="button" class="btn btn-sm btn-outline-secondary btn-star" data-card="fourth">
-									<i class="bi bi-star"></i>
-								</button>
+								<div class="invader-card-buttons">
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="blight">
+										Blight
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="event">
+										Event
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="fear">
+										Fear
+									</button>
+								</div>
 							</div>
 						</div>
 
@@ -470,9 +476,20 @@
 								<div class="invader-card-label" id="invader-card-label-ravage">
 									Ravage
 								</div>
-								<button type="button" class="btn btn-sm btn-outline-secondary btn-star" data-card="fourth">
-									<i class="bi bi-star"></i>
-								</button>
+								<div class="invader-card-buttons">
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="lock">
+										<i class="bi bi-lock-fill"></i>
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="blight">
+										Blight
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="event">
+										Event
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="fear">
+										Fear
+									</button>
+								</div>
 							</div>
 						</div>
 
@@ -488,9 +505,20 @@
 								<div class="invader-card-label" id="invader-card-label-build">
 									Build
 								</div>
-								<button type="button" class="btn btn-sm btn-outline-secondary btn-star" data-card="fourth">
-									<i class="bi bi-star"></i>
-								</button>
+								<div class="invader-card-buttons">
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="lock">
+										<i class="bi bi-lock-fill"></i>
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="blight">
+										Blight
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="event">
+										Event
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="fear">
+										Fear
+									</button>
+								</div>
 							</div>
 						</div>
 
@@ -507,9 +535,17 @@
 								<div class="invader-card-label" id="invader-card-label-explore">
 									Explore
 								</div>
-								<button type="button" class="btn btn-sm btn-outline-secondary btn-star" data-card="fourth">
-									<i class="bi bi-star"></i>
-								</button>
+								<div class="invader-card-buttons">
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="blight">
+										Blight
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="event">
+										Event
+									</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="fear">
+										Fear
+									</button>
+								</div>
 							</div>
 						</div>
 

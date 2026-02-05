@@ -55,6 +55,30 @@ var invaderCardRavage;
 var invaderCardBuild; 
 var invaderCardExplore;
 var invaderCards = [[],[],[],[]]; // Store invader codes
+var invaderCardActions = {
+    fourth: {
+        blight: false,
+        event: false,
+        fear: false
+    },
+    ravage: {
+        lock: false,
+        blight: false,
+        event: false,
+        fear: false
+    },
+    build: {
+        lock: false,
+        blight: false,
+        event: false,
+        fear: false
+    },
+    explore: {
+        blight: false,
+        event: false,
+        fear: false
+    }
+}
 
 var ravageBadge = null;
 var buildBadge = null;
@@ -197,23 +221,26 @@ $(function() {
         }
     });
 
-    $('.btn-star').on('click', function() {
+    // Card action button click handler
+    $('.btn-card-action').on('click', function() {
+
+        let currentCards = {
+            'blight': blightFlipped ? blightSeq[blightSeqIndex] : 'back',
+            'event': eventSeq[eventSeqIndex-1],
+            'fear': fearSeq[fearSeqIndex-1]
+        }
+
+        if (phase >= 5) {
+            if ($(this).data('action') === 'lock') return;
+            if ($(this).hasClass('active')) {
+                displayCard($(this).data('action'), currentCards[$(this).data('action')]);
+            }
+            return;
+        }
+
         // Toggle active class
         $(this).toggleClass('active');
-        
-        // Toggle icon
-        const $icon = $(this).find('i');
-        if ($(this).hasClass('active')) {
-            $icon.removeClass('bi-star').addClass('bi-star-fill');
-        } else {
-            $icon.removeClass('bi-star-fill').addClass('bi-star');
-        }
-        
-        const cardName = $(this).data('card');
-        console.log(`Star toggled for ${cardName}:`, $(this).hasClass('active'));
-        
-        // Save star state
-        saveStarStates();
+        invaderCardActions[$(this).data('card')][$(this).data('action')] = $(this).hasClass('active');
     });
 
     // Logic about game setup. 
@@ -239,6 +266,7 @@ function nextStep() {
         advancePhaseList(3); // Advance twice to skip to first spirit phase if it is turn 0
         advanceInvaderCard();
         turn++;
+        resetInvaderCardActions();
         turnRandomNumber = Math.random();
         updateUI();
         save();
@@ -320,7 +348,7 @@ function nextStep() {
         updateInvaderCard(true);
         updateInvaderBadge(true);
         clearCardDisplay();
-        showAdversaryCard();
+        displayCard('adversary', adversary)
     }
 
     // Slow power phase: advance invader card
@@ -465,19 +493,22 @@ function drawCard(type) {
 
 function displayCard(type, content) {
 
-    cardDisplayType = type;
-    cardDisplayContent = content;
+    if (type == cardDisplayType && content == cardDisplayContent) {
+        if (type == 'adversary') return;
+        type = 'adversary';
+        content = adversary;
+    }
 
-    const $cardDisplay = $('#main-card-display');
-    
+    if (content == 'none' || content == '') return;
+
     // Fade out container
-    $cardDisplay.fadeOut(300, function() {
+    cardDisplay.fadeOut(300, function() {
         // Clear and add new image
-        $cardDisplay.empty();
+        cardDisplay.empty();
         
         if (type === '') {
-            $cardDisplay.html(content);
-            $cardDisplay.fadeIn(300);
+            cardDisplay.html(content);
+            cardDisplay.fadeIn(300);
             return;
         }
         const $img = $('<img>')
@@ -490,9 +521,9 @@ function displayCard(type, content) {
         }
         
         // Add image and fade container back in
-        $cardDisplay.append($img).fadeIn(300, function() {
+        cardDisplay.append($img).fadeIn(300, function() {
             // Remove inline styles after fade completes
-            $cardDisplay.css({
+            cardDisplay.css({
                 'opacity': '',
                 'display': ''
             });
@@ -811,7 +842,7 @@ function setup() {
     phase = 5;
     
     initUI();
-    showAdversaryCard();
+    displayCard('adversary', adversary)
     updatePhaseList();
     updateUI();
     updateInvaderCard(true);
@@ -831,6 +862,7 @@ function save() {
         invaderSeqIndex: invaderSeqIndex,
         invaderLevelSeq: invaderLevelSeq,
         invaderLevelSeqCustom: invaderLevelSeqCustom,
+        invaderCardActions: invaderCardActions,
         fear: fear,
         fearSeq: fearSeq,
         fearSeqIndex: fearSeqIndex,
@@ -870,6 +902,7 @@ function load(index) {
     invaderSeqIndex = gameData.invaderSeqIndex;
     invaderLevelSeq = gameData.invaderLevelSeq;
     invaderLevelSeqCustom = gameData.invaderSeqCustom;
+    invaderCardActions = gameData.invaderCardActions;
 
     blightSeq = gameData.blightSeq;
     blightSeqIndex = gameData.blightSeqIndex;
@@ -957,9 +990,19 @@ function updateUI() {
         else if (adversaryLevel >= 4) {
             if ($('#phase-list-fourth-item')) $('#phase-list-fourth-item').css('display','block'); 
             $('#invader-card-label-fourth').html('Build 🏴󠁧󠁢󠁥󠁮󠁧󠁿')
-        }
-        
+        }   
     }
+
+    $('.btn-card-action').each(function() {
+        if (phase === 0) {
+            $(this).removeClass('active active-yellow');
+        }
+        if ($(this).hasClass('active')) {
+            if (phase === 5) {
+                $(this).addClass('active-yellow');
+            } 
+        }
+    });
     
     let redrawEnabledPhases = [3,4];
     if (redrawEnabledPhases.includes(phase)) {
@@ -1061,11 +1104,6 @@ function startNewGame() {
     }
 }
 
-function showAdversaryCard() {
-    if (adversary === 'none') return;
-    displayCard('adversary', adversary);
-}
-
 function showBlightCard() {
     if (!blightEnabled) return;
     if (!blightFlipped) {
@@ -1076,11 +1114,19 @@ function showBlightCard() {
 }
 
 function advanceInvaderCard() {
+
     for (let i = 0; i < 3; i++) {
         let newArray = [];
 
         for (let j = 0; j < invaderCards[i+1].length; j++) {
-            if (i === 0 && invaderCards[i+1][j] === 'ss') continue;
+            // Look at card in next slot one by one and decide whether to move it to current slot
+            if (
+                (i === 0 && invaderCards[i+1][j] === 'ss') || 
+                (i === 0 && invaderCardActions['ravage']['lock']) || 
+                (i === 1 && invaderCardActions['build']['lock'])
+            ) 
+                {continue};
+            if ((i === 1 && invaderCardActions['ravage']['lock']) || (i === 2 && invaderCardActions['build']['lock'])) newArray.push(invaderCards[i][j]);
             if (i === 1 && invaderCards[i][j] === 'ss') {
                 newArray.push('ss');
             }
@@ -1540,6 +1586,14 @@ function fracturedDaysPower(deck, strength) {
     save();
 }
 
+function resetInvaderCardActions() {
+    invaderCardActions = {
+            fourth: { lock: false, blight: false, event: false, fear: false },
+            ravage: { lock: false, blight: false, event: false, fear: false },
+            build: { lock: false, blight: false, event: false, fear: false },
+            explore: { lock: false, blight: false, event: false, fear: false }
+    }
+}
 
 function isValidCode(code) {
     if (code.length > 3) return false;

@@ -38,10 +38,10 @@
 /* Invader Area - Main Container */
 .invader-area {
     display: flex;
-    justify-content: space-around;
     align-items: center;
     padding: 12px;
     margin-top: 12px;
+    height: 38vh;
 }
 
 /* Invader Card Area */
@@ -91,9 +91,7 @@
 .invader-card-container .game-card-invader:nth-child(6) { z-index: 6; }
 
 .invader-card-label-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    text-align: center;
     justify-content: center;
     gap: 5px; /* Reduced gap */
     margin-top: 10px;
@@ -286,7 +284,7 @@
 .main-area,
 .phase-list-container
 {
-    height: 60vh;
+    height: 55vh;
 }
 
 .phase-list
@@ -472,27 +470,53 @@
     box-shadow: 0 0 0 0.2rem rgba(67, 56, 202, 0.5);
 }
 
+/* Invader card buttons container */
+.invader-card-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
-/* Star button customization */
-.btn-star {
+/* Card action buttons */
+.btn-card-action {
     border-color: rosybrown;
     color: rosybrown;
-    padding: 0.25rem 0.5rem;
+    padding: 6px 9px;
+    font-size: 1em;
     transition: all 0.3s ease;
+    text-transform: uppercase;
 }
 
-.btn-star:hover {
-    border-color: #ffd700;
-    color: #ffd700;
-    background-color: rgba(255, 215, 0, 0.1);
+.btn-card-action:hover {
+    border-color: white;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Active/lit state */
-.btn-star.active {
+/* Active/lit state with white glow */
+.btn-card-action.active {
+    background-color: white;
+    border-color: white;
+    color: #212529; /* Dark text on white background */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.btn-card-action.active-yellow {
     background-color: #ffd700;
     border-color: #ffd700;
-    color: white;
+    color: #212529; /* Dark text on yellow background */
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Lock icon - change when active */
+.btn-card-action[data-action="lock"] .bi-lock::before {
+    content: "\f475"; /* bi-lock */
+}
+
+.btn-card-action[data-action="lock"].active .bi-lock::before {
+    content: "\f474"; /* bi-lock-fill */
 }
 
 .inverted {filter:invert(100%)}
