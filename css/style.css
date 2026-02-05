@@ -171,13 +171,16 @@
 
 .fear-card-control
 {
+    
     display: none;
     margin-top: 12px
 }
 
 .fear-card-btn
 {
-    
+    margin: 0px;
+    margin-bottom: 3px;   
+    padding: 3px 0px;
 }
 
 .fear-card-btn-large

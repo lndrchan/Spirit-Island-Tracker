@@ -375,7 +375,8 @@ function addFear(count) {
         fear++;
 
         if (fear === maxFear) {
-            earnFearCard();
+            earnedFearCards++;
+            removeFearCard();
         }
 
         if (fear >= maxFear || fear < 0) {
@@ -421,11 +422,6 @@ function updateTerrorLevel() {
         `)
 }
 
-function earnFearCard() {
-    earnedFearCards++;
-    removeCard('fear');
-}
-
 function revealFearCard() {
     if (earnedFearCards === 0) {
         alert('No earned Fear Cards to reveal.');
@@ -443,8 +439,36 @@ function addFearCard(tl) {
     save();
 }
 
-function removeFearCard(tl) {
-    fearLevelSeq[tl]--;
+function removeFearCard() {
+    fearLevelSeq[terrorLevel]--;
+    if (fearLevelSeq[terrorLevel] === 0) {
+        terrorLevel++;
+        updateTerrorLevel();
+    }
+
+    if (adversary === 'russia' && adversaryLevel >= 5) {
+        let russiaFearCount = 0;
+        for (let i = 0; i < 3; i++) {
+            russiaFearCount += adversaryConfig[adversary]['fear'][adversaryLevel][i] - fearLevelSeq[i];
+            console.log(adversaryConfig[adversary]['fear'][adversaryLevel][i], fearLevelSeq[i]);
+        }
+
+        if (russiaFearCount === 3) {
+            alert('Russia effect triggered: Entrench in the Face of Fear');
+            let unusedLevel2 = level2.filter(function(item) {return !invaderSeq.includes(item)});
+            invaderCards[2].push(unusedLevel2[Math.floor(Math.random() * unusedLevel2.length)]);
+            updateInvaderCard(false);
+            updateInvaderBadge();
+        }
+        if (russiaFearCount === 7) {
+            alert('Russia effect triggered: Entrench in the Face of Fear');
+            let unusedLevel3 = level3.filter(function(item) {return !invaderSeq.includes(item)});
+            invaderCards[2].push(unusedLevel3[Math.floor(Math.random() * unusedLevel3.length)]);
+            updateInvaderCard(false);
+            updateInvaderBadge();
+        }
+    }
+    
     updateUI();
     save();
 }
@@ -587,34 +611,7 @@ function redraw() {
 
 function removeCard(type) {
     if (type === 'fear') {
-        fearLevelSeq[terrorLevel]--;
-        if (fearLevelSeq[terrorLevel] === 0) {
-            terrorLevel++;
-            updateTerrorLevel();
-        }
-
-        if (adversary === 'russia' && adversaryLevel >= 5) {
-            let russiaFearCount = 0;
-            for (let i = 0; i < 3; i++) {
-                russiaFearCount += adversaryConfig[adversary]['fear'][adversaryLevel][i] - fearLevelSeq[i];
-                console.log(adversaryConfig[adversary]['fear'][adversaryLevel][i], fearLevelSeq[i]);
-            }
-
-            if (russiaFearCount === 3) {
-                alert('Russia effect triggered: Entrench in the Face of Fear');
-                let unusedLevel2 = level2.filter(function(item) {return !invaderSeq.includes(item)});
-                invaderCards[2].push(unusedLevel2[Math.floor(Math.random() * unusedLevel2.length)]);
-                updateInvaderCard(false);
-                updateInvaderBadge();
-            }
-            if (russiaFearCount === 7) {
-                alert('Russia effect triggered: Entrench in the Face of Fear');
-                let unusedLevel3 = level3.filter(function(item) {return !invaderSeq.includes(item)});
-                invaderCards[2].push(unusedLevel3[Math.floor(Math.random() * unusedLevel3.length)]);
-                updateInvaderCard(false);
-                updateInvaderBadge();
-            }
-        }
+        
     }
     else if (type === 'invader') {
     
@@ -622,6 +619,8 @@ function removeCard(type) {
         updateInvaderCard(false);
 
     }
+    updateUI();
+    save();
 }
 
 // Remove first item of phase list and generate new phase list item at bottom of list

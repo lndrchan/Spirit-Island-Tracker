@@ -295,39 +295,23 @@
 								<div class="fs-4" id="fear-cards-remaining-container">
 									<div class="fear-badge-container">
 										<span class="badge text-bg-dark fear-cards-remaining-badge">1</span>
-										<div class="btn-group-vertical fear-card-control" role="group">
-											<button type="button" class="btn btn-secondary fear-card-btn" onclick="addFearCard(0)">
-												<i class="bi bi-plus-lg"></i>
-											</button>
-											<button type="button" class="btn btn-secondary fear-card-btn" onclick="removeFearCard(0)">
-												<i class="bi bi-dash-lg"></i>
-											</button>
-										</div>
 									</div>
 									<div class="fear-badge-slash">/</div>
 									<div class="fear-badge-container">
 										<span class="badge text-bg-dark fear-cards-remaining-badge">1</span>
-										<div class="btn-group-vertical fear-card-control" role="group">
-											<button type="button" class="btn btn-secondary fear-card-btn" onclick="addFearCard(1)">
-												<i class="bi bi-plus-lg"></i>
-											</button>
-											<button type="button" class="btn btn-secondary fear-card-btn" onclick="removeFearCard(1)">
-												<i class="bi bi-dash-lg"></i>
-											</button>
-										</div>
 									</div>
 									<div class="fear-badge-slash">/</div>
 									<div class="fear-badge-container">
 										<span class="badge text-bg-dark fear-cards-remaining-badge">1</span>
-										<div class="btn-group-vertical fear-card-control" role="group">
-											<button type="button" class="btn btn-secondary fear-card-btn" onclick="addFearCard(2)">
-												<i class="bi bi-plus-lg"></i>
-											</button>
-											<button type="button" class="btn btn-secondary fear-card-btn" onclick="removeFearCard(2)">
-												<i class="bi bi-dash-lg"></i>
-											</button>
-										</div>
 									</div>
+								</div>
+								<div class="btn-group-vertical fear-card-control" role="group">
+									<button type="button" class="btn btn-secondary fear-card-btn" onclick="addFearCard(terrorLevel)">
+										Add Fear Card
+									</button>
+									<button type="button" class="btn btn-secondary fear-card-btn" onclick="removeFearCard()">
+										Remove Fear Card
+									</button>
 								</div>
 							</div>
 							<div style="text-align: center;height: 0.75em"><i class="bi bi-caret-down-fill text-secondary"></i></div>
