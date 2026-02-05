@@ -277,25 +277,25 @@
 				<div class="col-md-3">
 					<div class="left-bar fear-panel-top">
 						<div class="row container-glassmorphism" id="fear-card-number-display">
-							<div class="col-md-4 text-center">
+							<div class="col-md-6 text-center">
 								<h5 class="fear-card-number-title">Earned</h5> 
 								<div class="fs-4">
 									<div class="col fear-badge-container">
 										<span class="badge text-bg-dark" id="left-bar-fear-badge">1</span>
 										<div class="fear-card-control">
-											<button type="button" class="btn btn-secondary fear-card-btn">
-												Reveal
+											<button type="button" class="btn btn-secondary fear-card-btn-large" onclick="revealFearCard()">
+												Reveal Now
 											</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-8 text-center">
-								<h5 class="fear-card-number-title">Fear Cards Remaining</h5>
+							<div class="col-md-6 text-center" style="border-left:1px solid #424242;">
+								<h5 class="fear-card-number-title">Fear Deck</h5>
 								<div class="fs-4" id="fear-cards-remaining-container">
 									<div class="fear-badge-container">
 										<span class="badge text-bg-dark fear-cards-remaining-badge">1</span>
-										<div class="fear-card-control">
+										<div class="btn-group-vertical fear-card-control" role="group">
 											<button type="button" class="btn btn-secondary fear-card-btn" onclick="addFearCard(0)">
 												+
 											</button>
@@ -307,7 +307,7 @@
 									<div class="fear-badge-slash">/</div>
 									<div class="fear-badge-container">
 										<span class="badge text-bg-dark fear-cards-remaining-badge">1</span>
-										<div class="fear-card-control">
+										<div class="btn-group-vertical fear-card-control" role="group">
 											<button type="button" class="btn btn-secondary fear-card-btn" onclick="addFearCard(1)">
 												+
 											</button>
@@ -319,7 +319,7 @@
 									<div class="fear-badge-slash">/</div>
 									<div class="fear-badge-container">
 										<span class="badge text-bg-dark fear-cards-remaining-badge">1</span>
-										<div class="fear-card-control">
+										<div class="btn-group-vertical fear-card-control" role="group">
 											<button type="button" class="btn btn-secondary fear-card-btn" onclick="addFearCard(2)">
 												+
 											</button>
@@ -494,15 +494,17 @@
 									Discard
 								</div>
 								<div class="invader-card-buttons">
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="blight">
-										Blight
-									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="event">
-										Event
-									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="fear">
-										Fear
-									</button>
+									<div class="btn-group ms-2" role="group">
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="blight">
+											Blight
+										</button>
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="event">
+											Event
+										</button>
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="fear">
+											Fear
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -519,19 +521,21 @@
 								<div class="invader-card-label" id="invader-card-label-ravage">
 									Ravage
 								</div>
-								<div class="invader-card-buttons">
+								<div class="btn-toolbar invader-card-buttons" role="toolbar">
 									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="lock">
 										<i class="bi bi-lock-fill"></i>
 									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="blight">
-										Blight
-									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="event">
-										Event
-									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="fear">
-										Fear
-									</button>
+									<div class="btn-group ms-2" role="group">
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="blight">
+											Blight
+										</button>
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="event">
+											Event
+										</button>
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="fear">
+											Fear
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -548,19 +552,21 @@
 								<div class="invader-card-label" id="invader-card-label-build">
 									Build
 								</div>
-								<div class="invader-card-buttons">
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="lock">
+								<div class="btn-toolbar invader-card-buttons" role="toolbar">
+									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="ravage" data-action="lock">
 										<i class="bi bi-lock-fill"></i>
 									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="blight">
-										Blight
-									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="event">
-										Event
-									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="fear">
-										Fear
-									</button>
+									<div class="btn-group ms-2" role="group">
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="blight">
+											Blight
+										</button>
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="event">
+											Event
+										</button>
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="build" data-action="fear">
+											Fear
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -579,15 +585,17 @@
 									Explore
 								</div>
 								<div class="invader-card-buttons">
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="blight">
-										Blight
-									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="event">
-										Event
-									</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="fear">
-										Fear
-									</button>
+									<div class="btn-group ms-2" role="group">
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="blight">
+											Blight
+										</button>
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="event">
+											Event
+										</button>
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="explore" data-action="fear">
+											Fear
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>

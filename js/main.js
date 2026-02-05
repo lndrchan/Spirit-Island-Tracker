@@ -426,6 +426,17 @@ function earnFearCard() {
     removeCard('fear');
 }
 
+function revealFearCard() {
+    if (earnedFearCards === 0) {
+        alert('No earned Fear Cards to reveal.');
+        return;
+    }
+    drawCard('fear');
+    earnedFearCards--;
+    updateUI();
+    save();
+}
+
 function addFearCard(tl) {
     fearLevelSeq[tl]++;
     updateUI();
@@ -510,6 +521,8 @@ function displayCard(type, content) {
     }
 
     if (content == 'none' || content == '') return;
+
+    if (type === 'blight' && !blightFlipped) content = 'back';
 
     cardDisplayType = type;
     cardDisplayContent = content;
@@ -1497,10 +1510,7 @@ function spiritsMayYetDream() {
         return;
     }
 
-    if (earnedFearCards === 0) {
-        alert('No earned Fear Cards to draw.');
-        return;
-    }
+    
 
     // Flip all earned fear cards
     for (let i = 0; i < earnedFearCards; i++) {
@@ -1529,10 +1539,7 @@ function terrorSpikesUpwards() {
         return;
     }
 
-    drawCard('fear');
-    earnedFearCards--;
-    updateUI();
-    save();
+    
 }
 
 function fracturedDaysPower(deck, strength) { 

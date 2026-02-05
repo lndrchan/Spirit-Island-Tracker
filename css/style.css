@@ -171,13 +171,18 @@
 
 .fear-card-control
 {
-    margin-top: 12px;
+    display: none;
+    margin-top: 12px
 }
 
 .fear-card-btn
 {
-    height: 2em;
-    padding: 0px 12px;
+    margin: 0px;
+}
+
+.fear-card-btn-large
+{
+    width: 100%;
 }
 
 #btn-next-phase
@@ -213,7 +218,7 @@
 
 .fear-btn 
 {
-    width: 45%; 
+    width: 49%; 
 }
 
 .remove-fear-btn
@@ -226,7 +231,7 @@
 #fear-card-number-display
 {
     margin: 0px 3px;
-    padding: 1rem;
+    padding: 1rem 0rem;
 }
 
 .fear-panel-top
@@ -515,7 +520,6 @@
 .invader-card-buttons {
     display: flex;
     flex-direction: row;
-    gap: 3px;
     justify-content: center;
     flex-wrap: nowrap; /* Prevent wrapping */
     width: 100%;
