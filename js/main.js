@@ -833,13 +833,19 @@ function setup() {
     fear = 0;
 
     // Fall back to lower level if undefined (same as level below)
-    for (let i = adversaryLevel; invaderLevelSeq.length === 0 || i === 0; i--) {
-        invaderLevelSeq = adversaryConfig[adversary].invader[i];
-        if (i === 0) invaderLevelSeq = [1,1,1,2,2,2,2,3,3,3,3,3]; // Default sequence
+    for (let i = parseInt(adversaryLevel); invaderLevelSeq.length === 0; i--) {
+        invaderLevelSeq = adversaryConfig[adversary]['invader'][i];
+        if (i === 0) {
+            invaderLevelSeq = [1,1,1,2,2,2,2,3,3,3,3,3]; // Default sequence
+            break;
+        } 
     }
-    for (let i = adversaryLevel; fearLevelSeq.length === 0 || i === 0; i--) {
-        fearLevelSeq = adversaryConfig[adversary].fear[i];
-        if (i === 0) fearLevelSeq = [3,3,3]; // Default sequence
+    for (let i = parseInt(adversaryLevel); fearLevelSeq.length === 0; i--) {
+        fearLevelSeq = adversaryConfig[adversary]['fear'][i];
+        if (i === 0) {
+            fearLevelSeq = [3,3,3]; // Default sequence
+            break;
+        }
     }
 
     blightSeq = generateSeq(BLIGHT_CARD_COUNT);

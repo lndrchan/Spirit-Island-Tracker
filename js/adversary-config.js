@@ -4,10 +4,10 @@ const adversaryNameDict = {
     'england': 'England',
     'sweden': 'Sweden',
     'france': 'France',
-    'habsburg-livestock': 'Habsburg (Livestock)',
+    'habsburg-livestock': 'Habsburg Monarchy',
     'scotland': 'Scotland',
     'russia': 'Russia',
-    'habsburg-mining': 'Habsburg (Mining Expedition)'
+    'habsburg-mining': 'Habsburg Mining Expedition'
 }
 
 const adversaryFlagDict = {
