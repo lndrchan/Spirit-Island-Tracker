@@ -34,6 +34,9 @@ const invaderCardDict = {
 const adversaryConfig = {
 
     'none': {
+        'difficulty': [
+            0,0,0,0,0,0,0
+        ],
         'fear': [
             [],
             [],
@@ -64,6 +67,9 @@ const adversaryConfig = {
     },
 
     'prussia': {
+        'difficulty': [
+            1,2,4,6,7,9,10
+        ],
         'fear': [
             [],
             [],
@@ -94,6 +100,9 @@ const adversaryConfig = {
     },
 
     'england': {
+        'difficulty': [
+            1,3,4,6,7,9,11
+        ],
         'fear': [
             [],
             [3,4,3],
@@ -124,6 +133,9 @@ const adversaryConfig = {
     },
 
     'sweden': {
+        'difficulty': [
+            1,2,3,5,6,7,8
+        ],
         'fear': [
             [],
             [],
@@ -154,6 +166,9 @@ const adversaryConfig = {
     },
 
     'france': {
+        'difficulty': [
+            2,3,5,7,8,9,10
+        ],
         'fear': [
             [],
             [],
@@ -184,6 +199,9 @@ const adversaryConfig = {
     },
 
     'habsburg-livestock': {
+        'difficulty': [
+            2,3,5,6,8,9,10
+        ],
         'fear': [
             [],
             [3,4,3],
@@ -214,6 +232,9 @@ const adversaryConfig = {
     },
 
     'russia': {
+        'difficulty': [
+            1,3,4,6,7,9,11
+        ],
         'fear': [
             [],
             [3,3,4],
@@ -244,6 +265,9 @@ const adversaryConfig = {
     },
 
     'scotland': {
+        'difficulty': [
+            1,3,4,6,7,8,10
+        ],
         'fear': [
             [],
             [3,4,3],
@@ -274,6 +298,9 @@ const adversaryConfig = {
     },
 
     'habsburg-mining': {
+        'difficulty': [
+            2,3,4,5,7,9,10
+        ],
         'fear': [
             [],
             [],

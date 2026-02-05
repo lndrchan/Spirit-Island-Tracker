@@ -1118,7 +1118,7 @@ function initUI() {
     $('#invader-card-label-explore').html('Explore');
 
     if (adversary !== 'none') {
-        $('#adversary-name-display').html(adversaryNameDict[adversary] + ' ' + adversaryLevel);
+        $('#adversary-name-display').html(adversaryNameDict[adversary] + ' ' + adversaryLevel + ' (Difficulty ' + adversaryConfig[adversary]['difficulty'][adversaryLevel] + ')');
 
         let actionChangeIndex = adversaryConfig[adversary]['actionChange'][adversaryLevel];
         for (let i = 0; i < actionChangeIndex.length; i++) {
@@ -1151,6 +1151,7 @@ function advanceInvaderCard() {
 
     for (let i = 0; i < 3; i++) {
         let newArray = [];
+        if ((i === 1 && invaderCardActions['ravage']['lock']) || (i === 2 && invaderCardActions['build']['lock'])) newArray = invaderCards[i];
 
         for (let j = 0; j < invaderCards[i+1].length; j++) {
             // Look at card in next slot one by one and decide whether to move it to current slot
@@ -1160,7 +1161,7 @@ function advanceInvaderCard() {
                 (i === 1 && invaderCardActions['build']['lock'])
             ) 
                 {continue};
-            if ((i === 1 && invaderCardActions['ravage']['lock']) || (i === 2 && invaderCardActions['build']['lock'])) newArray.push(invaderCards[i][j]);
+            
             if (i === 1 && invaderCards[i][j] === 'ss') {
                 newArray.push('ss');
             }
