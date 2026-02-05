@@ -330,7 +330,6 @@ function nextStep() {
     }
 
     if (phase === 3) {
-        clearCardDisplay();
         if (eventEnabled) {
             drawCard('event');
         } else {
@@ -343,7 +342,6 @@ function nextStep() {
     }
 
     if (phase === 4) {
-        clearCardDisplay();
         if (earnedFearCards === 0) {
             displayCard('', `
                 <div class="preview-placeholder cantora-one">
@@ -362,7 +360,6 @@ function nextStep() {
     if (phase === 5) {    
         updateInvaderCard(true);
         updateInvaderBadge(true);
-        clearCardDisplay();
         displayCard('adversary', adversary)
     }
 
@@ -596,10 +593,6 @@ function displayCard(type, content) {
     });
 
     updateUI();
-}
-
-function clearCardDisplay() {
-    cardDisplay.empty();
 }
 
 function redraw() {
