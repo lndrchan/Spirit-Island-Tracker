@@ -241,6 +241,7 @@ $(function() {
         // Toggle active class
         $(this).toggleClass('active');
         invaderCardActions[$(this).data('card')][$(this).data('action')] = $(this).hasClass('active');
+        save();
     });
 
     // Logic about game setup. 
@@ -263,7 +264,7 @@ $(function() {
 // Checks if advance phase or if there are things that need resolving. 
 function nextStep() {
     if (phase === 5 && turn === 0) {
-        advancePhaseList(3); // Advance twice to skip to first spirit phase if it is turn 0
+        advancePhaseList(3); 
         advanceInvaderCard();
         turn++;
         resetInvaderCardActions();
@@ -292,6 +293,7 @@ function nextStep() {
 
     if (phase === 0) {
         turn++;
+        resetInvaderCardActions();
         turnRandomNumber = Math.random();
         $('#turn-count-display').html(turn);
         $('#total-turn-count-display').html(invaderSeq.length);
@@ -370,6 +372,7 @@ function addFear(count) {
 
         if (fear === maxFear) {
             earnFearCard();
+            return;
         }
 
         if (fear >= maxFear || fear < 0) {
@@ -787,6 +790,14 @@ function setup() {
         fearLevelSeq = [3,3,3];
     }
 
+    if (!eventEnabled) {
+        $('[data-action="event"]').hide();
+    }
+
+    if (!blightEnabled) {
+        $('[data-action="blight"]').hide();
+    }
+
     if (invaderLevelSeqCustom.length > 0) {
         invaderLevelSeq = invaderLevelSeqCustom;
     }
@@ -997,14 +1008,17 @@ function updateUI() {
     }
 
     $('.btn-card-action').each(function() {
-        if (phase === 0) {
+
+        if (invaderCardActions[$(this).data('card')][$(this).data('action')]) {
+            if (phase >= 5) {
+                $(this).addClass('active-yellow');
+            } else {
+                $(this).removeClass('active-yellow').addClass('active');
+            }
+        } else {
             $(this).removeClass('active active-yellow');
         }
-        if ($(this).hasClass('active')) {
-            if (phase === 5) {
-                $(this).addClass('active-yellow');
-            } 
-        }
+
     });
     
     let redrawEnabledPhases = [3,4];
@@ -1596,6 +1610,7 @@ function resetInvaderCardActions() {
             build: { lock: false, blight: false, event: false, fear: false },
             explore: { lock: false, blight: false, event: false, fear: false }
     }
+    $('.btn-card-action').removeClass('active active-yellow');
 }
 
 function isValidCode(code) {

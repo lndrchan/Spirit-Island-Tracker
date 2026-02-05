@@ -372,17 +372,17 @@
 										<div style="text-align: center; align-items: center;">
 											<span class="badge text-bg-dark" id="adversary-name-display"></span>
 											<div>
-												<button type="button" id="show-adversary-card-btn" class="btn btn-secondary btn-sm" onclick="showAdversaryCard()">Adversary Card</button>
-												<button type="button" id="show-blight-card-btn" class="btn btn-secondary btn-sm" onclick="showBlightCard()">Blight Card</button>
+												<button type="button" id="show-adversary-card-btn" class="btn btn-secondary btn-sm" onclick="displayCard('adversary', adversary)">Adversary Card</button>
+												<button type="button" id="show-blight-card-btn" class="btn btn-secondary btn-sm" onclick="displayCard('blight', blightSeq[blightSeqIndex])">Blight Card</button>
 											</div>
 										</div>
 										
 										<hr class="m-1">
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-3" style="text-wrap: nowrap;">
 												<span style="vertical-align: middle;">Invader Deck</span>
 											</div>
-											<div class="col-md-6" style="text-align: right;">
+											<div class="col-md-9" style="text-align: right;">
 												<span class="badge text-bg-dark" id="invader-level-sequence"></span>
 											</div>
 										</div>
@@ -398,13 +398,13 @@
 								</div>
 
 								<div class="card container-glassmorphism fear-panel-bottom" data-bs-theme="dark">
-									<h5 class="card-header">
+									<h6 class="card-header">
 										Card Histories
-									</h5>
+									</h6>
 									<div class="card-body" style="text-align: left;">
 										<div class="row">
 											<div class="col-md-3">
-												<span class="fs-4" style="vertical-align: middle;">Event</span> 
+												<span class="" style="vertical-align: middle;">Event</span> 
 											</div>
 											<div class="col-md-9" style="text-align: right;">
 												<button type="button" id="last-event-card-btn" class="btn btn-secondary btn-sm history-btn" onclick="displayCardHistory('event', -1)">
@@ -420,7 +420,7 @@
 										</div>
 										<div class="row mt-2">
 											<div class="col-md-3">
-												<span class="fs-4" style="vertical-align: middle;">Fear</span> 
+												<span class="" style="vertical-align: middle;">Fear</span> 
 											</div> 
 											<div class="col-md-9" style="text-align: right;">
 												<button type="button" id="last-fear-card-btn" class="btn btn-secondary btn-sm history-btn" onclick="displayCardHistory('fear', -1)">

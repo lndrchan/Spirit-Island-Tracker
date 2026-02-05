@@ -194,9 +194,9 @@
 
 .history-btn 
 {
-    height: 3em;
+    height: 2.5em;
     font-size: 0.75em;
-    padding: 0px 12px;
+    padding: 0px 9px;
     margin: 0px 6px;
 }
 
@@ -475,13 +475,14 @@
     box-shadow: 0 0 0 0.2rem rgba(67, 56, 202, 0.5);
 }
 
-/* Invader card buttons container */
+/* Invader card buttons container - prevent wrapping */
 .invader-card-buttons {
     display: flex;
     flex-direction: row;
-    gap: 5px;
-    flex-wrap: wrap;
+    gap: 3px;
     justify-content: center;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    width: 100%;
 }
 
 /* Card action buttons */
