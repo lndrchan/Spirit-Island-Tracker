@@ -625,16 +625,9 @@ function redraw() {
     }
 }
 
-function removeCard(type) {
-    if (type === 'fear') {
-        
-    }
-    else if (type === 'invader') {
-    
-        invaderSeqIndex++;
-        updateInvaderCard(false);
-
-    }
+function removeInvaderCard() {
+    invaderSeqIndex++;
+    updateInvaderCard(false);
     updateUI();
     save();
 }
