@@ -23,13 +23,12 @@ This is a personal project and is only meant to complement the board game rather
 
 # Compatibility
 
-- This tool explicitly supports the following Event Cards:
-    - Far-Off Wars Touch the Island
-    - Rising Interest in the Island
-    - Terror Spikes Upwards
-    - I may have missed some Event Cards that are resolved by changing the Invader Board. In those cases, use the 'Redraw' button and consider letting me know via the 'Credits & Feedback' menu. 
-- This tool supports all adversaries and their special rules.
-    - Namely, England High Immigration Tile, France 'Slave Rebellion' Event, Russia 'Entrench in the Face of Fear' Effect
+- I may have missed some Event Cards that are resolved by changing the Invader Board. In those cases, use the 'Redraw' button and consider letting me know via the 'Credits & Feedback' menu. 
+- This tool supports the following Adversary special rules (apart from changed Invader Deck and Fear Deck sequences):  
+    - England High Immigration Tile
+    - France 'Slave Rebellion' Event
+    - Russia 'Entrench in the Face of Fear' Effect
+    - Habsburg Mining Expedition 'Salt Deposit' Card
     - However, Supporting Adversaries (combinations) are **not** supported. 
 - All Spirits are supported. However, some of them need **Special Actions** with this tool to resolve their effects: 
     - Bringer of Dreams and Nightmares: **Spirits May Yet Dream**
