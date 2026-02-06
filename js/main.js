@@ -58,6 +58,8 @@ var fearLevelSeq = [];
 var fearLevelSeqCustom = [];
 var terrorLevel = 0; // 0 means terror level 1 and so on...
 
+var expansions = [];
+
 var cardDisplay = null;
 var terrorLevelDisplay = null;
 
@@ -361,6 +363,7 @@ function nextStep() {
         updateInvaderCard(true);
         updateInvaderBadge(true);
         displayCard('adversary', adversary)
+        
     }
 
     // Slow power phase: advance invader card
@@ -520,11 +523,12 @@ function drawCard(type) {
             cardHistoryFearIndex = fearSeqIndex;
             fearSeqIndex++;
             if (fearSeqIndex >= fearSeq.length) {
-                fearSeq = generateSeq(fearSeq.length);
+                fearSeq = generateSeq('fear');
                 fearSeqIndex = 0;
             }
             break;
         case 'event':
+            if (!eventEnabled) return;
             displayCard('event', eventSeq[eventSeqIndex])
             cardHistoryEventIndex = eventSeqIndex;
             if (eventSeq[eventSeqIndex] === 1) {
@@ -537,7 +541,7 @@ function drawCard(type) {
             }
             eventSeqIndex++;
             if (eventSeqIndex >= eventSeq.length) {
-                eventSeq = generateSeq(eventSeq.length);
+                eventSeq = generateSeq('event');
                 eventSeqIndex = 0;
             }
             break;
@@ -552,7 +556,11 @@ function displayCard(type, content) {
         content = adversary;
     }
 
-    if (content == 'none' || content == '') return;
+    if (type == 'adversary' && content == 'none') {
+        type = '';
+        content = '';
+    }
+    if (content == 'none') content = '';
 
     if (type === 'blight' && !blightFlipped) content = 'back';
 
@@ -596,20 +604,15 @@ function displayCard(type, content) {
 }
 
 function redraw() {
-    if (phase === 2 || cardDisplayType == 'blight') {
-        if (blightSeqIndex >= blightSeq.length-1) blightSeq = generateSeq(BLIGHT_CARD_COUNT);
-        blightSeq[blightSeqIndex] = blightSeq.pop();
-        displayCard('blight', blightSeq[blightSeqIndex]);
-    }
-    else if (phase === 3) {
+    if (phase === 3) {
         // Event card phase
-        if (eventSeqIndex >= eventSeq.length-1) eventSeq = generateSeq(EVENT_CARD_COUNT);
+        if (eventSeqIndex >= eventSeq.length-1) eventSeq = generateSeq('event');
         eventSeq[eventSeqIndex-1] = eventSeq.pop();
         displayCard('event', eventSeq[eventSeqIndex-1]);
     }
     else if (phase === 4) {
         // Fear card phase
-        if (fearSeqIndex >= fearSeq.length-1) fearSeq = generateSeq(FEAR_CARD_COUNT);
+        if (fearSeqIndex >= fearSeq.length-1) fearSeq = generateSeq('fear');
         fearSeq[fearSeqIndex-1] = fearSeq.pop();
         displayCard('fear', fearSeq[fearSeqIndex-1]);
     }
@@ -789,6 +792,13 @@ function setup() {
 
     eventEnabled = $('#eventCardsEnabled').is(':checked');
     blightEnabled = $('#blightCardsEnabled').is(':checked');
+    
+    $('.expansion-checkbox:checked').each(function() {
+        expansions.push($(this).val());
+    });
+
+    // Disable event cards if not using expansions that require them (JE, BC, NI)
+    if (!expansions.some(exp => ['bc', 'je', 'ni'].includes(exp))) eventEnabled = false;
 
     // England 6 special rule
     if (adversary === 'england' && adversaryLevel === '6') {
@@ -840,9 +850,9 @@ function setup() {
         }
     }
 
-    blightSeq = generateSeq(BLIGHT_CARD_COUNT);
-    fearSeq = generateSeq(FEAR_CARD_COUNT);
-    eventSeq = generateSeq(EVENT_CARD_COUNT);
+    blightSeq = generateSeq('blight');
+    fearSeq = generateSeq('fear');
+    eventSeq = generateSeq('event');
 
     // France 2 special rule (Slave Rebellion is event/1.jpg)
     for (let i = 0; i < eventSeq.length; i++) {
@@ -861,6 +871,10 @@ function setup() {
     // Habsburg Mining Expedition: Preprocess level 2 pool to remove coast card
     if (adversary === 'habsburg-mining' && adversaryLevel >= 4) {
         level2 = level2.filter((item) => item !== '2c'); // Remove '2c'
+    }
+
+    if (adversary === 'sweden' && adversaryLevel >= 4) {
+        alert('After the first Invader Explore Action, please make sure to Accelerate the Invader Deck using the Special Actions menu. ')
     }
     
     invaderSeq = generateInvaderSeq(invaderLevelSeq);
@@ -883,6 +897,7 @@ function save() {
         playerCount: playerCount,
         adversary: adversary,
         adversaryLevel: adversaryLevel,
+        expansions: expansions,
         blightSeq: blightSeq,
         blightSeqIndex: blightSeqIndex,
         blightFlipped: blightFlipped,
@@ -925,6 +940,7 @@ function load(index) {
     playerCount = gameData.playerCount;
     adversary = gameData.adversary;
     adversaryLevel = gameData.adversaryLevel;
+    expansions = gameData.expansions;
     
     invaderSeq = gameData.invaderSeq;
     invaderSeqIndex = gameData.invaderSeqIndex;
@@ -1256,14 +1272,33 @@ function generateInvaderSeq(levelSeq) {
     return output;
 }
 
-function generateSeq(n) {
-    let output = Array(n);
-    let orderedArray = Array.from({length: n}, (_, i) => i);
+function generateSeq(type) {
+    let length = 0; 
+    switch (type) {
+        case 'blight':
+            length = BLIGHT_CARD_COUNT;
+            break;
+        case 'fear':
+            length = FEAR_CARD_COUNT;
+            break;
+        case 'event':
+            length = EVENT_CARD_COUNT;
+            break;
+    }
+    let output = Array(length);
+    let orderedArray = range(1, length);
 
-    for (let i = 0; i < n; i++) {
-        let random = Math.floor(Math.random() * (n-i));
-        output[i] = orderedArray[random]+1;
+    for (let i = 0; i < length; i++) {
+        let random = Math.floor(Math.random() * (length-i));
+        output[i] = orderedArray[random];
         orderedArray.splice(random, 1);
+    }
+
+    let unusedExpansions = ['bc','ff','je','ni'].filter(exp => !expansions.includes(exp));
+    for (let expansion of unusedExpansions) {
+        if (expansionCards[expansion]) {
+            output = output.filter(card => !expansionCards[expansion][type].includes(card));
+        }
     }
     
     return output;
@@ -1374,7 +1409,7 @@ function updateInvaderBadge() {
     
 }
 
-function changeBlightCard() {
+function redrawBlightCard() {
     if (!confirm('Are you sure you want to flip/change the blight card?')) return;
     if (!blightEnabled) return;
     if (!blightFlipped) {
@@ -1383,8 +1418,11 @@ function changeBlightCard() {
         save();
         return;
     }
-    blightSeqIndex++;
+
+    if (blightSeqIndex >= blightSeq.length-1) blightSeq = generateSeq('blight');
+    blightSeqIndex = 0;
     displayCard('blight', blightSeq[blightSeqIndex]);
+    blightSeqIndex++;
     save();
 }
 
@@ -1489,7 +1527,7 @@ function slaveRebellion() {
         if (eventSeqIndex > eventSeq.length - 4) {
             // Regenerate event card sequence if left over deck not big enough
             // Highly unlikely to happen but not impossible
-            eventSeq = generateSeq(eventSeq.length);
+            eventSeq = generateSeq('event');
             eventSeqIndex = 0;
         }
 
@@ -1640,3 +1678,4 @@ function codeToString(code) {
         return `Stage ${stage} ${terrain}`;
     }
 }
+

@@ -1,3 +1,34 @@
+function range(start, end) {
+    const result = [];
+    for (let i = start; i <= end; i++) {
+        result.push(i);
+    }
+    return result;
+}
+
+const expansionCards = {
+    'bc': {
+        'fear': range(1, 15),
+        'event': [...range(2, 21), 52, 53],
+        'blight': range(3, 8)
+    },
+    'ff': {
+        'fear': range(37, 41),
+        'event': [],
+        'blight': []
+    },
+    'je': {
+        'fear': range(31, 36),
+        'event': range(22, 51),
+        'blight': range(9, 15)
+    },
+    'ni': {
+        'fear': range(42, 50),
+        'event': range(54, 62),
+        'blight': range(16, 23)
+    }
+}
+
 const adversaryNameDict = {
     'none': 'None',
     'prussia': 'Brandenburg-Prussia',

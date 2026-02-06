@@ -143,36 +143,36 @@
 										
 									</div>
 									<!-- Expansions -->
-									<!--
+									
 									<hr>
 									<div class="form-group mt-4">
-										<label class="font-weight-bold mb-3">Expansions Used (for Fear and Event Cards)</label>
+										<label class="font-weight-bold mb-3">Expansions Used (for Blight, Event, and Fear Cards)</label>
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="branch-claw" id="expansionBranchClaw">
+											<input class="form-check-input expansion-checkbox" type="checkbox" value="bc" id="expansionBranchClaw" checked>
 											<label class="form-check-label" for="expansionBranchClaw">
 												Branch & Claw
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="jagged-earth" id="expansionJaggedEarth">
-											<label class="form-check-label" for="expansionJaggedEarth">
-												Jagged Earth
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="feather-flame" id="expansionFeatherFlame">
+											<input class="form-check-input expansion-checkbox" type="checkbox" value="ff" id="expansionFeatherFlame" checked>
 											<label class="form-check-label" for="expansionFeatherFlame">
 												Feather & Flame
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="natures-incarnate" id="expansionNaturesIncarnate">
+											<input class="form-check-input expansion-checkbox" type="checkbox" value="je" id="expansionJaggedEarth" checked>
+											<label class="form-check-label" for="expansionJaggedEarth">
+												Jagged Earth
+											</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input expansion-checkbox" type="checkbox" value="ni" id="expansionNaturesIncarnate" checked>
 											<label class="form-check-label" for="expansionNaturesIncarnate">
 												Nature Incarnate
 											</label>
 										</div>
 									</div>
-									-->
+									
 									<!-- Custom Rules -->
 									<div class="form-group mt-4">
 										<label class="font-weight-bold mb-3">Custom Rules</label>
@@ -360,7 +360,7 @@
 						<button type="button" class="btn btn-outline-light" style="width:100%;" id='redraw-btn' onclick="redraw()">
 							Redraw Event/Fear Card
 						</button>
-						<button type="button" class="btn btn-outline-light" style="width:100%;" id='blight-btn' onclick="changeBlightCard()">
+						<button type="button" class="btn btn-outline-light" style="width:100%;" id='blight-btn' onclick="redrawBlightCard()">
 							Flip/Redraw Blight Card
 						</button>
 						<button type="button" class="btn btn-outline-light" style="width:100%;" id='special-action-btn' data-bs-toggle="modal" data-bs-target="#special-actions-modal">
