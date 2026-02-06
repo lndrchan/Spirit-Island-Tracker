@@ -190,7 +190,7 @@
 
 #btn-next-phase
 {
-    height: 3.3em;
+
 }
 
 .special-action-row
@@ -213,10 +213,7 @@
 
 .history-btn 
 {
-    height: 2.5em;
-    font-size: 0.75em;
-    padding: 0px 9px;
-    margin: 0px 6px;
+    margin-right: 4px;
 }
 
 #btn-add-fear-2
@@ -284,7 +281,7 @@
 {
     border: solid #3b3b3b 1px;
     border-radius: 12px;
-    padding: 24px;
+    padding: 12px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
     font-family: 'Cantora One';

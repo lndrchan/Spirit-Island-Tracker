@@ -26,7 +26,7 @@ var phaseListDict = {
     2: 'Blighted Island',
     3: 'Events',
     4: 'Fear Cards',
-    5: 'Invader Phase',
+    5: 'Invader Actions',
     6: 'Slow Powers',
     7: 'Time Passes'
 };
@@ -1042,12 +1042,14 @@ function updateUI() {
         $('#redraw-btn').attr('disabled','');
     }
 
+    /*
     let fearBtnDisabledPhases = [4];
     if (fearBtnDisabledPhases.includes(phase)) {
         $('.fear-btn').attr('disabled','');
     } else {
         $('.fear-btn').removeAttr('disabled');
     }
+    */
 
     if (saveIndex == 0) {
         $('#btn-undo').attr('disabled','');
@@ -1268,7 +1270,6 @@ function generateSeq(n) {
 }
 
 function generateBadge(terrain) {
-    // Terrain should be single character
     // 'u' means unknown terrain
     // 'n' means none
     let b = $(document.createElement('span'));
