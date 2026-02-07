@@ -1173,7 +1173,8 @@ function advanceInvaderCard() {
             if (
                 (i === 0 && invaderCards[i+1][j] === 'ss') || 
                 (i === 0 && invaderCardActions['ravage']['lock']) || 
-                (i === 1 && invaderCardActions['build']['lock'])
+                (i === 1 && invaderCardActions['build']['lock']) ||
+                (i === 2 && invaderCardActions['explore']['lock'])
             ) 
                 {continue};
             
@@ -1186,7 +1187,8 @@ function advanceInvaderCard() {
         invaderCards[i] = newArray;
     }
 
-    invaderSeqIndex++;
+    if (!invaderCardActions['explore']['lock']) invaderSeqIndex++;
+
     if (invaderSeqIndex === invaderSeq.length) {
         alert('This is the last turn before time runs out...')
     }
@@ -1212,7 +1214,7 @@ function updateInvaderCard(showExploreCard) {
     invaderCards[3] = [];
     if (nextCard) {
         if (!isNaN(nextCard[0])) {
-            if (showExploreCard) {
+            if (showExploreCard && !invaderCardActions['explore']['lock']) {
                 invaderCards[3].push(nextCard);
             } else {
                 invaderCards[3].push(codeToLevel(nextCard));
