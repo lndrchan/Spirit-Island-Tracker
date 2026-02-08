@@ -1411,7 +1411,7 @@ function updateInvaderBadge(showExplore) {
                 badges[i].append(generateBadge(code[k+1]));
             }
             if (i === 3 && level === '2' && code[1] !== 'c') badges[i].append(' + Escalation')
-            badges[i].append('<br>');
+            if (j < invaderCards[i].length - 1) badges[i].append(', ');
         }
         
     }
