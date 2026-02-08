@@ -1392,7 +1392,7 @@ function updateInvaderBadge(showExplore) {
                 badges[i].append(generateBadge(code));
                 continue;
             }
-            if (!showExplore && i === 3) {
+            if (i === 3 && (!showExplore || invaderCardActions['explore']['lock'])) {
                 badges[i].append(generateBadge('u'));
                 continue;
             } 
