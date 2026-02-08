@@ -1205,18 +1205,10 @@ function advanceInvaderCard() {
         return;
     }
     
-    let nextCard = invaderSeq[invaderSeqIndex];
+    let nextCard = invaderSeq[invaderSeqIndex+1];
 
     invaderCards[3] = [];
-    if (nextCard) {
-        if (!isNaN(nextCard[0])) {
-            if (!invaderCardActions['explore']['lock']) {
-                invaderCards[3].push(nextCard);
-            }
-        } else {
-            invaderCards[3].push(nextCard);
-        }
-    }
+    if (nextCard) invaderCards[3].push(nextCard);
 
     updateInvaderCard(false);
 }
@@ -1234,7 +1226,7 @@ function updateInvaderCard(showExploreCard) {
         slots[i].empty();
         if (!invaderCards[i]) continue; // Skip slot if no cards in invaderCards[i]
         for (let j = 0; j < invaderCards[i].length; j++) {
-            let card = (i === 3 && !showExploreCard) ? codeToLevel(invaderCards[i][j]) : invaderCards[i][j];
+            let card = (i === 3 && (!showExploreCard || invaderCardActions['explore']['lock'])) ? codeToLevel(invaderCards[i][j]) : invaderCards[i][j];
             slots[i].append(generateInvaderCard(card))
         }
     }
