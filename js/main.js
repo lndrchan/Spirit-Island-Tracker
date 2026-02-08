@@ -535,7 +535,7 @@ function drawCard(type) {
                         <i class="text-muted">No Event Card drawn on Turn 1. The top Event Card has been discarded. </i>
                     </div>
                 `)
-                eventSeqIndex++;
+                eventSeq.shift();
                 return;
             }
             displayCard('event', eventSeq[eventSeqIndex])
@@ -1015,6 +1015,7 @@ function updateUI() {
     // invaderLevelSeq = invaderSeq.map(code => codeToLevel(code));  
 
     $('#turn-count-display').html(invaderSeqIndex);
+    $('#total-turn-count-display').html(invaderSeq.length);
     $('#invader-level-sequence').html(invaderLevelSeq.slice(invaderSeqIndex).join(' '));
 
     // MUST RUN THIS AFTER UPDATING INVADER LEVEL SEQUENCE UI
@@ -1129,7 +1130,6 @@ function initUI() {
         $('#blight-btn').css('display','none');
     }
 
-    $('#total-turn-count-display').html(invaderSeq.length);
     let invaderCardLabels = [
         $('#invader-card-label-fourth'), 
         $('#invader-card-label-ravage'), 
@@ -1205,6 +1205,19 @@ function advanceInvaderCard() {
         alert('You have reached the end of the Invader Deck. The Invaders have taken over the Island...')
         return;
     }
+    
+    let nextCard = invaderSeq[invaderSeqIndex];
+
+    invaderCards[3] = [];
+    if (nextCard) {
+        if (!isNaN(nextCard[0])) {
+            if (!invaderCardActions['explore']['lock']) {
+                invaderCards[3].push(nextCard);
+            }
+        } else {
+            invaderCards[3].push(nextCard);
+        }
+    }
 
     updateInvaderCard(false);
 }
@@ -1218,26 +1231,12 @@ function generateInvaderCard(code) {
 function updateInvaderCard(showExploreCard) {
     let slots = [invaderCardFourth, invaderCardRavage, invaderCardBuild, invaderCardExplore];
 
-    nextCard = invaderSeq[invaderSeqIndex];
-    
-    invaderCards[3] = [];
-    if (nextCard) {
-        if (!isNaN(nextCard[0])) {
-            if (showExploreCard && !invaderCardActions['explore']['lock']) {
-                invaderCards[3].push(nextCard);
-            } else {
-                invaderCards[3].push(codeToLevel(nextCard));
-            }
-        } else {
-            invaderCards[3].push(nextCard);
-        }
-    }
-
     for (let i = 0; i < 4; i++) {
         slots[i].empty();
         if (!invaderCards[i]) continue; // Skip slot if no cards in invaderCards[i]
         for (let j = 0; j < invaderCards[i].length; j++) {
-            slots[i].append(generateInvaderCard(invaderCards[i][j]))
+            let card = (i === 3 && !showExploreCard) ? codeToLevel(invaderCards[i][j]) : invaderCards[i][j];
+            slots[i].append(generateInvaderCard(card))
         }
     }
 }
@@ -1369,7 +1368,7 @@ function generateBadge(terrain) {
     return b;
 }
 
-function updateInvaderBadge() {
+function updateInvaderBadge(showExplore) {
 
     fourthBadge = $('#phase-list-fourth-badge');
     ravageBadge = $('#phase-list-ravage-badge');
@@ -1402,8 +1401,8 @@ function updateInvaderBadge() {
                 badges[i].append(generateBadge(code));
                 continue;
             }
-            if (code.length <= 1) {
-                exploreBadge.append(generateBadge('u'));
+            if (!showExplore && i === 3) {
+                badges[i].append(generateBadge('u'));
                 continue;
             } 
 
@@ -1413,7 +1412,7 @@ function updateInvaderBadge() {
                 badges[i].append(generateBadge(code[k+1]));
             }
             if (i === 3 && level === '2' && code[1] !== 'c') badges[i].append(' + Escalation')
-            
+            badges[i].append('<br>');
         }
         
     }
@@ -1591,6 +1590,10 @@ function fracturedDaysPower(deck, strength) {
         return;
     }
 
+    if (strength === 8) {
+
+    }
+
     // Deck: 0 is invader; 1 is event
     // Strength: 0 is weak, 1 is strong
 
@@ -1607,6 +1610,10 @@ function fracturedDaysPower(deck, strength) {
                 // Shuffle two top cards
                 invaderSeq[invaderSeqIndex] = invaderSeq[invaderSeqIndex+1];
                 invaderSeq[invaderSeqIndex+1] = invaderCode;
+
+                let tempLevel = invaderLevelSeq[invaderSeqIndex];
+                invaderLevelSeq[invaderSeqIndex] = invaderLevelSeq[invaderSeqIndex+1];
+                invaderLevelSeq[invaderSeqIndex+1] = tempLevel;
             }
             
         } else if (strength === 1) {
@@ -1625,6 +1632,10 @@ function fracturedDaysPower(deck, strength) {
         } else if (strength === 9) {
             invaderSeqFirst = invaderSeq.splice(invaderSeqIndex, 1); // Returns an array instead of single element
             invaderSeq.push(invaderSeqFirst);
+            invaderLevelSeqFirst = invaderLevelSeq.splice(invaderSeqIndex, 1);
+            invaderLevelSeq.push(invaderLevelSeqFirst);
+            invaderCards[3] = [invaderSeq[invaderSeqIndex]];
+            alert(`The top Invader Card is now moved to the bottom of the Deck. `);
         }
         
     }
@@ -1644,7 +1655,87 @@ function fracturedDaysPower(deck, strength) {
             alert(`The top card of the Event Deck is now moved to the bottom of the Event Deck. `);
         }
     }
+    updateInvaderCard(false);
     updateUI();
+    save();
+}
+
+// Open modal to select card to remove
+function openRemoveCardModal(event) {
+    // Store which card container this is for
+    const $dropup = $(event.target).closest('.btn-group');
+    currentInvaderCardContainer = $dropup.closest('.invader-card-area').find('.invader-card-container').attr('id');
+    
+    // Populate modal with current deck
+    const $selection = $('#invader-deck-selection');
+    $selection.empty();
+
+    let invaderDeck = invaderLevelSeq.slice(invaderSeqIndex);
+    
+    if (!invaderDeck || invaderDeck.length === 0) {
+        $selection.html('<p class="text-muted">No cards in deck</p>');
+    } else {
+        invaderDeck.forEach((card, index) => {
+            const $button = $('<button>')
+                .addClass('btn btn-danger delete-invader-card-btn')
+                .attr('type', 'button')
+                .attr('data-card-index', index + invaderSeqIndex)
+                .attr('data-card-id', card)
+                .html(`
+                    ${codeToString(card)}
+                `)
+                .on('click', function() {
+                    removeCardFromDeck(index + invaderSeqIndex);
+                    $('#remove-card-modal').modal('hide');
+                });
+            
+            $selection.append($button);
+        });
+    }
+    
+    // Show modal
+     $('#remove-card-modal').modal('show');
+}
+
+// Remove selected card from deck
+function removeCardFromDeck(cardIndex) {
+    if (!invaderLevelSeq || cardIndex >= invaderLevelSeq.length) {
+        alert('Invalid card selection');
+        return;
+    }
+    
+    const removedCard = invaderLevelSeq[cardIndex];
+    invaderSeq.splice(cardIndex, 1);
+    invaderLevelSeq.splice(cardIndex, 1);
+    
+    // Show confirmation
+    alert(`Removed a ${codeToString(removedCard)} Card from the Invader Deck.`);
+
+    if (phase === 5) {updateInvaderCard(true);} else {updateInvaderCard(false);}
+    updateUI();
+    save();
+}
+
+// Flip the top card of the invader deck
+function flipTopInvaderCard(event) {
+    
+    // Check if there are cards in the invader deck
+    if (invaderSeqIndex + 1 >= invaderSeq.length) {
+        alert('No cards left in Invader Deck to reveal. ');
+        return;
+    }
+
+    if (phase !== 5) {
+        alert('You can only do this during the Invader Actions Phase. ');
+        return;
+    }
+
+    invaderSeqIndex++;
+    const topCard = invaderSeq[invaderSeqIndex];
+    invaderCards[3].push(topCard);
+
+    // Update the invader card display
+    updateInvaderCard(true);
     save();
 }
 
@@ -1675,6 +1766,14 @@ function codeToLevel(code) {
 }
 
 function codeToString(code) {
+    let d = {
+        1: 'I',
+        2: 'II',
+        3: 'III'
+    }
+    if (code.length === 1 && !isNaN(code)) {
+        return `Stage ${d[code]}`;
+    }
     stage = codeToLevel(code);
     if (isNaN(stage)) {
         stage = 0;
@@ -1684,9 +1783,8 @@ function codeToString(code) {
         let terrain = '';
         for (let i = 1; i < code.length; i++) {
             terrain += (invaderCardDict[code[i]]);
-            if (i !== code.length-1) terrain += ' ';
         }
-        return `Stage ${stage} ${terrain}`;
+        return `Stage ${d[stage]} ${terrain}`.trim();
     }
 }
 

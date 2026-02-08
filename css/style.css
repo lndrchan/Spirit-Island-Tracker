@@ -42,6 +42,11 @@
     padding: 12px;
     margin-top: 12px;
     height: 38vh;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url(../assets/board/background.jpg);
+    background-size: 180%;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    border-radius: 12px;
 }
 
 /* Invader Card Area */
@@ -97,13 +102,6 @@
     margin-top: 10px;
 }
 
-.invader-card-label-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
 
 /* Card styling */
 .game-card-invader {
@@ -172,7 +170,6 @@
 {
     margin-top: 6px;
     margin-bottom: 6px;
-    z-index: 9999;
     font-family: 'Cantora One';
     text-transform: uppercase;
 }
@@ -585,6 +582,22 @@
 
 .btn-card-action[data-action="lock"].active .bi-lock::before {
     content: "\f474"; /* bi-lock-fill */
+}
+
+/* Fade and slide animation for dropup menu */
+.dropdown-menu {
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    opacity: 0;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Optional: Faster animation on dropdown items */
+.dropdown-item {
+    transition: background-color 0.15s ease-in-out;
 }
 
 .inverted {filter:invert(100%)}
