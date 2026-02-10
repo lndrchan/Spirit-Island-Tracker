@@ -498,7 +498,7 @@ function removeFearCard(save) {
 function unearnFearCard() {
     earnedFearCards--;
     
-    if (fearLevelSeq[terrorLevel] == adversaryConfig[adversary]['fear'][adversaryLevel][terrorLevel]) {
+    if (fearLevelSeq[terrorLevel] === getAdversaryConfig('fear')[terrorLevel]) {
         terrorLevel--;
     }
 
@@ -802,6 +802,31 @@ function generatePhaseListItem(phaseIndex) {
     return listItem;
 }
 
+function getAdversaryConfig(category) {
+    let out = [];
+    switch (category) {
+        case 'invader':
+            for (let i = parseInt(adversaryLevel); out.length === 0; i--) {
+                out = adversaryConfig[adversary]['invader'][i];
+                if (i === 0) {
+                    out = [1,1,1,2,2,2,2,3,3,3,3,3]; // Default sequence
+                    break;
+                } 
+            }
+            break;
+        case 'fear':
+            for (let i = parseInt(adversaryLevel); out.length === 0; i--) {
+                out = adversaryConfig[adversary]['fear'][i];
+                if (i === 0) {
+                    out = [3,3,3]; // Default sequence
+                    break;
+                }
+            }
+            break;
+    }
+    return out;
+}
+
 // Function attached to setup modal 'Start Game' button
 function setup() {
 
@@ -831,8 +856,8 @@ function setup() {
     }
 
     if (adversary !== 'none') {
-        invaderLevelSeq = adversaryConfig[adversary]['invader'][adversaryLevel].slice();
-        fearLevelSeq = adversaryConfig[adversary]['fear'][adversaryLevel].slice();
+        invaderLevelSeq = getAdversaryConfig('invader').slice();
+        fearLevelSeq = getAdversaryConfig('fear').slice();
     }
     else { // No adversary
         invaderLevelSeq = [1,1,1,2,2,2,2,3,3,3,3,3];
@@ -856,21 +881,8 @@ function setup() {
 
     fear = 0;
 
-    // Fall back to lower level if undefined (same as level below)
-    for (let i = parseInt(adversaryLevel); invaderLevelSeq.length === 0; i--) {
-        invaderLevelSeq = adversaryConfig[adversary]['invader'][i];
-        if (i === 0) {
-            invaderLevelSeq = [1,1,1,2,2,2,2,3,3,3,3,3]; // Default sequence
-            break;
-        } 
-    }
-    for (let i = parseInt(adversaryLevel); fearLevelSeq.length === 0; i--) {
-        fearLevelSeq = adversaryConfig[adversary]['fear'][i];
-        if (i === 0) {
-            fearLevelSeq = [3,3,3]; // Default sequence
-            break;
-        }
-    }
+    invaderLevelSeq = getAdversaryConfig('invader');
+    fearLevelSeq = getAdversaryConfig('fear');
 
     blightSeq = generateSeq('blight');
     fearSeq = generateSeq('fear');
