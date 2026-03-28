@@ -1,3 +1,36 @@
+.btn-group-toggle input[type="radio"] {
+    display: none;
+}
+
+.btn-group-toggle .btn {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+#adversaryLevelGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#setup-modal .modal-body {
+    overflow: hidden;
+}
+
+#setup-modal .modal-body > .row {
+    height: 100%;
+}
+
+#setup-modal .modal-body > .row > .col-md-4 {
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+#setup-modal .modal-body > .row > .col-md-6 {
+    max-height: 100%;
+    overflow-y: auto;
+}
+
 .cantora-one {
   font-family: "Cantora One", sans-serif;
   font-weight: 400;
@@ -21,6 +54,8 @@
 .container-fluid
 {
     padding: 24px;
+    height: 100vh;
+    overflow: hidden;
 }
 
 
@@ -216,9 +251,63 @@
     margin: 3px 3px;
 }
 
-.history-btn 
-{
-    margin-right: 4px;
+/* Card History Rows */
+
+#card-history-event,
+#card-history-fear,
+#fear-earned-inline {
+    position: relative;
+    overflow: hidden;
+}
+
+#card-history-event.show-gradient::after,
+#card-history-fear.show-gradient::after,
+#fear-deck-inline .fear-deck-level-section.show-gradient::after,
+#fear-earned-inline.show-gradient::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: 18px;
+    bottom: 6px;
+    width: calc(20% - 18px);
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.8));
+    pointer-events: none;
+    z-index: 10;
+}
+
+#card-history-fear {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+#card-history-event .fear-deck-card-row,
+#card-history-fear .fear-deck-card-row {
+    gap: 0;
+    overflow-x: auto;
+    min-width: 100%;
+}
+
+#card-history-event .fear-deck-card-wrapper,
+#card-history-fear .fear-deck-card-wrapper {
+    position: relative;
+    width: clamp(50px, 5vw, 80px);
+    flex-shrink: 0;
+    margin-right: -10px;
+    cursor: pointer;
+}
+
+#card-history-event .fear-deck-card-wrapper:last-child,
+#card-history-fear .fear-deck-card-wrapper:last-child {
+    margin-right: 0;
+}
+
+#card-history-event .fear-deck-card,
+#card-history-fear .fear-deck-card {
+    width: 100%;
+    max-width: none;
+    border-radius: 5px;
+    margin: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
 }
 
 #btn-add-fear-2
@@ -265,6 +354,7 @@
 {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .fear-badge-container
@@ -278,6 +368,11 @@
 {
     width: 12px;
     margin: 0px 3px 0px 3px;
+}
+
+.left-bar-column {
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
 }
 
 .left-bar,
@@ -343,6 +438,30 @@
     width: 100%;
     height: 75%;
     font-family: 'Cantora One';
+    overflow: hidden;
+    position: relative;
+}
+
+.phase-list-animating .list-group-item
+{
+    transition: transform 300ms ease, opacity 300ms ease,
+                background-color 300ms ease, color 300ms ease;
+}
+
+.phase-list-item-exiting
+{
+    pointer-events: none;
+}
+
+.phase-list-item-entering
+{
+    opacity: 0;
+}
+
+.phase-list-animating .phase-list-fade-out
+{
+    transition: opacity 300ms ease, height 300ms ease, margin 300ms ease;
+    opacity: 0;
 }
 
 .phase-list.badge
@@ -433,13 +552,32 @@
     align-items: center;
 }
 
+/* Adversary List Group */
+.adversary-list-group .list-group-item {
+    background-color: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}
+
+.adversary-list-group .list-group-item:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.adversary-list-group .list-group-item.active {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
 /* Adversary Preview Styles */
 .adversary-preview-container {
     position: relative;
-    y: 50%;
     border-radius: 12px;
     padding: 12px;
     width: 100%;
+    aspect-ratio: 1797 / 1197;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -604,5 +742,225 @@
 .brightness {filter: brightness(100%);}
 .clear{
     clear:both;
+}
+
+/* Fear Deck Modal */
+.fear-deck-level-section {
+    padding: 4px 0;
+    padding-left: 12px;
+}
+
+.fear-deck-card-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    overflow-x: auto;
+    position: relative;
+}
+
+
+.fear-deck-card-wrapper {
+    position: relative;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.fear-deck-card-wrapper:last-child {
+    margin-right: 0;
+}
+
+.fear-deck-card-wrapper:hover {
+    transform: translateY(-4px);
+    z-index: 100;
+}
+
+.fear-deck-card {
+    max-width: 100px;
+    height: auto;
+}
+
+
+/* Fear Deck Inline (sidebar) */
+#fear-deck-inline {
+    padding: 8px 4px;
+    border-top: 1px solid #424242;
+    margin-top: 8px;
+}
+
+#fear-deck-inline .fear-deck-card-row,
+#fear-earned-inline .fear-deck-card-row {
+    gap: 0;
+}
+
+
+#fear-deck-inline .fear-deck-card-wrapper,
+#fear-earned-inline .fear-deck-card-wrapper {
+    width: clamp(50px, 5vw, 80px);
+    flex-shrink: 0;
+    margin-right: -10px;
+}
+
+#fear-deck-inline .fear-deck-card-wrapper:last-child,
+#fear-earned-inline .fear-deck-card-wrapper:last-child {
+    margin-right: 0;
+}
+
+#fear-deck-inline .fear-deck-card,
+#fear-earned-inline .fear-deck-card {
+    width: 100%;
+    max-width: none;
+    border-radius: 5px;
+    margin: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+}
+
+#fear-earned-inline,
+#card-history-event,
+#card-history-fear {
+    padding: 6px 18px;
+    min-height: 7rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#fear-earned-inline .fear-deck-card-wrapper {
+    width: clamp(50px, 4vw, 80px);
+}
+
+#fear-deck-inline .fear-deck-level-section {
+    position: relative;
+    overflow: hidden;
+    padding: 6px 18px;
+}
+
+#fear-deck-inline .fear-deck-level-section .fear-deck-card-row {
+    position: relative;
+    z-index: 1;
+}
+
+.fear-deck-level-arrow {
+    position: absolute;
+    right: 10%;
+    height: 50%;
+    top: 25%;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10%;
+    z-index: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.15));
+    clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* Add card button styled like a fear card */
+#fear-deck-inline .fear-deck-add-btn {
+    width: 100%;
+    aspect-ratio: 5 / 7;
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#fear-deck-inline .fear-deck-add-btn:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+/* Fear Card Action Popover (Bootstrap) */
+.fear-card-bs-popover {
+    --bs-popover-bg: rgba(30, 30, 30, 0.95);
+    --bs-popover-border-color: rgba(255, 255, 255, 0.2);
+    --bs-popover-body-padding-y: 0;
+    --bs-popover-body-padding-x: 0;
+    --bs-popover-max-width: none;
+    border-radius: 5px;
+}
+
+.fear-card-bs-popover .popover-arrow {
+    display: none;
+}
+
+.fear-card-bs-popover .popover-body {
+    padding: 4px;
+    height: 100%;
+}
+
+.fear-card-bs-popover .popover-body .btn-group-vertical {
+    height: 100%;
+}
+
+.fear-card-bs-popover .popover-body .btn {
+    flex: 1;
+    margin: 0;
+}
+
+/* Fear Deck Toggle Badge */
+.fear-deck-toggle-badge {
+    height: 1.5rem;
+    padding: 0 22%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Invader Deck Card Row (remove card modal) */
+.invader-deck-card-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 0;
+    padding: 6px 0;
+}
+
+.invader-deck-card-wrapper {
+    position: relative;
+    flex-shrink: 0;
+    width: clamp(50px, 5vw, 80px);
+    margin-right: -10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.invader-deck-card-wrapper:last-child {
+    margin-right: 0;
+}
+
+.invader-deck-card-wrapper:hover {
+    transform: translateY(-4px);
+    z-index: 100;
+}
+
+.invader-deck-card {
+    width: 100%;
+    max-width: none;
+    border-radius: 5px;
+    margin: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Invader Discard Modal */
+.invader-discard-card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
 }
 

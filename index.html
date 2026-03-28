@@ -26,43 +26,27 @@
 							<div class="col-md-4">
 								<form id="gameSetupForm">
 									<!-- Player Count -->
-									<div class="form-group">
-										<label class="font-weight-bold mb-3">Number of Players</label>
-										<div class="d-flex flex-wrap">
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="playerCount" id="player1" value="1">
-												<label class="form-check-label" for="player1">
-													1
+									<div class="form-group d-flex align-items-center justify-content-between">
+										<label class="font-weight-bold mb-0">Number of Players</label>
+										<div>
+											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="playerCount" value="1"> 1
 												</label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="playerCount" id="player2" value="2" checked>
-												<label class="form-check-label" for="player2">
-													2 
+												<label class="btn btn-outline-primary active">
+													<input type="radio" name="playerCount" value="2" checked> 2
 												</label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="playerCount" id="player3" value="3">
-												<label class="form-check-label" for="player3">
-													3
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="playerCount" value="3"> 3
 												</label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="playerCount" id="player4" value="4">
-												<label class="form-check-label" for="player4">
-													4 
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="playerCount" value="4"> 4
 												</label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="playerCount" id="player5" value="5">
-												<label class="form-check-label" for="player5">
-													5 
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="playerCount" value="5"> 5
 												</label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="playerCount" id="player6" value="6">
-												<label class="form-check-label" for="player6">
-													6 
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="playerCount" value="6"> 6
 												</label>
 											</div>
 										</div>
@@ -72,75 +56,82 @@
 									<!-- Adversary Choice -->
 									<div class="form-group mt-4">
 										<label class="font-weight-bold mb-3">Adversary</label>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advNone" value="none" data-image="" checked>
-											<label class="form-check-label" for="advNone">
-												No Adversary
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advBrandenburg" value="prussia" data-image="prussia.jpg">
-											<label class="form-check-label" for="advBrandenburg">
-												Brandenburg-Prussia
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advEngland" value="england" data-image="england.jpg">
-											<label class="form-check-label" for="advEngland">
-												England
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advSweden" value="sweden" data-image="sweden.jpg">
-											<label class="form-check-label" for="advSweden">
-												Sweden
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advFrance" value="france" data-image="france.jpg">
-											<label class="form-check-label" for="advFrance">
-												France
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advHabsburgLivestock" value="habsburg-livestock" data-image="habsburg-livestock.jpg">
-											<label class="form-check-label" for="advHabsburgLivestock">
-												Habsburg (Livestock Colony)
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advRussia" value="russia" data-image="russia.jpg">
-											<label class="form-check-label" for="advRussia">
-												Russia
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advScotland" value="scotland" data-image="scotland.jpg">
-											<label class="form-check-label" for="advScotland">
-												Scotland
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input adversary-radio" type="radio" name="adversary" id="advHabsburgMining" value="habsburg-mining" data-image="habsburg-mining.jpg">
-											<label class="form-check-label" for="advHabsburgMining">
-												Habsburg (Mining Expedition)
-											</label>
+										<div class="row">
+											<div class="col-6">
+												<div class="list-group adversary-list-group">
+													<label class="list-group-item list-group-item-action active">
+														<input class="adversary-radio" type="radio" name="adversary" id="advNone" value="none" data-image="" checked hidden>
+														No Adversary
+													</label>
+													<label class="list-group-item list-group-item-action">
+														<input class="adversary-radio" type="radio" name="adversary" id="advBrandenburg" value="prussia" data-image="prussia.jpg" hidden>
+														Brandenburg-Prussia
+													</label>
+													<label class="list-group-item list-group-item-action">
+														<input class="adversary-radio" type="radio" name="adversary" id="advEngland" value="england" data-image="england.jpg" hidden>
+														England
+													</label>
+													<label class="list-group-item list-group-item-action">
+														<input class="adversary-radio" type="radio" name="adversary" id="advSweden" value="sweden" data-image="sweden.jpg" hidden>
+														Sweden
+													</label>
+													<label class="list-group-item list-group-item-action">
+														<input class="adversary-radio" type="radio" name="adversary" id="advFrance" value="france" data-image="france.jpg" hidden>
+														France
+													</label>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="list-group adversary-list-group">
+													<label class="list-group-item list-group-item-action">
+														<input class="adversary-radio" type="radio" name="adversary" id="advHabsburgLivestock" value="habsburg-livestock" data-image="habsburg-livestock.jpg" hidden>
+														Habsburg (Livestock)
+													</label>
+													<label class="list-group-item list-group-item-action">
+														<input class="adversary-radio" type="radio" name="adversary" id="advRussia" value="russia" data-image="russia.jpg" hidden>
+														Russia
+													</label>
+													<label class="list-group-item list-group-item-action">
+														<input class="adversary-radio" type="radio" name="adversary" id="advScotland" value="scotland" data-image="scotland.jpg" hidden>
+														Scotland
+													</label>
+													<label class="list-group-item list-group-item-action">
+														<input class="adversary-radio" type="radio" name="adversary" id="advHabsburgMining" value="habsburg-mining" data-image="habsburg-mining.jpg" hidden>
+														Habsburg (Mining)
+													</label>
+												</div>
+											</div>
 										</div>
 									</div>
 									
 									<!-- Adversary Level (conditional) -->
 									<div class="form-group mt-3" id="adversaryLevelGroup" style="display: none;">
-										<label for="adversaryLevel" class="font-weight-bold">Adversary Level</label>
-										<select class="form-control" id="adversaryLevel">
-											<option value="0">0</option>
-											<option value="1" selected>1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-										</select>
-										
+										<label class="font-weight-bold mb-0">Adversary Level</label>
+										<div id="adversaryLevelRadios">
+											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="adversaryLevel" value="0"> 0
+												</label>
+												<label class="btn btn-outline-primary active">
+													<input type="radio" name="adversaryLevel" value="1" checked> 1
+												</label>
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="adversaryLevel" value="2"> 2
+												</label>
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="adversaryLevel" value="3"> 3
+												</label>
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="adversaryLevel" value="4"> 4
+												</label>
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="adversaryLevel" value="5"> 5
+												</label>
+												<label class="btn btn-outline-primary">
+													<input type="radio" name="adversaryLevel" value="6"> 6
+												</label>
+											</div>
+										</div>
 									</div>
 									<!-- Expansions -->
 									
@@ -277,23 +268,14 @@
 
 		<div class="container-fluid">
 			<div class="row main-container">
-				<div class="col-md-3">
+				<div class="col-md-3 left-bar-column">
 					<div class="left-bar fear-panel-top">
 						<div class="row container-glassmorphism" id="fear-card-number-display">
 							<div class="col-md-6 text-center">
-								<h5 class="fear-card-number-title">Earned</h5> 
-								<div class="fs-4">
-									<div class="col fear-badge-container">
-										<span class="badge text-bg-dark" id="left-bar-fear-badge">1</span>
-										<div class="fear-card-control">
-											<button type="button" class="btn btn-secondary fear-card-btn-large" onclick="revealFearCard()">
-												Reveal Now
-											</button>
-										</div>
-									</div>
-								</div>
+								<h5 class="fear-card-number-title">Earned</h5>
+								<div id="fear-earned-inline"></div>
 							</div>
-							<div class="col-md-6 text-center" style="border-left:1px solid #424242;">
+							<div class="col-md-6 text-center d-flex flex-column justify-content-center" id="fear-deck-toggle-area" style="border-left:1px solid #424242; cursor: pointer;">
 								<h5 class="fear-card-number-title">Fear Deck</h5>
 								<div class="fs-4" id="fear-cards-remaining-container">
 									<div class="fear-badge-container">
@@ -308,16 +290,9 @@
 										<span class="badge text-bg-dark fear-cards-remaining-badge">1</span>
 									</div>
 								</div>
-								<div class="btn-group-vertical fear-card-control" role="group">
-									<button type="button" class="btn btn-secondary fear-card-btn" onclick="addFearCard(terrorLevel)">
-										Add Fear Card
-									</button>
-									<button type="button" class="btn btn-secondary fear-card-btn" onclick="removeFearCard(true)">
-										Remove Fear Card
-									</button>
-								</div>
-							</div>
-							<div style="text-align: center;height: 0.75em"><i class="bi bi-caret-down-fill text-secondary"></i></div>
+								<div id="fear-deck-toggle" class="mt-3" style="text-align: center; cursor: pointer;"><span class="badge rounded-pill text-bg-secondary fear-deck-toggle-badge"><i class="bi bi-caret-down-fill" id="fear-deck-toggle-icon"></i></span></div>
+														</div>
+							<div class="col-12 fear-card-control" id="fear-deck-inline"></div>
 						</div>
 						<hr>
 
@@ -435,45 +410,11 @@
 								</div>
 								<hr>
 								<div class="card container-glassmorphism fear-panel-bottom" data-bs-theme="dark">
-									<h5 class="card-header">
-										Card Histories
-									</h5>
-									<div class="card-body" style="text-align: left;">
+									<h5 class="card-header">Discard Piles</h5>
+									<div class="card-body" style="padding: 0.75rem; ">
 										<div class="row">
-											<div class="col-md-3" style="align-content: center;">
-												<h5>Event</h5> 
-											</div>
-											<div class="col-md-9" style="text-align: right;">
-												<div class="btn-group" role="group">
-													<button type="button" id="last-event-card-btn" class="btn btn-secondary history-btn" onclick="displayCardHistory('event', -1)">
-														<i class="bi bi-caret-left-fill"></i>
-													</button>
-													<button type="button" id="next-event-card-btn" class="btn btn-secondary history-btn" onclick="displayCardHistory('event', 1)">
-														<i class="bi bi-caret-right-fill"></i>
-													</button>	
-													<button type="button" id="this-event-card-btn" class="btn btn-secondary history-btn" onclick="displayCardHistory('event', 0)" disabled>
-														<span style="font-size: 1rem;">Latest</span>
-													</button>
-												</div>
-											</div>
-										</div>
-										<div class="row mt-2">
-											<div class="col-md-3" style="align-content: center;">
-												<h5>Fear</h5> 
-											</div> 
-											<div class="col-md-9" style="text-align: right;">
-												<div class="btn-group" role="group">
-													<button type="button" id="last-fear-card-btn" class="btn btn-secondary history-btn" onclick="displayCardHistory('fear', -1)">
-														<i class="bi bi-caret-left-fill"></i>
-													</button>
-													<button type="button" id="next-fear-card-btn" class="btn btn-secondary history-btn" onclick="displayCardHistory('fear', 1)">
-														<i class="bi bi-caret-right-fill"></i>
-													</button>
-													<button type="button" id="this-fear-card-btn" class="btn btn-secondary history-btn" onclick="displayCardHistory('fear', 0)" disabled>
-														<span style="font-size: 1rem;">Latest</span>
-													</button>
-												</div>
-											</div>
+											<div class="col-6" id="card-history-event"></div>
+											<div class="col-6" id="card-history-fear"></div>
 										</div>
 									</div>
 								</div>
@@ -491,7 +432,7 @@
 								<div class="invader-card-label" id="invader-card-label-fourth">
 									Discard
 								</div>
-								<div class="invader-card-buttons">
+								<div class="btn-toolbar invader-card-buttons" role="toolbar">
 									<div class="btn-group ms-2" role="group">
 										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="blight">
 											Blight
@@ -501,6 +442,11 @@
 										</button>
 										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action" data-card="fourth" data-action="fear">
 											Fear
+										</button>
+									</div>
+									<div class="btn-group ms-2">
+										<button type="button" class="btn btn-sm btn-outline-secondary btn-card-action-style" onclick="openInvaderDiscardModal()">
+											<i class="bi bi-trash"></i> <span id="invader-discard-count"></span>
 										</button>
 									</div>
 								</div>
@@ -620,8 +566,6 @@
 							</div>
 						</div>
 
-
-
 					</div>
 				</div>
 			</div>
@@ -636,8 +580,8 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<p>Select a Card to remove from the Invader Deck:</p>
-						<div id="invader-deck-selection" class="d-grid gap-2">
+						<p>Select a card to remove:</p>
+						<div id="invader-deck-selection" class="invader-deck-card-row">
 							<!-- Cards will be populated here -->
 						</div>
 					</div>
@@ -648,15 +592,34 @@
 			</div>
 		</div>
 
+		<!-- Invader Discard Modal -->
+		<div class="modal fade cantora-one" id="invader-discard-modal" tabindex="-1" aria-labelledby="invaderDiscardModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="invaderDiscardModalLabel">Invader Discard Pile</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="invader-discard-modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- Special Actions Modal -->
 		<div class="modal fade cantora-one" id="special-actions-modal" tabindex="-1" role="dialog">
 			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-7">
 						<!--
 						<div class="special-action-section">
 							<div class="row special-action-row">
-								
+
 								<div class="col-md-6"><h5>Invader Deck</h5></div>
 								<div class="col-md-6">
 									<button type="button" class="btn btn-secondary special-action-btn" style="text-transform: none;" onclick="accelerateInvaderCard()">
@@ -666,9 +629,9 @@
 							</div>
 						</div>
 						<hr>
-						
+
 						<div class="special-action-section">
-							
+
 							<h5>Events</h5>
 
 							<div class="row special-action-row">
@@ -678,10 +641,10 @@
 								<div class="col-md-6">
 									<button type="button" class="btn btn-secondary special-action-btn" onclick="addFearCard(terrorLevel)">
 										Add Fear Card to Top of Fear Deck
-									</button>	
+									</button>
 								</div>
 							</div>
-							
+
 
 							<div class="row special-action-row">
 								<div class="col-md-4 special-action-label">
@@ -690,10 +653,10 @@
 								<div class="col-md-8">
 									<button type="button" class="btn btn-secondary special-action-btn" onclick="removeFearCard(true)">
 										Remove Top Fear Card
-									</button>	
+									</button>
 									<button type="button" class="btn btn-danger special-action-btn" onclick="removeInvaderCard()">
 										Remove Top Invader Card
-									</button>	
+									</button>
 								</div>
 							</div>
 
@@ -704,7 +667,7 @@
 								<div class="col-md-6">
 									<button type="button" class="btn btn-secondary special-action-btn" onclick="terrorSpikesUpwards()">
 										Resolve First Earned Fear Card Now
-									</button>	
+									</button>
 								</div>
 							</div>
 
@@ -715,72 +678,33 @@
 						-->
 
 						<div class="special-action-section">
-							<h5>Bringer of Dreams and Nightmares</h5>
-							
-							<div>
-								<div class="row special-action-row">
-									<div class="col-md-6 special-action-label">
-										Spirits May Yet Dream
-									</div>
-									<div class="col-md-6">
-									<button type="button" class="btn btn-secondary special-action-btn" onclick="spiritsMayYetDream()">
-										Reveal Earned Fear Card(s)
-									</button>	
+							<h5>Fractured Days Split the Sky (Visions of a Shifting Future)</h5>
+
+							<div class="row special-action-row">
+								<div class="col-md-6 special-action-label">
+									Top Power (look then shuffle with 2nd card)
 								</div>
-								
+								<div class="col-md-6">
+									<button type="button" class="btn btn-danger special-action-btn" onclick="fdLook('top','invader')">Invader</button>
+									<button type="button" class="btn btn-warning special-action-btn" onclick="fdLook('top','event')">Event</button>
+								</div>
+							</div>
+
+							<div class="row special-action-row">
+								<div class="col-md-6 special-action-label">
+									Bottom Power (look then return to top or bottom)
+								</div>
+								<div class="col-md-6">
+									<button type="button" class="btn btn-danger special-action-btn" onclick="fdLook('bottom','invader')">Invader</button>
+									<button type="button" class="btn btn-warning special-action-btn" onclick="fdLook('bottom','event')">Event</button>
+								</div>
 							</div>
 						</div>
-
-						<hr>
-
-						<div class="special-action-section">
-							<h5>Fractured Days Split the Sky (Visions of a Shifting Future)</h5>
-							
-							<div>
-								<div class="row special-action-row">
-									<div class="col-md-6 special-action-label">
-										Top Power (look then shuffle)
-									</div>
-									<div class="col-md-6">
-										<button type="button" class="btn btn-secondary special-action-btn" onclick="fracturedDaysPower(0, 8)">
-											Review Revealed Card
-										</button>
-										<button type="button" class="btn btn-warning special-action-btn" onclick="fracturedDaysPower(1, 0)">
-											Event
-										</button>
-										<button type="button" class="btn btn-danger special-action-btn" onclick="fracturedDaysPower(0, 0)">
-											Invader
-										</button>
-										
-									</div>
-								</div>
-								
-								<div class="row special-action-row">
-									<div class="col-md-6 special-action-label">
-										Bottom power (look then return to top or bottom): 
-									</div>
-									<div class="col-md-6">
-										
-										<button type="button" class="btn btn-danger special-action-btn" onclick="fracturedDaysPower(0, 9)">
-											Move to Bottom (Invader)
-										</button>
-										<button type="button" class="btn btn-danger special-action-btn" onclick="fracturedDaysPower(0, 1)">
-											Look (Invader)
-										</button>
-
-										<button type="button" class="btn btn-warning special-action-btn" onclick="fracturedDaysPower(1, 9)">
-											Move to Bottom (Event)
-										</button>
-
-										<button type="button" class="btn btn-warning special-action-btn" onclick="fracturedDaysPower(1, 1)">
-											Look (Event)
-										</button>
-
-									</div>
-									</div>
-								</div>
 							</div>
-
+							<div class="col-md-5 d-flex flex-column align-items-center justify-content-center" id="fd-preview-panel">
+								<img id="fd-preview-card" class="game-card" style="max-height: 400px; display: none;">
+								<div id="fd-actions" class="mt-2"></div>
+							</div>
 						</div>
 						<div class="modal-footer justify-content-center">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
