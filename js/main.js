@@ -557,7 +557,7 @@ function drawCard(type) {
                         <i class="text-muted">No Event Card drawn on Turn 1. The top Event Card has been discarded. </i>
                     </div>
                 `)
-                eventSeq.shift();
+                eventSeqIndex++;
                 return;
             }
             displayCard('event', eventSeq[eventSeqIndex])
