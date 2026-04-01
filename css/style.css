@@ -209,6 +209,11 @@
     text-transform: uppercase;
 }
 
+#blight-status-badge
+{
+    text-transform: none;
+}
+
 .fear-card-control
 {
     

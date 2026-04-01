@@ -1242,6 +1242,11 @@ function updateUI() {
 
     $('#invader-discard-count').text(invaderDiscardPile.length > 0 ? '(' + invaderDiscardPile.length + ')' : '');
 
+    $('#blight-status-badge')
+        .toggleClass('text-bg-success', !blightFlipped)
+        .toggleClass('text-bg-dark', blightFlipped)
+        .text(blightFlipped ? 'Blighted' : 'Healthy');
+
     fearProgressBar.attr('style', 'width: ' + fear / maxFear * 100 + '%');
     fearProgressBar.html(fear + ' / ' + maxFear);
 
